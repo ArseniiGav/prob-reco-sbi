@@ -37,7 +37,7 @@ explains every step).
 
    ```bash
    python3 -m venv .venv
-   source .venv/bin/activate
+   source .venv/bin/activate   # Windows: .venv\Scripts\activate.bat or .venv\Scripts\Activate.ps1
    python -m pip install --upgrade pip
    python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
    python -m pip install -e ".[analysis,dev]"

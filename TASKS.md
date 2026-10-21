@@ -9,6 +9,10 @@ of the course, in which a neural network learns the posterior distribution of th
 - Background: the model is in [docs/physics.md](docs/physics.md), the file layout in
   [docs/data_format.md](docs/data_format.md), and [notebooks/00_quickstart.ipynb](notebooks/00_quickstart.ipynb) is a
   guided first look at the data.
+- **Where to run.** A laptop is enough (Linux, macOS or Windows; CPU only). The commands are written for a Unix shell
+  (Linux, macOS, or WSL on Windows). Single `flashsim` commands also work in the Windows Command Prompt and in
+  PowerShell; the data of T1 to T4 can be made with `python examples/make_task_data.py` on any system, and loops can
+  be written in Python with the API (see `examples/quickstart.py`).
 
 ## What to bring to the next session
 
@@ -62,16 +66,20 @@ python -m pip install -e ".[analysis,dev]"
 python -m pytest                 # ends with "... passed, ... deselected": the deselected ones are the slow tests
 ```
 
+On Windows, use `python -m venv .venv` and `.venv\Scripts\activate.bat` (Command Prompt) or `.venv\Scripts\Activate.ps1`
+(PowerShell) instead of the third and fourth lines. On a Mac with an Intel processor, see "CPU or GPU" in
+[README.md](README.md#installation) for the PyTorch version.
+
 For notebooks, start JupyterLab from the activated environment with `python -m jupyter lab`; on JupyterHub or in
 VS Code, register the environment as a kernel first (see "Notebooks" in [README.md](README.md#installation)).
 
-**T0.2** Generate 10 000 events with the default physics and time it on a CPU node (and on a GPU node, if your cluster
-has one). How does the time scale with the number of events $N$ and with the preset?
+**T0.2** Generate 10 000 events with the default physics and time it on your computer (and on an NVIDIA GPU, if you
+have one). How does the time scale with the number of events $N$ and with the preset?
 
 ```bash
-time flashsim generate -n 10000 --seed 1 --overwrite        # default device: the GPU if there is one, else the CPU
-time flashsim generate -n 10000 --seed 1 --device cpu --threads 4 -o data/t0_cpu_threads4.h5 --overwrite
-time flashsim generate -n 10000 --seed 1 --device cuda -o data/t0_gpu.h5 --overwrite   # on a GPU node only
+flashsim generate -n 10000 --seed 1 --overwrite        # prints "done in ... s"; device: a GPU if there is one, else the CPU
+flashsim generate -n 10000 --seed 1 --device cpu --threads 4 -o data/t0_cpu_threads4.h5 --overwrite
+flashsim generate -n 10000 --seed 1 --device cuda -o data/t0_gpu.h5 --overwrite   # only with an NVIDIA GPU
 
 for n in 1000 10000 100000; do
   for p in straight absorb absorb-scatter full; do
@@ -99,18 +107,22 @@ print(data.provenance)
 preset and every device you tried (T0.2).
 
 **Hints**
-- The time printed by `time` includes starting Python and importing PyTorch. The simulation alone is stored in every
-  file as `data.provenance["wall_time_s"]` (also shown by `flashsim info`).
+- `flashsim generate` prints the time of the simulation at the end ("done in ... s"); it is also stored in every file as
+  `data.provenance["wall_time_s"]` (shown by `flashsim info`). On Linux and macOS, `time flashsim ...` measures in
+  addition the start of Python and the import of PyTorch.
 - The first use of a GPU costs extra start-up time, so time more than one $N$.
-- On a shared node, use as many threads (`--threads`) as you requested from the scheduler.
+- On a laptop, compare a few thread counts (`--threads 1`, `2`, `4`, ...); on a shared cluster node, use as many threads
+  as you requested from the scheduler.
 - For the scaling, a log-log plot of the time against $N$ shows a power law as a straight line.
 
 ## Data for T1 to T4
 
 With the installation working, make the data of the next tasks. All files go to `data/` in the repository root, and
 every path in this document is relative to the repository root (a notebook in `notebooks/` reads the same file as
-`../data/t2_full.h5`). Each command takes seconds to a minute on a CPU (on a cluster, run it in a job or an
-interactive session, not on the login node; see [examples/cluster](examples/cluster/README.md)). Using the same seed
+`../data/t2_full.h5`). Each command takes seconds to a minute on a laptop, and
+`python examples/make_task_data.py` runs all of them in one go on any operating system and writes the same files (it
+keeps files that already exist; `--overwrite` makes them again). On a cluster, run the commands in a job or an
+interactive session, not on the login node (see [examples/cluster](examples/cluster/README.md)). Using the same seed
 for every preset gives the same events (vertices, energies, $t_0$ and photon numbers), which makes comparisons between
 presets sharper; such paired samples are made for differences, not for pooling (two presets with the same seed are not
 independent samples).

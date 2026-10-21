@@ -31,14 +31,17 @@ First release (0.1.0): the toy detector "A Flash in the Dark" and its data.
   statistical regression tests against the original seminar implementation and its reference numbers. The original
   code and the reference numbers are not distributed, so those comparisons run only where they are available
   (`FLASH_CORE_DIR`, `FLASH_REFERENCE_FILE`).
-- Continuous integration (lint, type checks, pre-commit hooks, tests on Python 3.10 to 3.14), Dependabot.
-- Documentation: the README (course roadmap, installation with CPU or CUDA builds of PyTorch and with uv, quick start,
-  presets and options), `docs/physics.md` (the model with its equations, what every switch does, the network input)
-  and `docs/data_format.md` (the HDF5 layout of format version 1, provenance, merging).
+- Continuous integration (lint, type checks, pre-commit hooks; tests on Linux with Python 3.10 to 3.14 and on macOS and
+  Windows with Python 3.12), Dependabot.
+- Documentation: the README (course roadmap, installation on a laptop with Linux, macOS or Windows or on a cluster, with
+  CPU or CUDA builds of PyTorch and with uv, quick start, presets and options), `docs/physics.md` (the model with its
+  equations, what every switch does, the network input) and `docs/data_format.md` (the HDF5 layout of format
+  version 1, provenance, merging).
 - `TASKS.md`: the tasks of the first session, T0 to T4 and the bonus T5, with fixed question IDs.
 - `CONTRIBUTING.md`: issues, the fork and branch workflow, pre-commit, tests and style.
-- Examples: `examples/quickstart.py`; `examples/cluster/` with a shard script, a SLURM array job and an HTCondor
-  submit file to adapt, the merge workflow and measured resources per job.
+- Examples: `examples/quickstart.py`; `examples/make_task_data.py` (the data of the tasks on any operating system);
+  `examples/cluster/` with a shard script, a SLURM array job and an HTCondor submit file to adapt, the merge workflow
+  and measured resources per job.
 - `notebooks/00_quickstart.ipynb`: a guided first look at the data.
 
 [Unreleased]: https://github.com/ArseniiGav/prob-reco-sbi/commits/main
