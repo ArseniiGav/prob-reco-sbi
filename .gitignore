@@ -1,0 +1,55 @@
+# Reference solutions stay local until the next session of the course.
+solutions/
+# Cached data of the solutions: never committed, also once the solutions are public.
+solutions/data/
+
+# Reference numbers of the original seminar implementation: kept by the course team, not distributed
+# (tests/test_regression.py skips the tests that need them).
+tests/data/seminar_reference.json
+
+# Simulated data (the top-level data/ directory)
+/data/
+*.h5
+*.hdf5
+*.h5.part
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.python-version
+
+# Tests, coverage and type checking
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Cluster job output
+logs/
+*.out
+*.err
+slurm-*.out
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

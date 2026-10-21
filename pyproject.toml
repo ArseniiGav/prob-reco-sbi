@@ -1,0 +1,147 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "prob-reco-sbi"
+dynamic = ["version"]
+description = "Probabilistic event reconstruction with simulation-based inference: a course built on a toy photon-transport detector."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Arsenii Gavrikov" }]
+requires-python = ">=3.10"
+keywords = [
+    "simulation-based inference",
+    "neural posterior estimation",
+    "event reconstruction",
+    "photon transport",
+    "particle physics",
+    "teaching",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Education",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Typing :: Typed",
+]
+dependencies = [
+    "h5py>=3.8",
+    "numpy>=1.24",
+    "torch>=2.1",
+]
+
+[project.optional-dependencies]
+analysis = [
+    "ipykernel>=6.25",
+    "jupyterlab>=4.0",
+    "matplotlib>=3.7",
+    "pandas>=2.0",
+]
+dev = [
+    "mypy>=1.10",
+    "nbstripout>=0.7",
+    "pre-commit>=3.5",
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.16",
+]
+
+[project.scripts]
+flashsim = "prob_reco_sbi.flash.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ArseniiGav/prob-reco-sbi"
+Repository = "https://github.com/ArseniiGav/prob-reco-sbi"
+Issues = "https://github.com/ArseniiGav/prob-reco-sbi/issues"
+Changelog = "https://github.com/ArseniiGav/prob-reco-sbi/blob/main/CHANGELOG.md"
+
+[tool.hatch.version]
+path = "src/prob_reco_sbi/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/README.md", "/CHANGELOG.md", "/CITATION.cff", "/LICENSE"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/prob_reco_sbi"]
+
+# ---------------------------------------------------------------------------------------------------------------- ruff
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # import sorting
+    "B",    # bugbear
+    "C4",   # comprehensions
+    "D",    # docstrings (NumPy convention)
+    "NPY",  # NumPy-specific rules
+    "PT",   # pytest style
+    "RUF",  # ruff-specific rules
+    "SIM",  # simplifications
+    "UP",   # pyupgrade
+]
+ignore = [
+    "D105",  # magic methods need no docstring
+    "D107",  # __init__ is documented in the class docstring
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["prob_reco_sbi.flash.config._param"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]
+
+# ---------------------------------------------------------------------------------------------------------------- mypy
+[tool.mypy]
+python_version = "3.10"
+files = ["src"]
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+
+[[tool.mypy.overrides]]
+module = ["h5py"]
+ignore_missing_imports = true
+
+# -------------------------------------------------------------------------------------------------------------- pytest
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config", "-m", "not slow"]
+markers = ["slow: statistical regression and fresh-process reproducibility tests (tens of seconds; run with `pytest -m slow`)"]
+xfail_strict = true
+
+# ------------------------------------------------------------------------------------------------------------ coverage
+[tool.coverage.run]
+source = ["prob_reco_sbi"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_also = [
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]

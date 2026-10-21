@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software in teaching or research, please cite it as below."
+type: software
+title: "prob-reco-sbi: probabilistic event reconstruction with simulation-based inference"
+abstract: >-
+  Course material on probabilistic event reconstruction with simulation-based inference. The first part,
+  "A Flash in the Dark", is a photon-transport simulation of a toy two-dimensional scintillation detector with
+  switchable absorption, Rayleigh scattering and wall reflection, a documented HDF5 data format and student tasks
+  about the simulated data.
+authors:
+  - family-names: Gavrikov
+    given-names: Arsenii
+    affiliation: "Tsung-Dao Lee Institute, Shanghai Jiao Tong University"
+version: 0.1.0
+license: MIT
+repository-code: "https://github.com/ArseniiGav/prob-reco-sbi"
+url: "https://github.com/ArseniiGav/prob-reco-sbi"
+keywords:
+  - simulation-based inference
+  - neural posterior estimation
+  - event reconstruction
+  - photon transport
+  - particle physics
+  - teaching
