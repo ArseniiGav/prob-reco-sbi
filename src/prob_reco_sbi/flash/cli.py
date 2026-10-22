@@ -63,7 +63,6 @@ def build_parser() -> argparse.ArgumentParser:
     gen.add_argument("--preset", choices=list(PRESETS), default="full", help="physics preset")
     gen.add_argument("-n", "--n-events", type=int, default=10_000, metavar="N", help="number of events")
     gen.add_argument("--seed", type=int, default=0, help="random seed (non-negative integer)")
-    gen.add_argument("--device", default="auto", help="'auto' (CUDA if available), 'cpu', 'cuda' or 'cuda:N'")
     gen.add_argument(
         "-o",
         "--output",
@@ -77,17 +76,19 @@ def build_parser() -> argparse.ArgumentParser:
     gen.add_argument(
         "--save-tracks", type=int, default=0, metavar="K", help="store the photon paths of the first K events"
     )
-    gen.add_argument("--track-photons", type=int, default=100, metavar="P", help="photons per stored event (0: all)")
-    gen.add_argument("--first-event-id", type=int, default=0, metavar="ID", help="event id of the first event")
-    gen.add_argument(
+    adv = gen.add_argument_group("advanced options")
+    adv.add_argument("--device", default="auto", help="'auto' (CUDA if available), 'cpu', 'cuda' or 'cuda:N'")
+    adv.add_argument("--threads", type=int, default=None, help="CPU threads used by torch (default: torch's choice)")
+    adv.add_argument("--track-photons", type=int, default=100, metavar="P", help="photons per stored event (0: all)")
+    adv.add_argument("--first-event-id", type=int, default=0, metavar="ID", help="event id of the first event")
+    adv.add_argument(
         "--photons-per-chunk",
         type=int,
         default=None,
         metavar="P",
         help="photons transported at once (memory control; default 2^21 on CPU, 2^23 on CUDA)",
     )
-    gen.add_argument("--threads", type=int, default=None, help="CPU threads used by torch (default: torch's choice)")
-    gen.add_argument(
+    adv.add_argument(
         "--progress", action=argparse.BooleanOptionalAction, default=True, help="show a progress indicator"
     )
     _add_logging_options(gen)

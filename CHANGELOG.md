@@ -33,12 +33,11 @@ First release (0.1.0): the toy detector "A Flash in the Dark" and its data.
   (`FLASH_CORE_DIR`, `FLASH_REFERENCE_FILE`).
 - Continuous integration (lint, type checks, pre-commit hooks; tests on Linux with Python 3.10 to 3.14 and on macOS and
   Windows with Python 3.12), Dependabot.
-- Documentation: the README (course roadmap, installation on a laptop with Linux, macOS or Windows or on a cluster, with
-  CPU or CUDA builds of PyTorch and with uv, quick start, presets and options), `docs/physics.md` (the model with its
-  equations, what every switch does, the network input) and `docs/data_format.md` (the HDF5 layout of format
-  version 1, provenance, merging).
+- Documentation: the README (course roadmap, installation, quick start, presets and options), `docs/install.md`
+  (Windows, PyTorch builds for CPU, GPU and Intel Macs, uv, clusters, common problems), `docs/physics.md` (the model
+  with its equations, what every switch does, the network input) and `docs/data_format.md` (the HDF5 layout of
+  format version 1, provenance, merging).
 - `TASKS.md`: the tasks of the first session, T0 to T4 and the bonus T5, with fixed question IDs.
-- `CONTRIBUTING.md`: issues, the fork and branch workflow, pre-commit, tests and style.
 - Examples: `examples/quickstart.py`; `examples/make_task_data.py` (the data of the tasks on any operating system);
   `examples/cluster/` with a shard script, a SLURM array job and an HTCondor submit file to adapt, the merge workflow
   and measured resources per job.

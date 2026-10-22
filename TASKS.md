@@ -5,7 +5,7 @@ process changes it, and how hard it is to go back from the detector response to 
 of the course, in which a neural network learns the posterior distribution of the event parameters from these data.
 
 - **Core tasks:** T0 to T4. **Bonus:** T5.
-- The question IDs (T0.1, T2.3, ...) are fixed: we go through the answers by ID in the next session.
+- The question IDs (T0.1, T2.3, ...) are fixed: we go through the answers by ID together.
 - Background: the model is in [docs/physics.md](docs/physics.md), the file layout in
   [docs/data_format.md](docs/data_format.md), and [notebooks/00_quickstart.ipynb](notebooks/00_quickstart.ipynb) is a
   guided first look at the data.
@@ -14,7 +14,7 @@ of the course, in which a neural network learns the posterior distribution of th
   PowerShell; the data of T1 to T4 can be made with `python examples/make_task_data.py` on any system, and loops can
   be written in Python with the API (see `examples/quickstart.py`).
 
-## What to bring to the next session
+## What to hand in
 
 1. **Figures** (PDF or PNG) with the question ID in the file name, e.g. `T2.2_light_collection.pdf`.
 2. **Short answers**: a few sentences per question ID, with the numbers you measured, in one Markdown file or notebook.
@@ -25,11 +25,11 @@ proposals, but every task welcomes more.
 
 **Figure checklist.** A figure should be readable on its own: axis labels with units, a legend that does not hide the
 data, and a title or caption that says what is shown (preset, number of events, energy range). Show statistical
-uncertainties where they matter (e.g. the error of the mean in each bin), use colours that colour-blind readers can
-tell apart, and use a log axis when values span several orders of magnitude.
+uncertainties where they matter (e.g. the error of the mean in each bin), and use a log axis when values span several
+orders of magnitude.
 
-**Where to work.** Keep your scripts on a branch of your fork (see [CONTRIBUTING.md](CONTRIBUTING.md)) or in a folder
-outside the repository. Data files are not committed: `data/` and `*.h5` are ignored by git.
+**Where to work.** Keep your scripts on your own branch of the repository (`git switch -c <your-name>`) or in a
+folder outside it. Data files are not committed: `data/` and `*.h5` are ignored by git.
 
 ## Notation
 
@@ -60,18 +60,15 @@ git clone https://github.com/ArseniiGav/prob-reco-sbi.git
 cd prob-reco-sbi
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install torch --index-url https://download.pytorch.org/whl/cpu   # or a CUDA build, see README.md
 python -m pip install -e ".[analysis,dev]"
 python -m pytest                 # ends with "... passed, ... deselected": the deselected ones are the slow tests
+python -m ipykernel install --user --name prob-reco-sbi --display-name "Python (prob-reco-sbi)"
 ```
 
-On Windows, use `python -m venv .venv` and `.venv\Scripts\activate.bat` (Command Prompt) or `.venv\Scripts\Activate.ps1`
-(PowerShell) instead of the third and fourth lines. On a Mac with an Intel processor, see "CPU or GPU" in
-[README.md](README.md#installation) for the PyTorch version.
-
-For notebooks, start JupyterLab from the activated environment with `python -m jupyter lab`; on JupyterHub or in
-VS Code, register the environment as a kernel first (see "Notebooks" in [README.md](README.md#installation)).
+The last command registers the environment as the Jupyter kernel of the notebooks. Start JupyterLab with
+`python -m jupyter lab` from the activated environment and open `notebooks/00_quickstart.ipynb`; if you are asked
+which kernel to use, pick "Python (prob-reco-sbi)". Windows, a smaller
+CPU-only PyTorch, Intel Macs and common problems: [docs/install.md](docs/install.md).
 
 **T0.2** Generate 10 000 events with the default physics and time it on your computer (and on an NVIDIA GPU, if you
 have one). How does the time scale with the number of events $N$ and with the preset?
@@ -81,8 +78,8 @@ flashsim generate -n 10000 --seed 1 --overwrite        # prints "done in ... s";
 flashsim generate -n 10000 --seed 1 --device cpu --threads 4 -o data/t0_cpu_threads4.h5 --overwrite
 flashsim generate -n 10000 --seed 1 --device cuda -o data/t0_gpu.h5 --overwrite   # only with an NVIDIA GPU
 
-for n in 1000 10000 100000; do
-  for p in straight absorb absorb-scatter full; do
+for n in 10000 100000; do
+  for p in straight full; do
     flashsim generate --preset "$p" -n "$n" --seed 3 -o "data/t0_${p}_n$n.h5" -q --overwrite
   done
 done
@@ -216,15 +213,15 @@ between sensors; photon-fate fractions; the direct / scattered / reflected compo
   relative times. Its definition is in [docs/physics.md](docs/physics.md#network-input).
 - The photon bookkeeping (`data.photons`) gives the fates and the direct / scattered / reflected counts per event.
 
-## T3 Switch the physics on step by step (5 to 6 hours; the parts marked optional can wait)
+## T3 Switch the physics on step by step (about 3 hours; the parts marked optional can wait)
 
 **Goal:** see what every optical process does to the data. Go up the ladder `straight` -> `absorb` ->
 `absorb-scatter` -> `full`, and also look at each process alone on top of `straight`.
 
-**T3.1** For every preset: the light collection against $r_0$, the charge of a sensor against its distance $d_j$, the
-photon arrival delays $t - t_0 - d_j/c_n$ (from the files with `--save-hits`), and the photon-fate fractions.
-Optional: split the delays by the history of the photon (direct, scattered, reflected; `data.hits.n_scatter` and
-`data.hits.n_reflect`).
+**T3.1** For every preset: the light collection against $r_0$ and the photon arrival delays $t - t_0 - d_j/c_n$ (from
+the files with `--save-hits`). Optional: the charge of a sensor against its distance $d_j$, the photon-fate
+fractions, and the delays split by the history of the photon (direct, scattered, reflected; `data.hits.n_scatter`
+and `data.hits.n_reflect`).
 
 **T3.2** Straight light: derive the expected charge of sensor $j$ for a vertex $(x_0, y_0)$ (think of the angle under
 which the sensor arc is seen from the vertex) and compare it with the simulation. Optional: then add absorption.
@@ -241,7 +238,7 @@ collection grow toward the wall in the full model?
 and the vertex from the charge barycentre, and show the bias and the resolution of both against $r_0$. What will a
 learned posterior need beyond $Q$ (the charge pattern, the timing)?
 
-**Deliverables:** for T3.1 the four quantities with all presets on shared axes; for T3.2 the expected and the
+**Deliverables:** for T3.1 the two quantities with all presets on shared axes; for T3.2 the expected and the
 simulated charges against the sensor index, with the residuals; for T3.4 the bias and the resolution against $r_0$.
 Answer T3.3 in a few sentences and refer to your figures.
 
@@ -319,15 +316,14 @@ flashsim generate --fixed-vertex 0.3 0.4 --fixed-energy 2 --photon-statistics fi
 **T5.2** Degeneracy: find two different pairs $(E, r_0)$ with the same mean $Q$. Can you tell them apart with the full
 charge pattern? With the times?
 
-**T5.3** Detector design: 8, 16, 32 and 64 sensors, at a fixed sensor width or at a fixed photocoverage. At the default
-width of 0.10 m at most 62 sensors fit on the wall (the generator rejects overlapping sensors), so 64 sensors exist
-only at a fixed photocoverage.
+**T5.3** Detector design: 8, 16, 32 and 48 sensors, at a fixed sensor width (the photocoverage grows with the number of
+sensors) or at a fixed photocoverage (the sensors get narrower).
 
 ```bash
-for m in 8 16 32; do                                   # fixed width 0.10 m
+for m in 8 16 48; do                                   # fixed width 0.10 m (32 is the default detector)
   flashsim generate --n-sensors "$m" -n 20000 --seed 12 -o "data/t5_width_m$m.h5"
 done
-for spec in 8:0.40 16:0.20 32:0.10 64:0.05; do          # fixed photocoverage: sensors times width constant
+for spec in 8:0.40 16:0.20 48:0.0667; do                # fixed photocoverage: sensors times width constant
   m=${spec%:*}; a=${spec#*:}
   flashsim generate --n-sensors "$m" --sensor-width "$a" -n 20000 --seed 12 -o "data/t5_coverage_m$m.h5"
 done

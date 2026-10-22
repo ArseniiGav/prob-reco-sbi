@@ -68,75 +68,24 @@ course. The model, with all equations, is in [docs/physics.md](docs/physics.md).
 
 ## Installation
 
-Python 3.10 or newer on Linux, macOS or Windows. A laptop is enough for the tasks: the simulation runs on any CPU and
-needs no GPU. Create a virtual environment and install PyTorch first, then the package:
+Python 3.10 or newer on Linux, macOS or Windows; a laptop is enough (CPU only, no GPU needed). The environment takes
+about 2 GB of disk.
 
 ```bash
 git clone https://github.com/ArseniiGav/prob-reco-sbi.git
 cd prob-reco-sbi
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install torch --index-url https://download.pytorch.org/whl/cpu   # CPU-only PyTorch
 python -m pip install -e ".[analysis,dev]"
-python -m pytest                                                               # fast tests (the "deselected" ones are the slow tests)
-```
-
-On Windows, create the environment with `python -m venv .venv` (or `py -m venv .venv`) and activate it with
-`.venv\Scripts\activate.bat` in the Command Prompt or `.venv\Scripts\Activate.ps1` in PowerShell; the other commands
-are the same.
-
-The extra `analysis` installs matplotlib, pandas, JupyterLab and the Jupyter kernel; `dev` installs the test and lint
-tools. The environment takes about 1.5 GB of disk with the CPU build of PyTorch, and the data of all task commands
-about 0.4 GB; on a cluster with a small home quota, put both on a work or scratch file system. In every new terminal
-or job, activate the environment again: `cd prob-reco-sbi && source .venv/bin/activate` (on Windows with the command
-above).
-
-**Notebooks.** Start JupyterLab from the activated environment with `python -m jupyter lab` (a bare `jupyter` may
-belong to another Python installation, whose kernel does not have the package). On JupyterHub, in VS Code or with
-any other Jupyter that was not installed into this environment, register the environment as a kernel once and choose
-it in the notebook:
-
-```bash
+python -m pytest                                 # fast tests (the "deselected" ones are the slow tests)
 python -m ipykernel install --user --name prob-reco-sbi --display-name "Python (prob-reco-sbi)"
 ```
 
-**CPU or GPU.** The simulation runs on any CPU and uses an NVIDIA GPU automatically when PyTorch sees one (`--device
-auto`, the default). Which PyTorch build you need depends on the machine:
+The last line registers the environment as the Jupyter kernel that the notebooks use. In every new terminal, activate
+the environment again (`source .venv/bin/activate`), and start JupyterLab from it with `python -m jupyter lab`.
 
-- CPU only (laptops, CPU nodes of a cluster): the CPU build above, a download of about 200 MB, for Linux, Windows and
-  Macs with Apple silicon (macOS 14 or newer).
-- Macs with an Intel processor: PyTorch 2.2.2 is the last release for them (Python 3.10 to 3.12), and it needs NumPy 1.
-  Install it with `python -m pip install "torch==2.2.2" --index-url https://download.pytorch.org/whl/cpu` and the
-  package with `python -m pip install -e ".[analysis,dev]" "numpy<2"`. The tests pass with these versions on Linux;
-  macOS on Intel itself is not tested.
-- NVIDIA GPU: run `nvidia-smi` on a GPU node. The `CUDA Version` in its header is the newest CUDA that the driver
-  supports. Install the build for that CUDA major version, for example the CUDA 12 build:
-
-  ```bash
-  python -m pip install torch --index-url https://download.pytorch.org/whl/cu126
-  ```
-
-  The `cu126` build also runs with older CUDA 12 drivers (we tested a driver that reports CUDA 12.2). For a driver that
-  reports CUDA 13.0 or newer, use `cu130`. The [PyTorch selector](https://pytorch.org/get-started/locally/) lists the
-  current builds. On Linux, a plain `pip install torch` from PyPI installs a CUDA 13 build together with the NVIDIA
-  libraries it needs.
-- Check what you got: `python -c "import torch; print(torch.__version__, torch.cuda.is_available())"`.
-
-On a cluster, load the cluster's Python module (if there is one) before you create the environment. Put the environment
-on a file system with enough space, because a CUDA build of PyTorch takes several GB.
-
-**With [uv](https://docs.astral.sh/uv/)** instead of pip:
-
-```bash
-uv venv
-source .venv/bin/activate
-uv pip install torch --index-url https://download.pytorch.org/whl/cpu
-uv pip install -e ".[analysis,dev]"
-```
-
-An environment made by `uv venv` has no pip of its own: use `uv pip install ...` for every later install (or create it
-with `uv venv --seed`), since `python -m pip` fails there and a bare `pip` would install into another environment.
+Windows commands, a smaller CPU-only PyTorch, GPU builds, Intel Macs, `uv`, clusters and common problems:
+[docs/install.md](docs/install.md).
 
 ## Quick start
 
@@ -213,44 +162,18 @@ stored as attributes of the file.
 
 Types, shapes, units and reading examples are in [docs/data_format.md](docs/data_format.md).
 
-## Reproducibility
-
-The same seed gives identical data (every stored array) on the same type of device and hardware, with the same chunking
-(`--photons-per-chunk`) and the same PyTorch build, whatever the number of threads. Between two such runs only the
-provenance differs: the creation time and the wall time, and the recorded thread count and command line where those
-differ. The event parameters, the photon numbers and the dark noise do not depend on the device or on
-the chunking. Every file records how it was made. Details, including the CPU warm-up that keeps the first simulation of
-a process identical to later ones, are in [docs/physics.md](docs/physics.md#random-numbers-and-reproducibility).
-
-## Running on a cluster (optional)
-
-A laptop is enough for the tasks. Large samples are generated on a cluster as shards, one job per shard with its own
-seed and its own range of event ids, and combined with `flashsim merge`. [examples/cluster](examples/cluster/README.md)
-describes the workflow and the resources a job needs, with a SLURM array job and an HTCondor submit file to adapt to
-your cluster.
-
 ## Tasks
 
-[TASKS.md](TASKS.md) holds the tasks for the next session: set-up (T0), the prior (T1), the detector response (T2), the
+[TASKS.md](TASKS.md) holds the tasks of this stage: set-up (T0), the prior (T1), the detector response (T2), the
 physics ladder (T3) and event displays (T4), plus a bonus on the way to inference (T5). The data of T1 to T4 can be
 made on any operating system with `python examples/make_task_data.py`.
 
 ## Development
 
-```bash
-python -m pip install -e ".[dev]"
-pre-commit install          # ruff (lint and format), standard checks and nbstripout before every commit
-pre-commit run --all-files  # the same checks on the whole repository
-python -m pytest            # fast unit and physics tests (under a minute on a CPU; the slow tests are deselected)
-python -m pytest -m slow    # slow tests: statistical regression and fresh-process reproducibility (tens of seconds)
-```
-
-Most slow tests compare with the original seminar implementation or with its reference numbers. Both are kept by the
-course team and are not part of this repository, so those tests are skipped unless `FLASH_CORE_DIR` points to the
-original code and `FLASH_REFERENCE_FILE` to the reference numbers. Continuous integration (GitHub Actions) runs ruff,
-mypy and the pre-commit hooks, and the fast and slow tests with the CPU build of PyTorch: on Linux with Python 3.10 to 3.14, and on macOS and Windows with
-Python 3.12. How to contribute:
-[CONTRIBUTING.md](CONTRIBUTING.md). Changes between versions: [CHANGELOG.md](CHANGELOG.md).
+`python -m pytest` runs the fast tests, `python -m pytest -m slow` the slow ones, and `pre-commit run --all-files` the
+lint and format checks (install the hooks once with `pre-commit install`). Continuous integration runs all of this on
+Linux (Python 3.10 to 3.14), macOS and Windows. Reproducibility of the simulations: [docs/physics.md](docs/physics.md#random-numbers-and-reproducibility);
+clusters: [examples/cluster](examples/cluster/README.md); changes between versions: [CHANGELOG.md](CHANGELOG.md).
 
 ## Citation
 

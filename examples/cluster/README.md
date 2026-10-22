@@ -15,7 +15,7 @@ from one cluster to the next. Ask your cluster's documentation or its administra
 
 ## Before the first job
 
-1. Install the package in a virtual environment on the cluster, as in the [README](../../README.md#installation): the
+1. Install the package in a virtual environment on the cluster, as in the [README](../../README.md#installation) and [docs/install.md](../../docs/install.md): the
    CPU build of PyTorch for CPU nodes, a CUDA build for GPU nodes. The jobs must be able to read the environment.
 2. Choose where the data go (`OUT_DIR`, default `data/shards`): a work or scratch file system with enough space, not
    your home directory, which usually has a small quota.
