@@ -12,6 +12,7 @@ authors:
     given-names: Arsenii
     affiliation: "Tsung-Dao Lee Institute, Shanghai Jiao Tong University"
 version: 0.1.0
+date-released: 2026-10-22
 license: MIT
 repository-code: "https://github.com/ArseniiGav/prob-reco-sbi"
 url: "https://github.com/ArseniiGav/prob-reco-sbi"

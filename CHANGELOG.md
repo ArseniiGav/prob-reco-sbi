@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-First release (0.1.0): the toy detector "A Flash in the Dark" and its data.
+## [0.1.0] - 2026-10-22
+
+First release: the toy detector "A Flash in the Dark" and its data.
 
 ### Added
 
@@ -43,4 +45,5 @@ First release (0.1.0): the toy detector "A Flash in the Dark" and its data.
   and measured resources per job.
 - `notebooks/00_quickstart.ipynb`: a guided first look at the data.
 
-[Unreleased]: https://github.com/ArseniiGav/prob-reco-sbi/commits/main
+[Unreleased]: https://github.com/ArseniiGav/prob-reco-sbi/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/ArseniiGav/prob-reco-sbi/releases/tag/v0.1.0
