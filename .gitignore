@@ -1,7 +1,8 @@
-# Reference solutions stay local until the next session of the course.
+# Reference solutions stay local until the next session of the course (one directory per course stage).
 solutions/
-# Cached data of the solutions: never committed, also once the solutions are public.
-solutions/data/
+# Cached data sets and run logs of every solutions stage: never committed, also once the solutions are public.
+solutions/*/data/
+solutions/*/logs/
 
 # Reference numbers of the original seminar implementation: kept by the course team, not distributed
 # (tests/test_regression.py skips the tests that need them).
