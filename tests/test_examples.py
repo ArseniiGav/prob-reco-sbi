@@ -42,11 +42,11 @@ def test_task_data_commands_are_valid_cli_commands():
     for command in script.task_commands():
         args = parser.parse_args(command)
         assert args.command == "generate"
-        assert str(script.output_of(command)).startswith("data/")
+        assert script.output_of(command).as_posix().startswith("data/")  # as_posix: "/" also on Windows
 
 
 def test_task_data_script_matches_the_tasks_sheet():
     script = load_script()
-    from_script = [str(script.output_of(c)) for c in script.task_commands()]
+    from_script = [script.output_of(c).as_posix() for c in script.task_commands()]
     assert sorted(from_script) == sorted(tasks_outputs(script.PRESETS, script.PROCESSES))
     assert len(set(from_script)) == len(from_script) == 14

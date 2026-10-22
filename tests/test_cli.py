@@ -73,7 +73,7 @@ def test_overrides_reach_the_stored_configuration(tmp_path, monkeypatch):
 
 
 def test_default_output_name():
-    assert str(default_output("full", preset("full"), 10000, 3)) == "data/flash_full_n10000_seed3.h5"
+    assert default_output("full", preset("full"), 10000, 3).as_posix() == "data/flash_full_n10000_seed3.h5"
 
 
 def test_invalid_values_give_an_error_message(tmp_path, capsys):
