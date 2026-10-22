@@ -10,8 +10,8 @@ reconstruct an event is to infer where it happened and how much energy it deposi
 Here the aim is the full posterior distribution of these parameters, not only a best estimate. The course starts with
 **A Flash in the Dark**, a photon-transport simulation of a toy two-dimensional scintillation detector with switchable
 optical processes. The later stages train neural posterior estimators on its data and then apply them to an open
-neutrino-telescope benchmark. This repository holds the simulation package `prob_reco_sbi.flash`, its documentation
-and the tasks for the students.
+neutrino-telescope benchmark. This repository holds the simulation package `prob_reco_sbi.flash`, the
+one-dimensional normalizing flows `prob_reco_sbi.flows1d`, their documentation and the tasks for the students.
 
 <p align="center">
   <img src="docs/img/flash_photons.gif" width="480" alt="Animation of the photons of one event spreading through the toy detector">
@@ -27,6 +27,7 @@ and the tasks for the students.
 | stage | content                                                                                                  | status               |
 |-------|----------------------------------------------------------------------------------------------------------|----------------------|
 | 1     | **A Flash in the Dark**: the toy detector, its data and the tasks about the data ([TASKS.md](TASKS.md))  | this release (0.1.0) |
+| 2a    | **Normalizing flows in one dimension**: the density model of NPE ([TASKS_flows.md](TASKS_flows.md))      | this branch          |
 | 2     | Neural posterior estimation (NPE) of the vertex and the energy from the simulated detector response     | next                 |
 | 3     | NPE on NuBench, an open benchmark for event reconstruction in neutrino telescopes ([arXiv:2511.13111](https://arxiv.org/abs/2511.13111)) | later |
 
@@ -167,6 +168,31 @@ Types, shapes, units and reading examples are in [docs/data_format.md](docs/data
 [TASKS.md](TASKS.md) holds the tasks of this stage: set-up (T0), the prior (T1), the detector response (T2), the
 physics ladder (T3) and event displays (T4), plus a bonus on the way to inference (T5). The data of T1 to T4 can be
 made on any operating system with `python examples/make_task_data.py`.
+
+## Stage 2a: normalizing flows in one dimension
+
+Neural posterior estimation describes the posterior with a normalizing flow. Stage 2a introduces flows where everything
+can be drawn and compared with the exact answer: one dimension. The subpackage `prob_reco_sbi.flows1d` (PyTorch,
+written from scratch, no new dependencies) has affine, planar, radial and rational-quadratic spline transforms, a
+Gaussian and a uniform base, maximum-likelihood training and the exact KL divergence to the target.
+
+- [docs/flows.md](docs/flows.md): the maths, from the change of variables to the transforms and the oracle map, with
+  reference figures and animations, and where a one-dimensional flow is used in a real experiment (the NFDE
+  likelihood model of [NeuroMCT](https://doi.org/10.1038/s42005-026-02499-6), Commun. Phys. 2026)
+- [notebooks/01_flows_1d.ipynb](notebooks/01_flows_1d.ipynb): a guided first look at the package
+- [examples/flows_quickstart.py](examples/flows_quickstart.py): one spline fit from the command line, checked against
+  the truth (about ten seconds on a CPU; writes `data/flows_quickstart.png`)
+- [TASKS_flows.md](TASKS_flows.md): the tasks F1 to F6 and the bonus B1 and B2
+
+```python
+from prob_reco_sbi.flows1d import Flow, RQSpline, camel, fit, kl_to_truth
+
+target = camel()  # the target of the tasks: a mixture of three Gaussians
+x = target.sample(20_000, seed=11)
+flow = Flow([RQSpline(bins=16)])  # a rational-quadratic spline on a standard normal base
+fit(flow, x, steps=2000, lr=1e-2)  # maximum likelihood (forward KL) with Adam
+print(kl_to_truth(flow, target))  # exact KL divergence to the target, in nats
+```
 
 ## Development
 

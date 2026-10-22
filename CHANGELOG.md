@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Stage 2a of the course, normalizing flows in one dimension (to be released as 0.2.0).
+
+### Added
+
+- `prob_reco_sbi.flows1d`: normalizing flows in one dimension, written from scratch in PyTorch (no new dependencies).
+  - Targets with an exact density, CDF, quantile function, sampling and entropy: `Mixture1D` (any Gaussian mixture,
+    in float64; the CDF is computed with `erfc`, accurate far in both tails) and the target of the tasks, the "camel
+    with a shoulder" `camel()`, with its parameters in `CAMEL`.
+  - The oracle map `oracle_map(target, base)`, the exact flow of a target (`z = Phi^-1(F(x))` for the Gaussian base,
+    `u = F(x)` for the uniform one) as a transform.
+  - Transforms with `forward(x) -> (z, log|dz/dx|)` and `inverse(z)`: `Affine`; `Planar` and `Radial` (Rezende and
+    Mohamed 2015) with the reparametrisation that keeps them invertible, and `constrained=False` to show what happens
+    without it; the monotone rational-quadratic spline `RQSpline` (Durkan et al. 2019; `3 K - 1` parameters, the
+    identity outside `[-B, B]`, exact inverse); `Sigmoid`, the last layer for the uniform base; `invert_monotone`
+    (bisection).
+  - `Flow`: a stack of transforms on a `StandardNormal` (default) or `Uniform` base, with `log_prob`, `sample`,
+    `inverse`, `transform_points` (the positions of samples after every layer) and `n_params`.
+  - `fit`: maximum-likelihood training (the forward KL divergence) with Adam, full batch or mini-batches. Its
+    `History` records the loss of every update and, at regular snapshots, the training and validation losses, the
+    parameters, the model density and the map on a grid (the frames of a training animation); `restore` loads a
+    snapshot back. `split` divides samples into a training and a validation part.
+  - Diagnostics: the exact `kl_to_truth` by quadrature, `qq_points`, and the one-sample Kolmogorov-Smirnov test
+    `ks_statistic`.
+- `tests/test_flows1d.py`: round trips and log-derivatives (against finite differences and autograd) of every
+  transform, monotonicity under the constraints, the mixture and the oracle map, the quadrature KL against closed
+  forms, a spline fit against the truth, flow samples against the flow density, the uniform base, the training history
+  and the diagnostics.
+- `docs/flows.md`: the maths of the stage: the change of variables, maximum likelihood as the forward KL divergence,
+  the transforms with their invertibility conditions, the Gaussian and the uniform base, the oracle map and the
+  diagnostics; reference figures and animations (`docs/img/flows/`), and a section on a one-dimensional flow in a
+  real experiment, the NFDE likelihood model of NeuroMCT (Commun. Phys. 9, 63 (2026)), with three of its figures
+  (`docs/img/neuromct/`).
+- `notebooks/01_flows_1d.ipynb`: a guided first look at flows in one dimension with the package.
+- `examples/flows_quickstart.py`: one spline fit from the command line, with the exact KL divergence to the target,
+  the Kolmogorov-Smirnov test of the mapped samples and a figure.
+- `TASKS_flows.md`: the tasks of stage 2a, F1 to F6 and the bonus B1 and B2, with fixed question IDs.
+
+### Changed
+
+- README: stage 2a in the course roadmap, and a short section with its documentation, notebook, tasks and a quick
+  start.
+
 ## [0.1.0] - 2026-10-22
 
 First release: the toy detector "A Flash in the Dark" and its data.
