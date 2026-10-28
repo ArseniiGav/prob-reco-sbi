@@ -166,7 +166,8 @@ Types, shapes, units and reading examples are in [docs/data_format.md](docs/data
 
 [TASKS.md](TASKS.md) holds the tasks of this stage: set-up (T0), the prior (T1), the detector response (T2), the
 physics ladder (T3) and event displays (T4), plus a bonus on the way to inference (T5). The data of T1 to T4 can be
-made on any operating system with `python examples/make_task_data.py`.
+made on any operating system with `python examples/make_task_data.py`. The reference solutions, one executed notebook
+per task, are in [solutions/stage1_flash/](solutions/stage1_flash/README.md).
 
 ## Development
 

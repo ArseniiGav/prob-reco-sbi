@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `solutions/stage1_flash/`: the reference solutions of stage 1, one executed notebook per task (T0 to T5) with the
+  scripts that make its figures and numbers, the answers by question ID (`ANSWERS.md`) and the numbers in
+  `results/*.json`.
+
 ## [0.1.0] - 2026-10-22
 
 First release: the toy detector "A Flash in the Dark" and its data.
