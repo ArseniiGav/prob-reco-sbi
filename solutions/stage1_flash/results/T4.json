@@ -1,0 +1,436 @@
+{
+ "T4.1": {
+  "gallery": {
+   "centre": {
+    "Q_pe": 497,
+    "barycentre_m": [
+     0.0028283318236111575,
+     0.01998864085429356
+    ],
+    "barycentre_offset_cm": 2.0187749357132043,
+    "barycentre_r_m": 0.020187749357132044,
+    "max_sensor": 8,
+    "max_sensor_charge_pe": 22,
+    "max_sensor_fraction_of_Q": 0.04426559356136821,
+    "n_empty_sensors": 0,
+    "n_hit_sensors": 32,
+    "photons": {
+     "absorbed_bulk": 1223,
+     "absorbed_wall": 256,
+     "collected_fraction": 0.2515182186234818,
+     "detected": 497,
+     "detected_direct": 297,
+     "detected_reflected": 48,
+     "detected_scattered": 152,
+     "emitted": 1976,
+     "lost": 0
+    },
+    "t0_ns": 3.0,
+    "theta": {
+     "energy_MeV": 2.0,
+     "r_m": 0.0,
+     "x0_m": 0.0,
+     "y0_m": 0.0
+    }
+   },
+   "low energy": {
+    "Q_pe": 178,
+    "barycentre_m": [
+     -0.12696925864676387,
+     -0.5155072428541235
+    ],
+    "barycentre_offset_cm": 7.9833600777199,
+    "barycentre_r_m": 0.5309132792428243,
+    "max_sensor": 21,
+    "max_sensor_charge_pe": 23,
+    "max_sensor_fraction_of_Q": 0.12921348314606743,
+    "n_empty_sensors": 2,
+    "n_hit_sensors": 30,
+    "photons": {
+     "absorbed_bulk": 267,
+     "absorbed_wall": 76,
+     "collected_fraction": 0.3416506717850288,
+     "detected": 178,
+     "detected_direct": 120,
+     "detected_reflected": 20,
+     "detected_scattered": 38,
+     "emitted": 521,
+     "lost": 0
+    },
+    "t0_ns": 3.0,
+    "theta": {
+     "energy_MeV": 0.5,
+     "r_m": 0.599999993597891,
+     "x0_m": -0.18439972400665283,
+     "y0_m": -0.5709612369537354
+    }
+   },
+   "mid-radius": {
+    "Q_pe": 607,
+    "barycentre_m": [
+     -0.27144911250381454,
+     0.25938383374055274
+    ],
+    "barycentre_offset_cm": 12.493604678086596,
+    "barycentre_r_m": 0.3754525188157023,
+    "max_sensor": 12,
+    "max_sensor_charge_pe": 54,
+    "max_sensor_fraction_of_Q": 0.08896210873146623,
+    "n_empty_sensors": 0,
+    "n_hit_sensors": 32,
+    "photons": {
+     "absorbed_bulk": 1131,
+     "absorbed_wall": 254,
+     "collected_fraction": 0.30471887550200805,
+     "detected": 607,
+     "detected_direct": 389,
+     "detected_reflected": 58,
+     "detected_scattered": 160,
+     "emitted": 1992,
+     "lost": 0
+    },
+    "t0_ns": 3.0,
+    "theta": {
+     "energy_MeV": 2.0,
+     "r_m": 0.4999999914428645,
+     "x0_m": -0.3535533845424652,
+     "y0_m": 0.3535533845424652
+    }
+   },
+   "near the wall, facing sensor 4": {
+    "Q_pe": 827,
+    "barycentre_m": [
+     0.5330371330926538,
+     0.519483051631002
+    ],
+    "barycentre_offset_cm": 17.601700287534623,
+    "barycentre_r_m": 0.7443058687041865,
+    "max_sensor": 4,
+    "max_sensor_charge_pe": 339,
+    "max_sensor_fraction_of_Q": 0.40991535671100365,
+    "n_empty_sensors": 0,
+    "n_hit_sensors": 32,
+    "photons": {
+     "absorbed_bulk": 841,
+     "absorbed_wall": 307,
+     "collected_fraction": 0.41873417721518985,
+     "detected": 827,
+     "detected_direct": 635,
+     "detected_reflected": 69,
+     "detected_scattered": 123,
+     "emitted": 1975,
+     "lost": 0
+    },
+    "t0_ns": 3.0,
+    "theta": {
+     "energy_MeV": 2.0,
+     "r_m": 0.9200000382028367,
+     "x0_m": 0.6505382657051086,
+     "y0_m": 0.6505382657051086
+    }
+   }
+  },
+  "main_event": {
+   "Q_pe": 557,
+   "barycentre_m": [
+    0.38264032263341813,
+    0.19263166718289965
+   ],
+   "barycentre_offset_cm": 8.847852925520339,
+   "barycentre_r_m": 0.4283930154737233,
+   "max_sensor": 3,
+   "max_sensor_charge_pe": 50,
+   "max_sensor_fraction_of_Q": 0.08976660682226212,
+   "n_empty_sensors": 0,
+   "n_hit_sensors": 32,
+   "photons": {
+    "absorbed_bulk": 1226,
+    "absorbed_wall": 300,
+    "collected_fraction": 0.2674027844455113,
+    "detected": 557,
+    "detected_direct": 357,
+    "detected_reflected": 55,
+    "detected_scattered": 145,
+    "emitted": 2083,
+    "lost": 0
+   },
+   "t0_ns": 3.0,
+   "theta": {
+    "energy_MeV": 2.0,
+    "r_m": 0.5147814966285833,
+    "x0_m": 0.44999998807907104,
+    "y0_m": 0.25
+   }
+  }
+ },
+ "T4.2": {
+  "corr_rel_first_vs_distance": 0.9630137824320975,
+  "corr_rel_mean_vs_distance": 0.9386784082985113,
+  "event": {
+   "Q_pe": 557,
+   "barycentre_m": [
+    0.38264032263341813,
+    0.19263166718289965
+   ],
+   "barycentre_offset_cm": 8.847852925520339,
+   "barycentre_r_m": 0.4283930154737233,
+   "max_sensor": 3,
+   "max_sensor_charge_pe": 50,
+   "max_sensor_fraction_of_Q": 0.08976660682226212,
+   "n_empty_sensors": 0,
+   "n_hit_sensors": 32,
+   "photons": {
+    "absorbed_bulk": 1226,
+    "absorbed_wall": 300,
+    "collected_fraction": 0.2674027844455113,
+    "detected": 557,
+    "detected_direct": 357,
+    "detected_reflected": 55,
+    "detected_scattered": 145,
+    "emitted": 2083,
+    "lost": 0
+   },
+   "t0_ns": 3.0,
+   "theta": {
+    "energy_MeV": 2.0,
+    "r_m": 0.5147814966285833,
+    "x0_m": 0.44999998807907104,
+    "y0_m": 0.25
+   }
+  },
+  "farthest_sensor": {
+   "charge": 8,
+   "d_m": 1.5136405675001223,
+   "j": 19,
+   "rel_first_ns": 0.2587666134859976,
+   "rel_mean_ns": 2.9444937329317984
+  },
+  "first_minus_straight_ns": {
+   "max": -0.10163795031871814,
+   "median": -1.6024187137309815,
+   "min": -2.9503414666194683
+  },
+  "nearest_sensor": {
+   "charge": 50,
+   "d_m": 0.4887660303436688,
+   "j": 3,
+   "rel_first_ns": -5.023905314919764,
+   "rel_mean_ns": -2.2819133181546274
+  },
+  "relative_mean_time_range_ns": [
+   -2.2819133181546274,
+   6.3755383114840445
+  ],
+  "tau_bar_ns": 8.20587877225619
+ },
+ "T4.3": {
+  "drawn_detected_fraction": 0.26,
+  "drawn_photons": {
+   "ABSORB_BULK": 90,
+   "ABSORB_WALL": 21,
+   "DETECT": 39,
+   "all": 150
+  },
+  "event": {
+   "Q_pe": 596,
+   "barycentre_m": [
+    -0.2867688726489424,
+    0.2943005153217767
+   ],
+   "barycentre_offset_cm": 5.72494102665239,
+   "barycentre_r_m": 0.410912618008998,
+   "max_sensor": 12,
+   "max_sensor_charge_pe": 50,
+   "max_sensor_fraction_of_Q": 0.08389261744966443,
+   "n_empty_sensors": 0,
+   "n_hit_sensors": 32,
+   "photons": {
+    "absorbed_bulk": 1140,
+    "absorbed_wall": 267,
+    "collected_fraction": 0.29755366949575635,
+    "detected": 596,
+    "detected_direct": 375,
+    "detected_reflected": 61,
+    "detected_scattered": 160,
+    "emitted": 2003,
+    "lost": 0
+   },
+   "t0_ns": 9.053817749023438,
+   "theta": {
+    "energy_MeV": 2.0,
+    "r_m": 0.46097722609716024,
+    "x0_m": -0.30000001192092896,
+    "y0_m": 0.3499999940395355
+   }
+  },
+  "event_fate_fractions": {
+   "absorbed_bulk": 0.5691462805791313,
+   "absorbed_wall": 0.13330004992511232,
+   "detected": 0.29755366949575635
+  },
+  "mean_path_length_drawn_m": 0.8580073118209839,
+  "median_path_length_drawn_m": 0.6870143413543701,
+  "reflect_points_drawn": 16,
+  "scatter_points_drawn": 67
+ },
+ "T4.4": {
+  "absorb": {
+   "barycentre_r_mean_m": 0.5386597955405437,
+   "barycentre_r_sd_m": 0.024613987231323783,
+   "collected_fraction": 0.2986450922555526,
+   "composition_detected": {
+    "direct": 1.0,
+    "reflected": 0.0,
+    "scattered": 0.0
+   },
+   "fate_fractions": {
+    "absorbed_bulk": 0.4141100667893258,
+    "absorbed_wall": 0.2872448409551216,
+    "lost": 0.0
+   },
+   "max_over_min_mean_charge": 12.175258564964448,
+   "mean_Q_pe": 597.408,
+   "mean_charge_nearest_farthest_pe": [
+    75.3405,
+    6.188
+   ],
+   "mean_empty_sensors": 0.015,
+   "rel_mean_time_range_ns": [
+    -1.9847233815701657,
+    4.6676985025770215
+   ],
+   "sd_Q_pe": 24.585173405442717,
+   "single_event_Q_pe": 584,
+   "true_r_m": 0.6708203932499369
+  },
+  "absorb-scatter": {
+   "barycentre_r_mean_m": 0.6006871678165662,
+   "barycentre_r_sd_m": 0.02413331065781402,
+   "collected_fraction": 0.2837937716785364,
+   "composition_detected": {
+    "direct": 0.7458408894142059,
+    "reflected": 0.0,
+    "scattered": 0.25415911058579405
+   },
+   "fate_fractions": {
+    "absorbed_bulk": 0.44250646559966045,
+    "absorbed_wall": 0.27369976272180313,
+    "lost": 0.0
+   },
+   "max_over_min_mean_charge": 16.766506340183646,
+   "mean_Q_pe": 567.6995,
+   "mean_charge_nearest_farthest_pe": [
+    76.69,
+    4.574
+   ],
+   "mean_empty_sensors": 0.0755,
+   "rel_mean_time_range_ns": [
+    -1.9166898225193973,
+    4.994118538273937
+   ],
+   "sd_Q_pe": 24.047584970667238,
+   "single_event_Q_pe": 561,
+   "true_r_m": 0.6708203932499369
+  },
+  "full": {
+   "barycentre_r_mean_m": 0.556368336681526,
+   "barycentre_r_sd_m": 0.024059268322271607,
+   "collected_fraction": 0.31373911495957424,
+   "composition_detected": {
+    "direct": 0.6744306104824395,
+    "reflected": 0.09577566674421051,
+    "scattered": 0.22979372277335
+   },
+   "fate_fractions": {
+    "absorbed_bulk": 0.5346460410683993,
+    "absorbed_wall": 0.15161484397202651,
+    "lost": 0.0
+   },
+   "max_over_min_mean_charge": 13.393712070128117,
+   "mean_Q_pe": 627.602,
+   "mean_charge_nearest_farthest_pe": [
+    79.4515,
+    5.932
+   ],
+   "mean_empty_sensors": 0.016,
+   "rel_mean_time_range_ns": [
+    -2.3695077864349035,
+    5.47749678989495
+   ],
+   "sd_Q_pe": 25.10806251787861,
+   "single_event_Q_pe": 636,
+   "true_r_m": 0.6708203932499369
+  },
+  "straight": {
+   "barycentre_r_mean_m": 0.3359910943683966,
+   "barycentre_r_sd_m": 0.022112005706988562,
+   "collected_fraction": 0.5096304753887295,
+   "composition_detected": {
+    "direct": 1.0,
+    "reflected": 0.0,
+    "scattered": 0.0
+   },
+   "fate_fractions": {
+    "absorbed_bulk": 0.0,
+    "absorbed_wall": 0.4903695246112704,
+    "lost": 0.0
+   },
+   "max_over_min_mean_charge": 4.940283960698575,
+   "mean_Q_pe": 1019.462,
+   "mean_charge_nearest_farthest_pe": [
+    93.774,
+    18.9815
+   ],
+   "mean_empty_sensors": 0.0,
+   "rel_mean_time_range_ns": [
+    -2.705616972585914,
+    3.9696277145540684
+   ],
+   "sd_Q_pe": 33.25222415426678,
+   "single_event_Q_pe": 995,
+   "true_r_m": 0.6708203932499369
+  }
+ },
+ "T4.4_straight_light_harmonics": {
+  "deviation_at_preset_event_r0": -5.792539557496579e-07,
+  "deviation_r0_0.9_facing_gap": -0.010931769370207534,
+  "deviation_r0_0.9_facing_sensor": 0.010909861949307752
+ },
+ "T4.5": {
+  "Q_pe": 74,
+  "absorbed": 206,
+  "detected": 74,
+  "duration_s": 8.12,
+  "event": {
+   "energy": 0.3,
+   "t0": 0.0,
+   "x": 0.25,
+   "y": 0.15
+  },
+  "file_MB": 1.032206,
+  "final_frame": {
+   "absorbed": 206,
+   "detected": 74,
+   "in_flight": 0
+  },
+  "frames": 163,
+  "max_sensor_photons": 5,
+  "median_detection_time_ns": 5.685587525367737,
+  "median_end_time_ns": 4.113569557666779,
+  "palette_colors": 128,
+  "photons": 280,
+  "pillowwriter_comparison": {
+   "file_MB": 8.937245,
+   "frames": 203
+  },
+  "seed": 451,
+  "size_px": [
+   792,
+   894
+  ],
+  "t_end_ns": 19.439999999999998,
+  "t_first_detection_ns": 3.5427898168563843,
+  "t_last_photon_ns": 19.40725088119507,
+  "writer": "palette"
+ }
+}

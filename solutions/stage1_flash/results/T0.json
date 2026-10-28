@@ -1,0 +1,987 @@
+{
+ "T0.1": {
+  "cuda_available": false,
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+  "pytest_command": "python -m pytest -q (from the repository root; fast suite, -m 'not slow' is the default)",
+  "pytest_counts": {
+   "deselected": 10,
+   "passed": 165
+  },
+  "pytest_exit_code": 0,
+  "pytest_from_analysis_extra": false,
+  "pytest_reported_seconds": 23.23,
+  "pytest_summary": "\u001b[32m\u001b[32m\u001b[1m165 passed\u001b[0m, \u001b[33m10 deselected\u001b[0m\u001b[32m in 23.23s\u001b[0m\u001b[0m",
+  "pytest_wall_seconds": 25.5,
+  "torch_threads": 16,
+  "versions": {
+   "h5py": "3.16.0",
+   "matplotlib": "3.11.2",
+   "numpy": "2.4.6",
+   "prob_reco_sbi": "0.1.0",
+   "python": "3.11.5",
+   "torch": "2.14.1+cpu"
+  }
+ },
+ "T0.2": {
+  "cli_10k_full": {
+   "command": "flashsim generate -n 10000 --seed 1 --threads 16 -o solutions/stage1_flash/data/t0_cli_full_n10000_seed1.h5 --overwrite",
+   "file": "t0_cli_full_n10000_seed1.h5",
+   "file_size_MB": 2.64,
+   "import_median_s": 1.31,
+   "simulation_median_s": 1.87,
+   "wall_median_s": 3.29,
+   "wall_s": [
+    3.29,
+    3.33,
+    3.29
+   ]
+  },
+  "created": "2026-10-22T03:17:31+00:00",
+  "device": "cpu",
+  "full_10k_from_fit_s": 1.82,
+  "load_average_1min_before_after": [
+   1.53,
+   12.84
+  ],
+  "n_events": [
+   1000,
+   2000,
+   5000,
+   10000,
+   20000,
+   50000
+  ],
+  "ns_per_transport_step_by_preset": {
+   "absorb": 39.3,
+   "absorb-scatter": 41.9,
+   "full": 42.7,
+   "straight": 38.0
+  },
+  "ns_per_transport_step_fit": 41.2,
+  "presets": {
+   "absorb": {
+    "events_per_s_at_50k": 9263,
+    "fit_events_per_s": 9264,
+    "fit_fixed_s": 0.0042,
+    "loglog_slope_N_ge_5000": 0.996,
+    "max_s": [
+     0.1142,
+     0.224,
+     0.543,
+     1.1281,
+     2.185,
+     5.4195
+    ],
+    "mean_photons_per_event": 2746.1,
+    "median_s": [
+     0.1128,
+     0.2179,
+     0.5402,
+     1.1041,
+     2.1519,
+     5.3978
+    ],
+    "min_s": [
+     0.1089,
+     0.2138,
+     0.5362,
+     1.0897,
+     2.1485,
+     5.3967
+    ],
+    "ns_per_photon_at_50k": 39.31,
+    "photons_per_s_at_50k": 25400000.0,
+    "time_10k_s": 1.104,
+    "transport": {
+     "photons": 838968,
+     "reflections": 0.0,
+     "scatterings": 0.0,
+     "steps": 1.0
+    }
+   },
+   "absorb-scatter": {
+    "events_per_s_at_50k": 6636,
+    "fit_events_per_s": 6608,
+    "fit_fixed_s": 0.0069,
+    "loglog_slope_N_ge_5000": 0.993,
+    "max_s": [
+     0.1629,
+     0.3116,
+     0.7725,
+     1.5558,
+     3.0605,
+     7.5461
+    ],
+    "mean_photons_per_event": 2746.1,
+    "median_s": [
+     0.16,
+     0.3027,
+     0.7626,
+     1.548,
+     3.0401,
+     7.5348
+    ],
+    "min_s": [
+     0.1584,
+     0.3017,
+     0.7575,
+     1.5404,
+     3.0304,
+     7.5018
+    ],
+    "ns_per_photon_at_50k": 54.88,
+    "photons_per_s_at_50k": 18200000.0,
+    "time_10k_s": 1.548,
+    "transport": {
+     "photons": 838968,
+     "reflections": 0.0,
+     "scatterings": 0.31011313899934206,
+     "steps": 1.3101131389993421
+    }
+   },
+   "full": {
+    "events_per_s_at_50k": 5518,
+    "fit_events_per_s": 5522,
+    "fit_fixed_s": 0.0131,
+    "loglog_slope_N_ge_5000": 0.994,
+    "max_s": [
+     0.1978,
+     0.3791,
+     0.9183,
+     1.8795,
+     3.6508,
+     9.1046
+    ],
+    "mean_photons_per_event": 2746.1,
+    "median_s": [
+     0.1961,
+     0.3682,
+     0.9139,
+     1.8549,
+     3.6327,
+     9.0613
+    ],
+    "min_s": [
+     0.1942,
+     0.365,
+     0.9007,
+     1.8514,
+     3.6204,
+     9.0137
+    ],
+    "ns_per_photon_at_50k": 65.99,
+    "photons_per_s_at_50k": 15200000.0,
+    "time_10k_s": 1.855,
+    "transport": {
+     "photons": 838968,
+     "reflections": 0.16225887042175624,
+     "scatterings": 0.38329471445871593,
+     "steps": 1.5455535848804722
+    }
+   },
+   "straight": {
+    "events_per_s_at_50k": 9570,
+    "fit_events_per_s": 9570,
+    "fit_fixed_s": 0.0038,
+    "loglog_slope_N_ge_5000": 0.998,
+    "max_s": [
+     0.11,
+     0.2136,
+     0.5306,
+     1.091,
+     2.1173,
+     5.231
+    ],
+    "mean_photons_per_event": 2746.1,
+    "median_s": [
+     0.1084,
+     0.2129,
+     0.5207,
+     1.0657,
+     2.0829,
+     5.2247
+    ],
+    "min_s": [
+     0.1051,
+     0.2074,
+     0.5093,
+     1.0504,
+     2.0617,
+     5.2049
+    ],
+    "ns_per_photon_at_50k": 38.05,
+    "photons_per_s_at_50k": 26300000.0,
+    "time_10k_s": 1.066,
+    "transport": {
+     "photons": 838968,
+     "reflections": 0.0,
+     "scatterings": 0.0,
+     "steps": 1.0
+    }
+   }
+  },
+  "relative_time_per_photon_vs_straight": {
+   "absorb": 1.03,
+   "absorb-scatter": 1.44,
+   "full": 1.73,
+   "straight": 1.0
+  },
+  "repeats": 3,
+  "torch_threads": 16,
+  "torch_version": "2.14.1+cpu"
+ },
+ "T0.2_derived": {
+  "cpu_median_time_50k_s": {
+   "absorb": 5.3978,
+   "absorb-scatter": 7.5348,
+   "full": 9.0613,
+   "straight": 5.2247
+  },
+  "gpu_over_cpu_rate_50k": {
+   "absorb": 7.4,
+   "absorb-scatter": 4.39,
+   "full": 4.19,
+   "straight": 6.7
+  },
+  "gpu_time_per_event_relative_to_straight_50k": {
+   "absorb": 0.94,
+   "absorb-scatter": 2.2,
+   "full": 2.78,
+   "straight": 1.0
+  }
+ },
+ "T0.2_gpu": {
+  "device": "NVIDIA A30",
+  "note": "single timing per point; the GPU was shared with another job",
+  "presets": {
+   "absorb": {
+    "1000": {
+     "events_per_s": 60380,
+     "photons": 2744234,
+     "s": 0.017
+    },
+    "10000": {
+     "events_per_s": 63362,
+     "photons": 27523743,
+     "s": 0.158
+    },
+    "50000": {
+     "events_per_s": 68549,
+     "photons": 137556526,
+     "s": 0.729
+    }
+   },
+   "absorb-scatter": {
+    "1000": {
+     "events_per_s": 15604,
+     "photons": 2744234,
+     "s": 0.064
+    },
+    "10000": {
+     "events_per_s": 26088,
+     "photons": 27523743,
+     "s": 0.383
+    },
+    "50000": {
+     "events_per_s": 29115,
+     "photons": 137556526,
+     "s": 1.717
+    }
+   },
+   "full": {
+    "1000": {
+     "events_per_s": 9998,
+     "photons": 2744234,
+     "s": 0.1
+    },
+    "10000": {
+     "events_per_s": 19924,
+     "photons": 27523743,
+     "s": 0.502
+    },
+    "100000": {
+     "events_per_s": 22850,
+     "photons": 275103773,
+     "s": 4.376
+    },
+    "50000": {
+     "events_per_s": 23105,
+     "photons": 137556526,
+     "s": 2.164
+    }
+   },
+   "straight": {
+    "1000": {
+     "events_per_s": 36252,
+     "photons": 2744234,
+     "s": 0.028
+    },
+    "10000": {
+     "events_per_s": 57517,
+     "photons": 27523743,
+     "s": 0.174
+    },
+    "50000": {
+     "events_per_s": 64146,
+     "photons": 137556526,
+     "s": 0.779
+    }
+   }
+  },
+  "torch_version": "2.4.0+cu121",
+  "total_gpu_seconds": 11.2
+ },
+ "T0.2_history": [
+  {
+   "cli_10k_full_wall_median_s": 4.87,
+   "created": null,
+   "fit_events_per_s": {
+    "absorb": 8333,
+    "absorb-scatter": 5903,
+    "full": 4743,
+    "straight": 8597
+   },
+   "load_average_1min_before_after": [
+    10.1,
+    29.47
+   ],
+   "ns_per_photon_at_50k": {
+    "absorb": 45.19,
+    "absorb-scatter": 62.82,
+    "full": 74.99,
+    "straight": 42.61
+   }
+  },
+  {
+   "cli_10k_full_wall_median_s": 3.84,
+   "created": "2026-10-21T11:46:28+00:00",
+   "fit_events_per_s": {
+    "absorb": 6801,
+    "absorb-scatter": 4898,
+    "full": 4122,
+    "straight": 7706
+   },
+   "load_average_1min_before_after": [
+    3.38,
+    22.52
+   ],
+   "ns_per_photon_at_50k": {
+    "absorb": 53.14,
+    "absorb-scatter": 74.69,
+    "full": 88.59,
+    "straight": 47.51
+   }
+  },
+  {
+   "cli_10k_full_wall_median_s": 3.84,
+   "created": "2026-10-21T11:56:14+00:00",
+   "fit_events_per_s": {
+    "absorb": 8944,
+    "absorb-scatter": 6506,
+    "full": 5331,
+    "straight": 9268
+   },
+   "load_average_1min_before_after": [
+    3.72,
+    15.59
+   ],
+   "ns_per_photon_at_50k": {
+    "absorb": 39.99,
+    "absorb-scatter": 56.5,
+    "full": 68.81,
+    "straight": 40.08
+   }
+  },
+  {
+   "cli_10k_full_wall_median_s": 3.36,
+   "created": "2026-10-21T13:45:01+00:00",
+   "fit_events_per_s": {
+    "absorb": 8801,
+    "absorb-scatter": 6333,
+    "full": 5294,
+    "straight": 9172
+   },
+   "load_average_1min_before_after": [
+    8.59,
+    13.32
+   ],
+   "ns_per_photon_at_50k": {
+    "absorb": 41.36,
+    "absorb-scatter": 57.71,
+    "full": 68.11,
+    "straight": 39.85
+   }
+  },
+  {
+   "cli_10k_full_wall_median_s": 3.3,
+   "created": "2026-10-21T13:49:21+00:00",
+   "fit_events_per_s": {
+    "absorb": 9233,
+    "absorb-scatter": 6618,
+    "full": 5491,
+    "straight": 9639
+   },
+   "load_average_1min_before_after": [
+    9.91,
+    14.39
+   ],
+   "ns_per_photon_at_50k": {
+    "absorb": 39.62,
+    "absorb-scatter": 55.44,
+    "full": 66.21,
+    "straight": 38.36
+   }
+  },
+  {
+   "cli_10k_full_wall_median_s": 3.32,
+   "created": "2026-10-22T02:45:56+00:00",
+   "fit_events_per_s": {
+    "absorb": 9173,
+    "absorb-scatter": 6580,
+    "full": 5428,
+    "straight": 9574
+   },
+   "load_average_1min_before_after": [
+    0.46,
+    10.96
+   ],
+   "ns_per_photon_at_50k": {
+    "absorb": 39.74,
+    "absorb-scatter": 55.87,
+    "full": 67.17,
+    "straight": 38.5
+   }
+  },
+  {
+   "cli_10k_full_wall_median_s": 3.34,
+   "created": "2026-10-22T02:52:06+00:00",
+   "fit_events_per_s": {
+    "absorb": 9161,
+    "absorb-scatter": 6577,
+    "full": 5497,
+    "straight": 9492
+   },
+   "load_average_1min_before_after": [
+    2.61,
+    13.93
+   ],
+   "ns_per_photon_at_50k": {
+    "absorb": 39.8,
+    "absorb-scatter": 55.45,
+    "full": 66.31,
+    "straight": 38.29
+   }
+  },
+  {
+   "cli_10k_full_wall_median_s": 3.33,
+   "created": "2026-10-22T03:08:49+00:00",
+   "fit_events_per_s": {
+    "absorb": 9229,
+    "absorb-scatter": 6599,
+    "full": 5533,
+    "straight": 9616
+   },
+   "load_average_1min_before_after": [
+    0.43,
+    11.2
+   ],
+   "ns_per_photon_at_50k": {
+    "absorb": 39.6,
+    "absorb-scatter": 55.44,
+    "full": 65.9,
+    "straight": 38.12
+   }
+  },
+  {
+   "cli_10k_full_wall_median_s": 3.29,
+   "created": "2026-10-22T03:17:31+00:00",
+   "fit_events_per_s": {
+    "absorb": 9264,
+    "absorb-scatter": 6608,
+    "full": 5522,
+    "straight": 9570
+   },
+   "load_average_1min_before_after": [
+    1.53,
+    12.84
+   ],
+   "ns_per_photon_at_50k": {
+    "absorb": 39.31,
+    "absorb-scatter": 54.88,
+    "full": 65.99,
+    "straight": 38.05
+   }
+  }
+ ],
+ "T0.2_history_rate_range": {
+  "absorb": [
+   6801,
+   9264
+  ],
+  "absorb-scatter": [
+   4898,
+   6618
+  ],
+  "full": [
+   4122,
+   5533
+  ],
+  "straight": [
+   7706,
+   9639
+  ]
+ },
+ "T0.2_threads": {
+  "best_events_per_s": {
+   "1": 1107,
+   "16": 5333,
+   "2": 1870,
+   "4": 2999,
+   "8": 4269
+  },
+  "created": "2026-10-22T03:18:35+00:00",
+  "events_per_s": {
+   "1": [
+    1107,
+    1104
+   ],
+   "16": [
+    5333,
+    5254
+   ],
+   "2": [
+    1870,
+    1848
+   ],
+   "4": [
+    2999,
+    2979
+   ],
+   "8": [
+    4269,
+    4242
+   ]
+  },
+  "load_average_1min_before_after": [
+   10.41,
+   6.28
+  ],
+  "n_events": 10000,
+  "preset": "full",
+  "repeats": 2,
+  "speed_up_vs_1_thread": {
+   "1": 1.0,
+   "16": 4.82,
+   "2": 1.69,
+   "4": 2.71,
+   "8": 3.86
+  }
+ },
+ "T0.3": {
+  "config": {
+   "geometry": {
+    "n_sensors": 32,
+    "radius": 1.0,
+    "sensor_width": 0.1
+   },
+   "optics": {
+    "absorption": true,
+    "absorption_length": 1.5,
+    "light_yield": 1000.0,
+    "max_steps": 80,
+    "photon_statistics": "poisson",
+    "reflection": true,
+    "reflection_model": "diffuse",
+    "reflectivity": 0.5,
+    "scattering": true,
+    "scattering_length": 2.0,
+    "speed_of_light": 0.2
+   },
+   "prior": {
+    "energy_max": 5.0,
+    "energy_min": 0.5,
+    "fixed_energy": null,
+    "fixed_vertex": null,
+    "r_max": 1.0,
+    "t0_max": 10.0,
+    "t0_min": 0.0
+   },
+   "readout": {
+    "dark_rate": 0.0,
+    "detection_efficiency": 1.0,
+    "readout_window": 100.0,
+    "time_jitter": 1.0
+   }
+  },
+  "config_equals_full_preset": true,
+  "config_round_trip_from_json": true,
+  "datasets": {
+   "/detector/sensor_phi": {
+    "dtype": "float64",
+    "shape": [
+     32
+    ],
+    "units": "rad"
+   },
+   "/detector/sensor_x": {
+    "dtype": "float64",
+    "shape": [
+     32
+    ],
+    "units": "m"
+   },
+   "/detector/sensor_y": {
+    "dtype": "float64",
+    "shape": [
+     32
+    ],
+    "units": "m"
+   },
+   "/photons/n_absorbed_bulk": {
+    "dtype": "int32",
+    "shape": [
+     10000
+    ],
+    "units": ""
+   },
+   "/photons/n_absorbed_sensor": {
+    "dtype": "int32",
+    "shape": [
+     10000
+    ],
+    "units": ""
+   },
+   "/photons/n_absorbed_wall": {
+    "dtype": "int32",
+    "shape": [
+     10000
+    ],
+    "units": ""
+   },
+   "/photons/n_detected": {
+    "dtype": "int32",
+    "shape": [
+     10000
+    ],
+    "units": ""
+   },
+   "/photons/n_detected_direct": {
+    "dtype": "int32",
+    "shape": [
+     10000
+    ],
+    "units": ""
+   },
+   "/photons/n_detected_reflected": {
+    "dtype": "int32",
+    "shape": [
+     10000
+    ],
+    "units": ""
+   },
+   "/photons/n_detected_scattered": {
+    "dtype": "int32",
+    "shape": [
+     10000
+    ],
+    "units": ""
+   },
+   "/photons/n_emitted": {
+    "dtype": "int32",
+    "shape": [
+     10000
+    ],
+    "units": ""
+   },
+   "/photons/n_lost": {
+    "dtype": "int32",
+    "shape": [
+     10000
+    ],
+    "units": ""
+   },
+   "/photons/n_noise": {
+    "dtype": "int32",
+    "shape": [
+     10000
+    ],
+    "units": ""
+   },
+   "/response/charge": {
+    "dtype": "int32",
+    "shape": [
+     10000,
+     32
+    ],
+    "units": ""
+   },
+   "/response/time_first": {
+    "dtype": "float32",
+    "shape": [
+     10000,
+     32
+    ],
+    "units": "ns"
+   },
+   "/response/time_mean": {
+    "dtype": "float32",
+    "shape": [
+     10000,
+     32
+    ],
+    "units": "ns"
+   },
+   "/truth/energy": {
+    "dtype": "float32",
+    "shape": [
+     10000
+    ],
+    "units": "MeV"
+   },
+   "/truth/event_id": {
+    "dtype": "int64",
+    "shape": [
+     10000
+    ],
+    "units": ""
+   },
+   "/truth/t0": {
+    "dtype": "float32",
+    "shape": [
+     10000
+    ],
+    "units": "ns"
+   },
+   "/truth/x": {
+    "dtype": "float32",
+    "shape": [
+     10000
+    ],
+    "units": "m"
+   },
+   "/truth/y": {
+    "dtype": "float32",
+    "shape": [
+     10000
+    ],
+    "units": "m"
+   }
+  },
+  "detector_attrs": {
+   "n_sensors": 32.0,
+   "photocoverage": 0.5092958178940651,
+   "radius": 1.0,
+   "sensor_width": 0.1
+  },
+  "file": "t0_cli_full_n10000_seed1.h5",
+  "file_size_MB": 2.64,
+  "flashsim_info": [
+   "file: solutions/stage1_flash/data/t0_cli_full_n10000_seed1.h5  (2.64 MB)",
+   "format version 1, 10000 events, 32 sensors",
+   "",
+   "configuration (preset: full):",
+   "  geometry:   R = 1 m, 32 sensors of 0.1 m (photocoverage 0.509)",
+   "  light:      Y = 1000 photons/MeV (poisson), c_n = 0.2 m/ns",
+   "  absorption: lambda_a = 1.5 m; scattering: lambda_s = 2 m; reflection: rho = 0.5 (diffuse)",
+   "  readout:    efficiency 1, jitter 1 ns, dark rate 0 Hz in [0, 100] ns",
+   "  prior:      vertex uniform in r <= 1 m; energy uniform in [0.5, 5] MeV; t0 uniform in [0, 10] ns",
+   "  transport:  at most 80 interactions per photon",
+   "",
+   "provenance:",
+   "  seed: 1",
+   "  photons_per_chunk: 2097152",
+   "  n_chunks: 14",
+   "  first_event_id: 0",
+   "  save_hits: False",
+   "  save_tracks: 0",
+   "  track_photons: 100",
+   "  device: cpu",
+   "  device_name: x86_64",
+   "  torch_threads: 16",
+   "  package_version: 0.1.0",
+   "  git_commit: feaeef75691034de60bb6cf59885a78cbecd0fd2-dirty",
+   "  python_version: 3.11.5",
+   "  numpy_version: 2.4.6",
+   "  torch_version: 2.14.1+cpu",
+   "  h5py_version: 3.16.0",
+   "  platform: Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+   "  created: 2026-10-22T03:17:41+00:00",
+   "  wall_time_s: 1.874",
+   "  preset: full",
+   "  overrides: {}",
+   "  command: flashsim generate -n 10000 --seed 1 --threads 16 -o solutions/stage1_flash/data/t0_cli_full_n10000_seed1.h5 --overwrite -q",
+   "",
+   "datasets:",
+   "  /detector/sensor_phi            float64  (32,)            rad",
+   "  /detector/sensor_x              float64  (32,)            m",
+   "  /detector/sensor_y              float64  (32,)            m",
+   "  /photons/n_absorbed_bulk        int32    (10000,)",
+   "  /photons/n_absorbed_sensor      int32    (10000,)",
+   "  /photons/n_absorbed_wall        int32    (10000,)",
+   "  /photons/n_detected             int32    (10000,)",
+   "  /photons/n_detected_direct      int32    (10000,)",
+   "  /photons/n_detected_reflected   int32    (10000,)",
+   "  /photons/n_detected_scattered   int32    (10000,)",
+   "  /photons/n_emitted              int32    (10000,)",
+   "  /photons/n_lost                 int32    (10000,)",
+   "  /photons/n_noise                int32    (10000,)",
+   "  /response/charge                int32    (10000, 32)",
+   "  /response/time_first            float32  (10000, 32)      ns",
+   "  /response/time_mean             float32  (10000, 32)      ns",
+   "  /truth/energy                   float32  (10000,)         MeV",
+   "  /truth/event_id                 int64    (10000,)",
+   "  /truth/t0                       float32  (10000,)         ns",
+   "  /truth/x                        float32  (10000,)         m",
+   "  /truth/y                        float32  (10000,)         m",
+   "",
+   "photon bookkeeping (all events):",
+   "  detected           0.3246 of the emitted photons",
+   "  absorbed_bulk      0.5185 of the emitted photons",
+   "  absorbed_wall      0.1569 of the emitted photons",
+   "  absorbed_sensor    0.0000 of the emitted photons",
+   "  lost               0.0000 of the emitted photons",
+   "  mean total charge 896.7 p.e. per event, 0.7 % of the sensors empty"
+  ],
+  "format_version": 1,
+  "hits_per_event_1k": 896.5,
+  "n_events": 10000,
+  "optional_file_size_MB": 7.15,
+  "optional_groups_1k_events": {
+   "/hits/event_id": {
+    "dtype": "int64",
+    "shape": [
+     896499
+    ],
+    "units": ""
+   },
+   "/hits/is_noise": {
+    "dtype": "bool",
+    "shape": [
+     896499
+    ],
+    "units": ""
+   },
+   "/hits/n_reflect": {
+    "dtype": "int32",
+    "shape": [
+     896499
+    ],
+    "units": ""
+   },
+   "/hits/n_scatter": {
+    "dtype": "int32",
+    "shape": [
+     896499
+    ],
+    "units": ""
+   },
+   "/hits/path_length": {
+    "dtype": "float32",
+    "shape": [
+     896499
+    ],
+    "units": "m"
+   },
+   "/hits/sensor": {
+    "dtype": "int32",
+    "shape": [
+     896499
+    ],
+    "units": ""
+   },
+   "/hits/time": {
+    "dtype": "float32",
+    "shape": [
+     896499
+    ],
+    "units": "ns"
+   },
+   "/tracks/event_id": {
+    "dtype": "int64",
+    "shape": [
+     300
+    ],
+    "units": ""
+   },
+   "/tracks/kind": {
+    "dtype": "int8",
+    "shape": [
+     770
+    ],
+    "units": ""
+   },
+   "/tracks/offsets": {
+    "dtype": "int64",
+    "shape": [
+     301
+    ],
+    "units": ""
+   },
+   "/tracks/path_length": {
+    "dtype": "float32",
+    "shape": [
+     770
+    ],
+    "units": "m"
+   },
+   "/tracks/photon": {
+    "dtype": "int32",
+    "shape": [
+     300
+    ],
+    "units": ""
+   },
+   "/tracks/x": {
+    "dtype": "float32",
+    "shape": [
+     770
+    ],
+    "units": "m"
+   },
+   "/tracks/y": {
+    "dtype": "float32",
+    "shape": [
+     770
+    ],
+    "units": "m"
+   }
+  },
+  "provenance_command": "flashsim generate -n 10000 --seed 1 --threads 16 -o solutions/stage1_flash/data/t0_cli_full_n10000_seed1.h5 --overwrite -q",
+  "provenance_keys": [
+   "seed",
+   "photons_per_chunk",
+   "n_chunks",
+   "first_event_id",
+   "save_hits",
+   "save_tracks",
+   "track_photons",
+   "device",
+   "device_name",
+   "torch_threads",
+   "package_version",
+   "git_commit",
+   "python_version",
+   "numpy_version",
+   "torch_version",
+   "h5py_version",
+   "platform",
+   "created",
+   "wall_time_s",
+   "preset",
+   "overrides",
+   "command"
+  ],
+  "tracks_point_types": {
+   "point_types": {
+    "ABSORB_BULK": 4,
+    "ABSORB_SENSOR": 6,
+    "ABSORB_WALL": 5,
+    "DETECT": 3,
+    "EMIT": 0,
+    "LOST": 7,
+    "REFLECT": 2,
+    "SCATTER": 1
+   }
+  }
+ }
+}

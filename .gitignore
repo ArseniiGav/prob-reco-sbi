@@ -1,7 +1,9 @@
-# Reference solutions stay local until the next session of the course.
-solutions/
-# Cached data of the solutions: never committed, also once the solutions are public.
-solutions/data/
+# Reference solutions: only the released stages are tracked; cached data sets and run logs never.
+solutions/*
+!solutions/README.md
+!solutions/stage1_flash/
+solutions/*/data/
+solutions/*/logs/
 
 # Reference numbers of the original seminar implementation: kept by the course team, not distributed
 # (tests/test_regression.py skips the tests that need them).
