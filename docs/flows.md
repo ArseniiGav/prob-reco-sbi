@@ -3,7 +3,7 @@
 Neural posterior estimation (NPE) describes the posterior $p(\theta \mid x)$ with a normalizing flow. Before flows
 meet the detector, this page and the package `prob_reco_sbi.flows1d` introduce them where everything can be drawn and
 checked against the exact answer: one dimension. It defines the maths that the tasks in
-[TASKS_flows.md](../TASKS_flows.md) use; the code follows the same notation.
+[tasks/stage2a_flows/](../tasks/stage2a_flows/README.md) use; the code follows the same notation.
 
 ## The target: a camel with a shoulder
 

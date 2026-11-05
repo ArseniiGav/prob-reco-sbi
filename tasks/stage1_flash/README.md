@@ -6,9 +6,9 @@ of the course, in which a neural network learns the posterior distribution of th
 
 - **Core tasks:** T0 to T4. **Bonus:** T5.
 - The question IDs (T0.1, T2.3, ...) are fixed: we go through the answers by ID together.
-- Background: the model is in [docs/physics.md](docs/physics.md), the file layout in
-  [docs/data_format.md](docs/data_format.md), and [notebooks/00_quickstart.ipynb](notebooks/00_quickstart.ipynb) is a
-  guided first look at the data.
+- Background: the model is in [docs/physics.md](../../docs/physics.md), the file layout in
+  [docs/data_format.md](../../docs/data_format.md), and
+  [notebooks/00_quickstart.ipynb](../../notebooks/00_quickstart.ipynb) is a guided first look at the data.
 - **Where to run.** A laptop is enough (Linux, macOS or Windows; CPU only). The commands are written for a Unix shell
   (Linux, macOS, or WSL on Windows). Single `flashsim` commands also work in the Windows Command Prompt and in
   PowerShell; the data of T1 to T4 can be made with `python examples/make_task_data.py` on any system, and loops can
@@ -68,7 +68,7 @@ python -m ipykernel install --user --name prob-reco-sbi --display-name "Python (
 The last command registers the environment as the Jupyter kernel of the notebooks. Start JupyterLab with
 `python -m jupyter lab` from the activated environment and open `notebooks/00_quickstart.ipynb`; if you are asked
 which kernel to use, pick "Python (prob-reco-sbi)". Windows, a smaller
-CPU-only PyTorch, Intel Macs and common problems: [docs/install.md](docs/install.md).
+CPU-only PyTorch, Intel Macs and common problems: [docs/install.md](../../docs/install.md).
 
 **T0.2** Generate 10 000 events with the default physics and time it on your computer (and on an NVIDIA GPU, if you
 have one). How does the time scale with the number of events $N$ and with the preset?
@@ -119,10 +119,10 @@ every path in this document is relative to the repository root (a notebook in `n
 `../data/t2_full.h5`). Each command takes seconds to a minute on a laptop, and
 `python examples/make_task_data.py` runs all of them in one go on any operating system and writes the same files (it
 keeps files that already exist; `--overwrite` makes them again). On a cluster, run the commands in a job or an
-interactive session, not on the login node (see [examples/cluster](examples/cluster/README.md)). Using the same seed
-for every preset gives the same events (vertices, energies, $t_0$ and photon numbers), which makes comparisons between
-presets sharper; such paired samples are made for differences, not for pooling (two presets with the same seed are not
-independent samples).
+interactive session, not on the login node (see [examples/cluster](../../examples/cluster/README.md)). Using the same
+seed for every preset gives the same events (vertices, energies, $t_0$ and photon numbers), which makes comparisons
+between presets sharper; such paired samples are made for differences, not for pooling (two presets with the same seed
+are not independent samples).
 
 ```bash
 # T1 and T2: the default model
@@ -210,7 +210,7 @@ between sensors; photon-fate fractions; the direct / scattered / reflected compo
   measured to the sensor centre while the arc has a width. This is not a bug; think about what the earliest of many
   jittered times does.
 - `network_input(charge, time_mean)` returns an array `[N, 64]`: columns 0 to 31 are the log charges, 32 to 63 the
-  relative times. Its definition is in [docs/physics.md](docs/physics.md#network-input).
+  relative times. Its definition is in [docs/physics.md](../../docs/physics.md#network-input).
 - The photon bookkeeping (`data.photons`) gives the fates and the direct / scattered / reflected counts per event.
 
 ## T3 Switch the physics on step by step (about 3 hours; the parts marked optional can wait)
@@ -248,8 +248,8 @@ Answer T3.3 in a few sentences and refer to your figures.
 - T3.2: photons are emitted uniformly in angle. The two ends of every sensor arc are in `sensor_edges(geometry)`
   (angles on the wall). Check your result first for a vertex at the centre. A fixed vertex and fixed photon numbers, as
   in the commands above, make the statistical errors of the mean charges small. For absorption, the probability that a
-  photon survives a straight path follows from the free-path distribution in [docs/physics.md](docs/physics.md); which
-  path length do you use for a sensor arc?
+  photon survives a straight path follows from the free-path distribution in
+  [docs/physics.md](../../docs/physics.md); which path length do you use for a sensor arc?
 - T3.3: put the curves of all presets (and of the single processes) into one figure. Look at how the delay
   distributions change, and at the direct / scattered / reflected composition of the light against $r_0$.
 - T3.4: a single calibration constant $k$ for the whole data set, e.g. the median of $Q/E$, gives

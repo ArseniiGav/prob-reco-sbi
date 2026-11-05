@@ -59,7 +59,7 @@ their number first. The merged file keeps the provenance of every shard.
 ## Resources
 
 Measured for the default model (`full`) on a shared server CPU in October 2026; your numbers will differ, and T0.2 of
-[TASKS.md](../../TASKS.md) asks you to measure them on your cluster:
+[stage 1](../../tasks/stage1_flash/README.md) asks you to measure them on your cluster:
 
 | job                                      | simulation time | peak memory | file size |
 |------------------------------------------|-----------------|-------------|-----------|

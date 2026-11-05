@@ -132,7 +132,7 @@ ignore_missing_imports = true
 minversion = "8.0"
 testpaths = ["tests"]
 addopts = ["-ra", "--strict-markers", "--strict-config", "-m", "not slow"]
-markers = ["slow: statistical regression and fresh-process reproducibility tests (tens of seconds; run with `pytest -m slow`)"]
+markers = ["slow: statistical regression, fresh-process reproducibility and example smoke tests (tens of seconds; run with `pytest -m slow`)"]
 xfail_strict = true
 
 # ------------------------------------------------------------------------------------------------------------ coverage

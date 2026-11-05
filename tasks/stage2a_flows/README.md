@@ -8,11 +8,11 @@ the truth.
 
 - **Core tasks:** F1 to F6 (about 8 hours). **Bonus:** B1 and B2.
 - The question IDs (F1.1, F2.3, ...) are fixed: we go through the answers by ID together.
-- Background: the maths is in [docs/flows.md](docs/flows.md), and
-  [notebooks/01_flows_1d.ipynb](notebooks/01_flows_1d.ipynb) is a guided first look at the package
+- Background: the maths is in [docs/flows.md](../../docs/flows.md), and
+  [notebooks/01_flows_1d.ipynb](../../notebooks/01_flows_1d.ipynb) is a guided first look at the package
   `prob_reco_sbi.flows1d`.
 - **Training is always maximum likelihood on samples**, which minimises the forward KL divergence
-  ([docs/flows.md](docs/flows.md#training-maximum-likelihood-is-the-forward-kl-divergence)). This is how neural
+  ([docs/flows.md](../../docs/flows.md#training-maximum-likelihood-is-the-forward-kl-divergence)). This is how neural
   posterior estimation (NPE) trains its flows: the simulator gives samples, never the value of a density.
 - **Where to run.** A laptop is enough (CPU only): a fit takes from a few seconds to a few tens of seconds. More
   threads hardly help, because the tensors are small; on a shared machine `torch.set_num_threads(4)` is plenty.
@@ -27,7 +27,7 @@ python -m pytest tests/test_flows1d.py           # ends with "... passed"
 ```
 
 **The samples.** Every task learns the same target, the "camel with a shoulder" of
-[docs/flows.md](docs/flows.md#the-target-a-camel-with-a-shoulder),
+[docs/flows.md](../../docs/flows.md#the-target-a-camel-with-a-shoulder),
 
 ```math
 p(x) = 0.30\,\mathcal{N}(x; -2.2, 0.25^2) + 0.50\,\mathcal{N}(x; 0.5, 0.9^2) + 0.20\,\mathcal{N}(x; 3.5, 1.4^2),
@@ -76,8 +76,8 @@ legend that does not hide the data, and a title or caption that says what is sho
 bins, the number of samples and of training steps). Draw the truth wherever it exists (the target density, the oracle
 map, the base), so that the eye can compare with it. KL divergences span orders of magnitude: plot them on a log axis.
 
-**Where to work.** As in [TASKS.md](TASKS.md): on your own branch (`git switch -c <your-name>`) or in a folder outside
-the repository.
+**Where to work.** As in [stage 1](../stage1_flash/README.md): on your own branch (`git switch -c <your-name>`) or in
+a folder outside the repository.
 
 ## Notation
 
@@ -232,8 +232,8 @@ KL against the depth, yours and the package's in one figure, and the learned map
   float64 samples runs in float64. From the same initial parameters the two agree for a few layers, but deep stacks
   can end in different optima: compare the spread over seeds, not single values.
 - In one dimension the increasing map that turns $p$ into the base is unique (see
-  [docs/flows.md](docs/flows.md#the-oracle-map-the-exact-answer-in-one-dimension)): every good flow approximates the
-  same curve $\Phi^{-1}(F(x))$. Draw both maps on a grid, and their difference.
+  [docs/flows.md](../../docs/flows.md#the-oracle-map-the-exact-answer-in-one-dimension)): every good flow approximates
+  the same curve $\Phi^{-1}(F(x))$. Draw both maps on a grid, and their difference.
 
 ## F3 Radial flows, by hand (about 1.5 hours)
 
@@ -285,7 +285,7 @@ your planar and radial results of F2 and F3.
 
 A spline with $K$ bins on $[-B, B]$ has $3K - 1$ parameters (the widths and the heights of the bins and the
 derivatives at the inner knots); outside $[-B, B]$ it is the identity. Its formulas are in
-[docs/flows.md](docs/flows.md#rational-quadratic-spline-durkan-et-al-2019).
+[docs/flows.md](../../docs/flows.md#rational-quadratic-spline-durkan-et-al-2019).
 
 ```python
 from prob_reco_sbi.flows1d import Flow, RQSpline, camel, fit, kl_to_truth
@@ -417,7 +417,7 @@ $\mathcal{L} = -\frac{1}{N}\sum_i \log q(x_i \mid \theta_i)$, and compare $q(x \
 for a few values of $\theta$, inside and outside the training range. NPE works the same way, with the roles
 swapped: its flow models the event parameters given the detector response, $q(\theta \mid x)$, and is trained on
 simulated pairs. And a conditional flow in the direction of this task, $q(x \mid \theta)$ with $x$ one-dimensional,
-is what a real analysis uses as a learned likelihood: see "Where this is used" in [docs/flows.md](docs/flows.md).
+is what a real analysis uses as a learned likelihood: see "Where this is used" in [docs/flows.md](../../docs/flows.md).
 
 **Deliverables:** for B1, the KL against the number of parameters for a few flows on your mixture; for B2,
 $q(x \mid \theta)$ against $p(x \mid \theta)$ for a few $\theta$, and the KL against $\theta$.
@@ -435,5 +435,6 @@ $q(x \mid \theta)$ against $p(x \mid \theta)$ for a few $\theta$, and the KL aga
   then $x = \mu_k + \sigma_k \varepsilon$ with $\varepsilon \sim \mathcal{N}(0, 1)$. With 50 000 pairs and 8 planar
   layers, 2000 full-batch steps take a minute or two on a CPU.
 - B2: for a fixed $\theta$, compute the KL by the trapezoidal rule on a grid (as in the F2 hints) against the
-  `Mixture1D` of that $\theta$. Recall [T1.2 of the first stage](TASKS.md#t1-what-did-we-simulate-the-prior-about-1-hour):
-  what can a model trained on $\theta \in [0.1, 0.5]$ say about $\theta = 0.7$?
+  `Mixture1D` of that $\theta$. Recall
+  [T1.2 of the first stage](../stage1_flash/README.md#t1-what-did-we-simulate-the-prior-about-1-hour): what can a model
+  trained on $\theta \in [0.1, 0.5]$ say about $\theta = 0.7$?

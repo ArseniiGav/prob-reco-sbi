@@ -46,10 +46,15 @@ as 0.2.0).
 - `notebooks/01_flows_1d.ipynb`: a guided first look at flows in one dimension with the package.
 - `examples/flows_quickstart.py`: one spline fit from the command line, with the exact KL divergence to the target,
   the Kolmogorov-Smirnov test of the mapped samples and a figure.
-- `TASKS_flows.md`: the tasks of stage 2a, F1 to F6 and the bonus B1 and B2, with fixed question IDs.
+- `tasks/stage2a_flows/README.md`: the tasks of stage 2a, F1 to F6 and the bonus B1 and B2, with fixed question IDs.
+- `tasks/README.md`: the index of the tasks, with the documentation, the guided notebook and the reference solutions
+  of every stage.
+- `tests/test_examples.py`: a slow smoke test of `examples/flows_quickstart.py` with a small training budget.
 
 ### Changed
 
+- The tasks moved from the repository root to `tasks/<stage>/`: `TASKS.md` is now
+  `tasks/stage1_flash/README.md`, and every link to it is updated.
 - README: stage 2a in the course roadmap, a short section with its documentation, notebook, tasks and a quick start,
   and the tasks of both stages with the public solutions of stage 1.
 - `CITATION.cff` and the package description and keywords: the normalizing flows.

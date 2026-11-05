@@ -24,12 +24,15 @@ one-dimensional normalizing flows `prob_reco_sbi.flows1d`, their documentation a
 
 ## Course roadmap
 
-| stage | content                                                                                                  | status                           |
-|-------|----------------------------------------------------------------------------------------------------------|----------------------------------|
-| 1     | **A Flash in the Dark**: the toy detector, its data and the tasks about the data ([TASKS.md](TASKS.md))  | released (0.1.0)                 |
-| 2a    | **Normalizing flows in one dimension**: the density model of NPE ([TASKS_flows.md](TASKS_flows.md))      | on main, to be released as 0.2.0 |
-| 2     | Neural posterior estimation (NPE) of the vertex and the energy from the simulated detector response     | next                             |
+| stage | content                                                                                                                  | status                           |
+|-------|--------------------------------------------------------------------------------------------------------------------------|----------------------------------|
+| 1     | **A Flash in the Dark**: the toy detector, its data and the tasks about the data ([tasks](tasks/stage1_flash/README.md)) | released (0.1.0)                 |
+| 2a    | **Normalizing flows in one dimension**: the density model of NPE ([tasks](tasks/stage2a_flows/README.md))                | on main, to be released as 0.2.0 |
+| 2     | Neural posterior estimation (NPE) of the vertex and the energy from the simulated detector response                      | next                             |
 | 3     | NPE on NuBench, an open benchmark for event reconstruction in neutrino telescopes ([arXiv:2511.13111](https://arxiv.org/abs/2511.13111)) | later |
+
+The index of the tasks, with the documentation, the guided notebook and the reference solutions of every stage, is
+[tasks/README.md](tasks/README.md).
 
 For background on simulation-based inference, see K. Cranmer, J. Brehmer and G. Louppe,
 [The frontier of simulation-based inference](https://doi.org/10.1073/pnas.1912789117),
@@ -165,12 +168,15 @@ Types, shapes, units and reading examples are in [docs/data_format.md](docs/data
 
 ## Tasks
 
-- Stage 1, [TASKS.md](TASKS.md): set-up (T0), the prior (T1), the detector response (T2), the physics ladder (T3) and
-  event displays (T4), plus a bonus on the way to inference (T5). The data of T1 to T4 can be made on any operating
-  system with `python examples/make_task_data.py`. The reference solutions are public, one executed notebook per task:
-  [solutions/stage1_flash/](solutions/stage1_flash/README.md).
-- Stage 2a, [TASKS_flows.md](TASKS_flows.md): the target and the oracle map (F1), planar and radial flows written by
-  hand (F2, F3), splines (F4), the uniform base (F5) and animations (F6), plus the bonus tasks B1 and B2.
+One directory per stage, indexed in [tasks/README.md](tasks/README.md):
+
+- Stage 1, [tasks/stage1_flash/](tasks/stage1_flash/README.md): set-up (T0), the prior (T1), the detector response
+  (T2), the physics ladder (T3) and event displays (T4), plus a bonus on the way to inference (T5). The data of T1 to
+  T4 can be made on any operating system with `python examples/make_task_data.py`. The reference solutions are public,
+  one executed notebook per task: [solutions/stage1_flash/](solutions/stage1_flash/README.md).
+- Stage 2a, [tasks/stage2a_flows/](tasks/stage2a_flows/README.md): the target and the oracle map (F1), planar and
+  radial flows written by hand (F2, F3), splines (F4), the uniform base (F5) and animations (F6), plus the bonus tasks
+  B1 and B2.
 
 ## Stage 2a: normalizing flows in one dimension
 
@@ -185,7 +191,7 @@ Gaussian and a uniform base, maximum-likelihood training and the exact KL diverg
 - [notebooks/01_flows_1d.ipynb](notebooks/01_flows_1d.ipynb): a guided first look at the package
 - [examples/flows_quickstart.py](examples/flows_quickstart.py): one spline fit from the command line, checked against
   the truth (about ten seconds on a CPU; writes `data/flows_quickstart.png`)
-- [TASKS_flows.md](TASKS_flows.md): the tasks F1 to F6 and the bonus B1 and B2
+- [tasks/stage2a_flows/](tasks/stage2a_flows/README.md): the tasks F1 to F6 and the bonus B1 and B2
 
 ```python
 from prob_reco_sbi.flows1d import Flow, RQSpline, camel, fit, kl_to_truth
