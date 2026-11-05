@@ -39,7 +39,7 @@ def main() -> None:
         text = path.read_text().strip()
         first, body = text.split("\n", 1)
         title = first.lstrip("# ").strip()
-        anchor = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
+        anchor = re.sub(r"[^\w\- ]", "", title.lower()).replace(" ", "-")  # the heading anchor of GitHub
         contents.append(f"- [{title}](#{anchor})")
         for name in FIGURE_NAME.findall(text) + [n for m in FIGURE_MARKER.findall(text) for n in m.split()]:
             if name not in figures:

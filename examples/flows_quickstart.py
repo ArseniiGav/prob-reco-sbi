@@ -8,7 +8,8 @@ Run from the repository root; it takes about ten seconds on a CPU::
 It trains a rational-quadratic spline flow by maximum likelihood on samples of the target (the forward KL divergence),
 prints the exact KL divergence to the target, the Kolmogorov-Smirnov test of the mapped samples and the moments of
 samples drawn from the flow, and, if matplotlib is installed, saves ``data/flows_quickstart.png``: the model density
-next to the target and the learned map next to the exact (oracle) map. The maths is in ``docs/flows.md``.
+next to the target, the learned map next to the exact (oracle) map and the training loss. The maths is in
+``docs/flows.md``.
 """
 
 from __future__ import annotations
@@ -20,7 +21,7 @@ import torch
 
 from prob_reco_sbi.flows1d import Flow, History, RQSpline, camel, fit, kl_to_truth, ks_statistic, oracle_map
 
-#: The figure style of the course (the owner's paper style): white, no grid, ticks in on all four sides, minor ticks.
+#: The figure style of the course (the paper style of the NeuroMCT figures): white, no grid, ticks in on all sides.
 PAPER_STYLE = {
     "figure.facecolor": "white",
     "axes.facecolor": "white",

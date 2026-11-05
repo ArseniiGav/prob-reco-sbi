@@ -14,7 +14,7 @@ as 0.2.0).
 
 - `solutions/stage1_flash/`: the reference solutions of stage 1, one executed notebook per task (T0 to T5) with the
   scripts that make its figures and numbers, the answers by question ID (`ANSWERS.md`) and the numbers in
-  `results/*.json`.
+  `results/*.json`; `solutions/README.md`, the index of the solutions by stage.
 - `prob_reco_sbi.flows1d`: normalizing flows in one dimension, written from scratch in PyTorch (no new dependencies).
   - Targets with an exact density, CDF, quantile function, sampling and entropy: `Mixture1D` (any Gaussian mixture,
     in float64; the CDF is computed with `erfc`, accurate far in both tails) and the target of the tasks, the "camel
@@ -50,8 +50,10 @@ as 0.2.0).
 
 ### Changed
 
-- README: stage 2a in the course roadmap, and a short section with its documentation, notebook, tasks and a quick
-  start.
+- README: stage 2a in the course roadmap, a short section with its documentation, notebook, tasks and a quick start,
+  and the tasks of both stages with the public solutions of stage 1.
+- `CITATION.cff` and the package description and keywords: the normalizing flows.
+- `notebooks/00_quickstart.ipynb`: its next steps point to the tasks of stage 1 and to the notebook of stage 2a.
 
 ## [0.1.0] - 2026-10-22
 

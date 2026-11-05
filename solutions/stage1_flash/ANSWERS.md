@@ -4,29 +4,29 @@ Assembled from `answers/T*.md` in question-ID order by `make_answers.py`. The fi
 
 ## Contents
 
-- [T0.1 Set-up](#t0-1-set-up)
-- [T0.2 How long does it take?](#t0-2-how-long-does-it-take)
-- [T0.3 Inspect the file](#t0-3-inspect-the-file)
-- [T1.1 What did we simulate?](#t1-1-what-did-we-simulate)
-- [T1.2 The prior that NPE will use](#t1-2-the-prior-that-npe-will-use)
-- [T2.1 Sensor charges, hit sensors, empty sensors](#t2-1-sensor-charges-hit-sensors-empty-sensors)
-- [T2.2 Total charge and light collection](#t2-2-total-charge-and-light-collection)
-- [T2.3 Mean, first and relative times](#t2-3-mean-first-and-relative-times)
-- [T2.4 The network input](#t2-4-the-network-input)
-- [T2.5 Own proposals](#t2-5-own-proposals)
-- [T3.1 The physics ladder, configuration by configuration](#t3-1-the-physics-ladder-configuration-by-configuration)
-- [T3.2 Expected charge of a sensor: straight light and absorption](#t3-2-expected-charge-of-a-sensor-straight-light-and-absorption)
-- [T3.3 Which process does what?](#t3-3-which-process-does-what)
-- [T3.4 How hard is the inverse problem?](#t3-4-how-hard-is-the-inverse-problem)
-- [T4.1 Event display](#t4-1-event-display)
-- [T4.2 Event display with timing](#t4-2-event-display-with-timing)
-- [T4.3 Photon paths of one event](#t4-3-photon-paths-of-one-event)
-- [T4.4 One theta, four presets](#t4-4-one-theta-four-presets)
-- [T4.5 Animation (bonus)](#t4-5-animation-bonus)
-- [T5.1 The same theta many times (bonus)](#t5-1-the-same-theta-many-times-bonus)
-- [T5.2 Degeneracy: the same mean Q from different (E, r) (bonus)](#t5-2-degeneracy-the-same-mean-q-from-different-e-r-bonus)
-- [T5.3 Detector design (bonus)](#t5-3-detector-design-bonus)
-- [T5.4 Detector effects: which features suffer most? (bonus)](#t5-4-detector-effects-which-features-suffer-most-bonus)
+- [T0.1 Set-up](#t01-set-up)
+- [T0.2 How long does it take?](#t02-how-long-does-it-take)
+- [T0.3 Inspect the file](#t03-inspect-the-file)
+- [T1.1 What did we simulate?](#t11-what-did-we-simulate)
+- [T1.2 The prior that NPE will use](#t12-the-prior-that-npe-will-use)
+- [T2.1 Sensor charges, hit sensors, empty sensors](#t21-sensor-charges-hit-sensors-empty-sensors)
+- [T2.2 Total charge and light collection](#t22-total-charge-and-light-collection)
+- [T2.3 Mean, first and relative times](#t23-mean-first-and-relative-times)
+- [T2.4 The network input](#t24-the-network-input)
+- [T2.5 Own proposals](#t25-own-proposals)
+- [T3.1 The physics ladder, configuration by configuration](#t31-the-physics-ladder-configuration-by-configuration)
+- [T3.2 Expected charge of a sensor: straight light and absorption](#t32-expected-charge-of-a-sensor-straight-light-and-absorption)
+- [T3.3 Which process does what?](#t33-which-process-does-what)
+- [T3.4 How hard is the inverse problem?](#t34-how-hard-is-the-inverse-problem)
+- [T4.1 Event display](#t41-event-display)
+- [T4.2 Event display with timing](#t42-event-display-with-timing)
+- [T4.3 Photon paths of one event](#t43-photon-paths-of-one-event)
+- [T4.4 One theta, four presets](#t44-one-theta-four-presets)
+- [T4.5 Animation (bonus)](#t45-animation-bonus)
+- [T5.1 The same theta many times (bonus)](#t51-the-same-theta-many-times-bonus)
+- [T5.2 Degeneracy: the same mean Q from different (E, r) (bonus)](#t52-degeneracy-the-same-mean-q-from-different-e-r-bonus)
+- [T5.3 Detector design (bonus)](#t53-detector-design-bonus)
+- [T5.4 Detector effects: which features suffer most? (bonus)](#t54-detector-effects-which-features-suffer-most-bonus)
 
 ## T0.1 Set-up
 
@@ -428,7 +428,7 @@ $A_j = R(\cos\varphi_1, \sin\varphi_1)$ to $B_j = R(\cos\varphi_2, \sin\varphi_2
 are exactly those emitted between the directions of $\vec u = A_j - \vec p$ and $\vec v = B_j - \vec p$. Each photon
 therefore hits sensor $j$ with probability $\Delta_j / 2\pi$, where the subtended angle is
 
-$$\Delta_j = \operatorname{atan2}\!\left(u_x v_y - u_y v_x,\; \vec u \cdot \vec v\right) \bmod 2\pi .$$
+$$\Delta_j = \mathrm{atan2}\!\left(u_x v_y - u_y v_x,\; \vec u \cdot \vec v\right) \bmod 2\pi .$$
 
 With $N \sim \mathrm{Poisson}(YE)$ independent photons, $n_j$ is again Poisson (thinning) with
 
