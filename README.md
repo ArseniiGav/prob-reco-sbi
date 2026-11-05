@@ -27,7 +27,7 @@ one-dimensional normalizing flows `prob_reco_sbi.flows1d`, their documentation a
 | stage | content                                                                                                                  | status                           |
 |-------|--------------------------------------------------------------------------------------------------------------------------|----------------------------------|
 | 1     | **A Flash in the Dark**: the toy detector, its data and the tasks about the data ([tasks](tasks/stage1_flash/README.md)) | released (0.1.0)                 |
-| 2a    | **Normalizing flows in one dimension**: the density model of NPE ([tasks](tasks/stage2a_flows/README.md))                | on main, to be released as 0.2.0 |
+| 2a    | **Normalizing flows in one dimension**: the density model of NPE ([tasks](tasks/stage2a_flows/README.md))                | released (0.2.0)                 |
 | 2     | Neural posterior estimation (NPE) of the vertex and the energy from the simulated detector response                      | next                             |
 | 3     | NPE on NuBench, an open benchmark for event reconstruction in neutrino telescopes ([arXiv:2511.13111](https://arxiv.org/abs/2511.13111)) | later |
 

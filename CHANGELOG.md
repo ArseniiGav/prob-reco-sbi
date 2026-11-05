@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-The reference solutions of stage 1, and stage 2a of the course: normalizing flows in one dimension (to be released
-as 0.2.0).
+## [0.2.0] - 2026-11-05
+
+The reference solutions of stage 1, and stage 2a of the course: normalizing flows in one dimension.
 
 ### Added
 
@@ -98,5 +99,6 @@ First release: the toy detector "A Flash in the Dark" and its data.
   and measured resources per job.
 - `notebooks/00_quickstart.ipynb`: a guided first look at the data.
 
-[Unreleased]: https://github.com/ArseniiGav/prob-reco-sbi/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/ArseniiGav/prob-reco-sbi/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/ArseniiGav/prob-reco-sbi/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ArseniiGav/prob-reco-sbi/releases/tag/v0.1.0
