@@ -1,7 +1,7 @@
 # Data format
 
 Every run of `flashsim generate` (or `save()` in Python) writes one HDF5 file. This page describes format version 1,
-written by `prob_reco_sbi` 0.1.0. Below, `N` is the number of events and `M` the number of sensors (32 by default).
+written by `prob_reco_sbi` 0.1.0 and later. Below, `N` is the number of events and `M` the number of sensors (32 by default).
 The physics behind the stored quantities is described in [physics.md](physics.md).
 
 ```text

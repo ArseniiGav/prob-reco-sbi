@@ -8,6 +8,6 @@ flows1d
     Normalizing flows in one dimension, from scratch: transforms, training by maximum likelihood, exact diagnostics.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = ["__version__"]

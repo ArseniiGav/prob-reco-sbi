@@ -3,7 +3,7 @@
 "A Flash in the Dark" is a two-dimensional toy model of a scintillation detector. A point-like event inside a disc
 emits photons, every photon is tracked through the detector until it is detected, absorbed or lost, and the
 photosensors on the wall record what arrives. This page defines the model as implemented in `prob_reco_sbi.flash`
-(version 0.1.0). The defaults are those of the `full` preset. The data files are described in
+(since version 0.1.0). The defaults are those of the `full` preset. The data files are described in
 [data_format.md](data_format.md).
 
 ## Units and coordinates
