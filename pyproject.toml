@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "prob-reco-sbi"
 dynamic = ["version"]
-description = "Probabilistic event reconstruction with simulation-based inference: a course built on a toy photon-transport detector."
+description = "Probabilistic event reconstruction with simulation-based inference: a course built on a toy photon-transport detector, with normalizing flows in one dimension."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -14,6 +14,7 @@ requires-python = ">=3.10"
 keywords = [
     "simulation-based inference",
     "neural posterior estimation",
+    "normalizing flows",
     "event reconstruction",
     "photon transport",
     "particle physics",

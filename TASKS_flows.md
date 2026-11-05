@@ -87,7 +87,7 @@ the repository.
 | $q(x)$ | the density of the flow (the model) |
 | $f$ | the map of the flow, strictly increasing: $z = f(x)$; a stack of layers is $f = f_L \circ \dots \circ f_1$ |
 | $z$ | the variable of a Gaussian base, $z \sim \mathcal{N}(0, 1)$, with the density $\varphi$ and the CDF $\Phi$ |
-| $u$ | the variable of a uniform base, $u \sim \mathcal{U}(0, 1)$ |
+| $u$ | the variable of a uniform base, $u \sim \mathcal{U}(0, 1)$ (in F2, $u$ and $\hat u$ are the parameters of the planar layer, as in the paper) |
 | $p_Z$, $p_U$ | the density of the base: Gaussian ($p_Z = \varphi$) or uniform ($p_U$) |
 | $\mathrm{KL}(p \,\Vert\, q)$ | $\int p \log(p/q)\,\mathrm{d}x \ge 0$, the forward Kullback-Leibler divergence in nats |
 | $H(p)$ | $-\int p(x) \log p(x)\,\mathrm{d}x$, the entropy of the target |
@@ -110,7 +110,7 @@ Write the density, the CDF, the oracle map and the inverse map yourself. No netw
 
 ```math
 p(x) = \sum_k \frac{w_k}{\sqrt{2\pi}\,\sigma_k} \exp\!\left[-\frac{(x - \mu_k)^2}{2\sigma_k^2}\right], \qquad
-F(x) = \sum_k \frac{w_k}{2} \left[1 + \operatorname{erf}\!\left(\frac{x - \mu_k}{\sqrt{2}\,\sigma_k}\right)\right],
+F(x) = \sum_k \frac{w_k}{2} \left[1 + \mathrm{erf}\!\left(\frac{x - \mu_k}{\sqrt{2}\,\sigma_k}\right)\right],
 ```
 
 and plot the density, the CDF and the histogram of the 20 000 samples.
@@ -132,8 +132,8 @@ QQ plot and the map (F1.2); the histogram of $u$, and the samples made from unif
   tensors, `math.erf` only on numbers.
 - Check your functions against `target.pdf` and `target.cdf` on a grid; the density should integrate to 1
   (`torch.trapezoid`).
-- On a wide grid, $1 + \operatorname{erf}(t)$ runs out of digits far in the left tail, and $\Phi^{-1}(F(x))$ becomes
-  $-\infty$. The same function written as $\tfrac{1}{2}\operatorname{erfc}(-t)$ (`torch.erfc`) keeps its precision.
+- On a wide grid, $1 + \mathrm{erf}(t)$ runs out of digits far in the left tail, and $\Phi^{-1}(F(x))$ becomes
+  $-\infty$. The same function written as $\tfrac{1}{2}\mathrm{erfc}(-t)$ (`torch.erfc`) keeps its precision.
 - `qq_points(z)` returns the quantiles of $\mathcal{N}(0, 1)$ and of the samples at the same probabilities: plot one
   against the other, with the diagonal. `ks_statistic(z)` returns the distance $D$ and its p-value. Both take any
   reference with a `quantile` or `cdf` method, e.g. `ks_statistic(u, Uniform())` or `ks_statistic(x, target)`.
@@ -369,8 +369,8 @@ training curves of both bases in one figure, and their KL (F5.3).
 **From the package:** everything: `fit` records the frames of the training, `Flow.transform_points` the transport.
 
 **F6.1** The training animation of one flow of your choice: in every frame, $q$ against $p$, the learned map against
-the oracle, the histogram of $z = f(x)$ against $\mathcal{N}(0, 1)$, and the loss up to that step; a frame every 10
-steps.
+the oracle, the histogram of $z = f(x)$ against $\mathcal{N}(0, 1)$, and the loss up to that step. Take a snapshot
+every 10 steps and draw all of them or a subset.
 
 **F6.2** The particle picture: samples of $p$ moving layer by layer to the base, for a planar stack and for a spline.
 
@@ -434,6 +434,6 @@ $q(x \mid \theta)$ against $p(x \mid \theta)$ for a few $\theta$, and the KL aga
 - B2: draw the pairs without a loop: a component index for every sample from `torch.rand` compared with the weights,
   then $x = \mu_k + \sigma_k \varepsilon$ with $\varepsilon \sim \mathcal{N}(0, 1)$. With 50 000 pairs and 8 planar
   layers, 2000 full-batch steps take a minute or two on a CPU.
-- B2: for a fixed $\theta$, compute the KL by the trapezoidal rule on a grid (as in F2.1) against the
-  `Mixture1D` of that $\theta$. Recall T1.2: what can a model trained on $\theta \in [0.1, 0.5]$ say about
-  $\theta = 0.7$?
+- B2: for a fixed $\theta$, compute the KL by the trapezoidal rule on a grid (as in the F2 hints) against the
+  `Mixture1D` of that $\theta$. Recall [T1.2 of the first stage](TASKS.md#t1-what-did-we-simulate-the-prior-about-1-hour):
+  what can a model trained on $\theta \in [0.1, 0.5]$ say about $\theta = 0.7$?

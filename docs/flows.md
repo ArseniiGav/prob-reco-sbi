@@ -18,7 +18,7 @@ skewed with a heavy right tail. Its density, its cumulative distribution functio
 
 ```math
 F(x) = \sum_k w_k\, \Phi\!\left(\frac{x - \mu_k}{\sigma_k}\right), \qquad
-\Phi(t) = \tfrac{1}{2}\left[1 + \operatorname{erf}\!\left(t/\sqrt{2}\right)\right],
+\Phi(t) = \tfrac{1}{2}\left[1 + \mathrm{erf}\!\left(t/\sqrt{2}\right)\right],
 ```
 
 and therefore its quantile function $F^{-1}$ are known exactly. Its mean is $0.29$, its standard deviation $2.18$
@@ -35,8 +35,8 @@ x = target.sample(20_000, seed=11)  # float64 tensor; the samples of the tasks
 target.pdf(x), target.log_pdf(x), target.cdf(x), target.quantile([0.1, 0.5, 0.9]), target.entropy()
 ```
 
-`cdf` is computed as $\tfrac12 \operatorname{erfc}(-t/\sqrt2)$, which equals $\Phi(t)$ but keeps its precision in
-the left tail, where $1 + \operatorname{erf}(t/\sqrt2)$ rounds to zero; `sf` gives $1 - F(x)$ with the same precision
+`cdf` is computed as $\tfrac12 \mathrm{erfc}(-t/\sqrt2)$, which equals $\Phi(t)$ but keeps its precision in
+the left tail, where $1 + \mathrm{erf}(t/\sqrt2)$ rounds to zero; `sf` gives $1 - F(x)$ with the same precision
 in the right tail. `quantile` inverts the CDF by bisection.
 
 ## Change of variables in one dimension
@@ -93,10 +93,10 @@ where $\phi$ are the parameters of all layers. For many samples the average beco
 ```
 
 The entropy $H(p)$ does not depend on the flow, so maximum likelihood minimises the forward Kullback-Leibler
-divergence $\mathrm{KL}(p \,\|\, q)$. Two consequences:
+divergence $\mathrm{KL}(p \,\Vert\, q)$. Two consequences:
 
 - the expected loss cannot go below $H(p)$ (1.888 nats for the camel). The training loss itself is an average over
-  $N$ samples: it fluctuates around $H(p) + \mathrm{KL}$ by about $\operatorname{std}(\log p)/\sqrt{N}$ (0.006 nats
+  $N$ samples: it fluctuates around $H(p) + \mathrm{KL}$ by about $\mathrm{std}(\log p)/\sqrt{N}$ (0.006 nats
   for $N = 20\,000$), so it can end below $H(p)$ by chance, and it does so systematically when the flow overfits,
   i.e. learns the particular samples rather than $p$. To estimate the KL divergence from the loss, subtract the loss
   of the exact density on the same samples, $-\frac{1}{N}\sum_i \log p(x_i)$, rather than $H(p)$: most of the
@@ -107,7 +107,7 @@ divergence $\mathrm{KL}(p \,\|\, q)$. Two consequences:
 
 The loss needs samples of $p$ and nothing else: never the value of $p(x)$. This is exactly the situation of
 simulation-based inference, where the simulator produces samples $(\theta, x)$ but no density, and it is the training
-that NPE uses. The reverse divergence $\mathrm{KL}(q \,\|\, p) = \mathbb{E}_q[\log q - \log p]$, used in variational
+that NPE uses. The reverse divergence $\mathrm{KL}(q \,\Vert\, p) = \mathbb{E}_q[\log q - \log p]$, used in variational
 inference, needs $\log p$ at the model's samples, which a simulator cannot provide (for NPE, $p$ would be the unknown
 posterior itself); it is not used in this course.
 
@@ -314,22 +314,22 @@ divergence, not the p-value, measures how good a flow is.
 ## Where this is used: a one-dimensional flow in a real experiment
 
 Everything above is the toolbox of a real analysis. In the JUNO neutrino experiment the energy response of the
-detector depends on three parameters $\boldsymbol\psi$ (Birks' coefficient, the Cherenkov yield factor and the light
+detector depends on three parameters $\psi$ (Birks' coefficient, the Cherenkov yield factor and the light
 yield), and the data that constrain them are the spectra of calibration sources: for each source, the number of
-photo-electrons $x$ of every event. The likelihood $p(x \mid \boldsymbol\psi)$ has no closed form, since it comes out
+photo-electrons $x$ of every event. The likelihood $p(x \mid \psi)$ has no closed form, since it comes out
 of a full detector simulation, so it is learned: the NFDE model of the NeuroMCT paper (Gavrikov et al. 2026) is a
-*conditional* one-dimensional normalizing flow $z = f(x, \boldsymbol\psi)$ with a standard normal base,
+*conditional* one-dimensional normalizing flow $z = f(x, \psi)$ with a standard normal base,
 trained by maximum likelihood on simulated events, exactly as in this stage, but with the parameters as an extra
 input. This is neural likelihood estimation (NLE): the flow gives the likelihood of the calibration data, and
-combined with a prior and sampled over $\boldsymbol\psi$, it gives the posterior of the response parameters. Bonus
+combined with a prior and sampled over $\psi$, it gives the posterior of the response parameters. Bonus
 task B2 is the toy version of it.
 
 <p align="center"><img src="img/neuromct/nfde_inference_vis.png" width="520" alt="The NFDE flow of NeuroMCT maps the 241Am-Be calibration spectrum to a standard normal distribution; the derivative of the map gives the density"></p>
 
-**The change of variables at work.** The learned map $f(x, \boldsymbol\psi)$ (black) sends the
-${}^{241}$Am-Be spectrum (top, log scale, with its narrow line and its broad continuum) to $z \sim \mathcal N(0, 1)$
+**The change of variables at work.** The learned map $f(x, \psi)$ (black) sends the
+²⁴¹Am-Be spectrum (top, log scale, with its narrow line and its broad continuum) to $z \sim \mathcal N(0, 1)$
 (right); the model density is
-$\hat p(x \mid \boldsymbol\psi) = \varphi(f(x, \boldsymbol\psi))\,|\partial f / \partial x|$, the formula of the
+$\hat p(x \mid \psi) = \varphi(f(x, \psi))\,|\partial f / \partial x|$, the formula of the
 section on the change of variables. Compare with the oracle map of the camel above: a narrow line is a steep piece of
 the map, a continuum a shallow one.
 
@@ -345,7 +345,7 @@ probability, 2.9 %, on both axes.
 <p align="center"><img src="img/neuromct/flows_animation.gif" width="640" alt="Animation from NeuroMCT: the flow builds the 241Am-13C spectrum transformation by transformation"></p>
 
 **Building a spectrum layer by layer.** The flow of NeuroMCT is a composition of transformations, like the stacks of
-this stage; the animation shows the model density of the ${}^{241}$Am-${}^{13}$C source taking shape as the
+this stage; the animation shows the model density of the ²⁴¹Am-¹³C source taking shape as the
 transformations are applied one after the other.
 
 <p align="center"><img src="img/flows/toy_layer_by_layer.gif" width="640" alt="Animation: the flow of 16 planar layers fitted to the camel with only its first n layers, n = 0 to 16: the model density and the map"></p>
@@ -360,7 +360,7 @@ in place. Training fits the composition, not the intermediate stages.
 <p align="center"><img src="img/neuromct/model_comparison_spectra.png" width="760" alt="Calibration spectra of five sources from the JUNO simulation compared with the NFDE flow (bottom row) and with a transformer-based binned model (top row)"></p>
 
 **What a one-dimensional flow achieves.** The learned densities (dashed, bottom row: NFDE) on top of the simulated
-spectra of three gamma and two neutron sources at one point $\boldsymbol\psi$ of the parameter space, over three
+spectra of three gamma and two neutron sources at one point $\psi$ of the parameter space, over about four
 orders of magnitude; the top row is the binned alternative of the same paper (TEDE).
 
 **Figure credit.** The three NeuroMCT figures above are reproduced from the authors' code repository,

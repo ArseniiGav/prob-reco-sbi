@@ -6,7 +6,8 @@ abstract: >-
   Course material on probabilistic event reconstruction with simulation-based inference. The first part,
   "A Flash in the Dark", is a photon-transport simulation of a toy two-dimensional scintillation detector with
   switchable absorption, Rayleigh scattering and wall reflection, a documented HDF5 data format and student tasks
-  about the simulated data.
+  about the simulated data. The second part introduces normalizing flows in one dimension: a PyTorch package written
+  from scratch (transforms, maximum-likelihood training, the exact KL divergence to the target) and student tasks.
 authors:
   - family-names: Gavrikov
     given-names: Arsenii
@@ -19,6 +20,7 @@ url: "https://github.com/ArseniiGav/prob-reco-sbi"
 keywords:
   - simulation-based inference
   - neural posterior estimation
+  - normalizing flows
   - event reconstruction
   - photon transport
   - particle physics
