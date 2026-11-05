@@ -1,7 +1,7 @@
 """T3.4 - how hard is the inverse problem? Naive estimators per configuration.
 
 Energy: ``E_hat = Q / k`` with one calibration constant per configuration, ``k = median(Q / E)`` over an independent
-calibration sample from the same prior (50 000 events, seed 32), as the TASKS.md hint says; in every bin of r the
+calibration sample from the same prior (50 000 events, seed 32), as the task-sheet hint says; in every bin of r the
 bias is the median of ``E_hat / E - 1`` and the resolution half the width of its central 68 % interval (the robust
 measures of the hint). The mean-based variants (``k = sum(Q) / sum(E)``, mean and standard deviation per bin) are
 stored as well: the two differ where the distribution of Q / E is skewed or bimodal, i.e. next to the wall.
@@ -101,7 +101,7 @@ class Calibration:
     """Calibration constants of one configuration from its calibration sample."""
 
     def __init__(self, cal: dict[str, np.ndarray], light_yield: float, n_sensors: int) -> None:
-        self.k = float(np.median(cal["q"] / cal["energy"]))  # photo-electrons per MeV: median of Q / E (TASKS hint)
+        self.k = float(np.median(cal["q"] / cal["energy"]))  # photo-electrons per MeV: median of Q / E (T3.4 hint)
         self.k_mean = float(cal["q"].sum() / cal["energy"].sum())  # the mean-based constant, for comparison
         self.light_yield = light_yield
         # vertex-known map of the collected fraction in bins of r^2 (equal population for the uniform prior) and psi

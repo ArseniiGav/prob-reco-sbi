@@ -1,6 +1,6 @@
 """T5.1 (bonus): the simulator is stochastic -- the same theta simulated 200 000 times.
 
-theta = (x0, y0, E) = (0.3 m, 0.4 m, 2 MeV) as in TASKS.md (r = 0.5 m), full model, t0 ~ U(0, 10) ns as usual.
+theta = (x0, y0, E) = (0.3 m, 0.4 m, 2 MeV) as in the task sheet (r = 0.5 m), full model, t0 ~ U(0, 10) ns as usual.
 Two photon statistics: 'poisson' (N ~ Poisson(Y E), the default) and 'fixed' (N = Y E = 2000 for every event).
 
 Run from the repository root::
@@ -30,7 +30,7 @@ from matplotlib.colors import LinearSegmentedColormap, Normalize
 from matplotlib.lines import Line2D
 from matplotlib.ticker import NullFormatter
 
-THETA = {"x": 0.3, "y": 0.4, "energy": 2.0}  # the theta of the TASKS.md example
+THETA = {"x": 0.3, "y": 0.4, "energy": 2.0}  # the theta of the example of the task sheet
 N_REP = 200_000
 CORR_CMAP = LinearSegmentedColormap.from_list("corr", [C["blue"], "white", C["red"]])  # diverging, paper colours
 

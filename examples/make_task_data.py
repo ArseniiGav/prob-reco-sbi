@@ -1,7 +1,7 @@
-"""Make the data sets of TASKS.md ("Data for T1 to T4") on any operating system, also on Windows without a Unix shell.
+"""Make the data sets of the stage-1 tasks ("Data for T1 to T4") on any system, also on Windows without a Unix shell.
 
-The script runs the same ``flashsim generate`` commands as the bash block in TASKS.md, through the entry point of the
-command line interface, so it writes the same files. Run it from anywhere inside the repository::
+The script runs the same ``flashsim generate`` commands as the bash block in ``tasks/stage1_flash/README.md``, through
+the entry point of the command line interface, so it writes the same files. Run it from anywhere inside the repository::
 
     python examples/make_task_data.py              # every file of the block; files that exist are kept
     python examples/make_task_data.py --overwrite  # make every file again
@@ -21,13 +21,13 @@ from pathlib import Path
 
 from prob_reco_sbi.flash.cli import main as flashsim
 
-ROOT = Path(__file__).resolve().parents[1]  # the repository root: every path of TASKS.md is relative to it
+ROOT = Path(__file__).resolve().parents[1]  # the repository root: every path of the stage-1 tasks is relative to it
 PRESETS = ("straight", "absorb", "absorb-scatter", "full")
 PROCESSES = ("scattering", "reflection")  # absorption alone on top of straight light is the preset absorb
 
 
 def task_commands() -> list[list[str]]:
-    """Return the ``flashsim`` commands of the data block in TASKS.md, in the same order."""
+    """Return the ``flashsim`` commands of the data block in ``tasks/stage1_flash/README.md``, in the same order."""
     commands = [["generate", "-n", "50000", "--seed", "5", "-o", "data/t2_full.h5"]]  # T1 and T2: the default model
     for p in PRESETS:  # T3: the physics ladder, the same events for every preset, and small files with every hit
         commands.append(["generate", "--preset", p, "-n", "20000", "--seed", "6", "-o", f"data/t3_{p}.h5"])
@@ -53,7 +53,7 @@ def output_of(command: list[str]) -> Path:
 
 def parse_args() -> argparse.Namespace:
     """Read the command-line options."""
-    parser = argparse.ArgumentParser(description="Make the data sets of TASKS.md (T1 to T4) on any operating system.")
+    parser = argparse.ArgumentParser(description="Make the data sets of the stage-1 tasks (T1 to T4) on any system.")
     parser.add_argument("--overwrite", action="store_true", help="make every file again, also those that exist")
     parser.add_argument("--dry-run", action="store_true", help="only print the commands")
     return parser.parse_args()
@@ -64,7 +64,7 @@ def main() -> int:
     args = parse_args()
     os.chdir(ROOT)
     commands = task_commands()
-    print(f"{len(commands)} data sets for TASKS.md, written to {ROOT / 'data'}")
+    print(f"{len(commands)} data sets for the stage-1 tasks, written to {ROOT / 'data'}")
     start = time.perf_counter()
     for command in commands:
         line = "flashsim " + shlex.join(command)

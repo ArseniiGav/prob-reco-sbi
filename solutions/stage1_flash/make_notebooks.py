@@ -82,16 +82,24 @@ def show(*names):
 '''
 
 
-FIGURE_MARKER = re.compile(r"^!\[fig\]\(([^)]+)\)\s*$", re.M)
+#: A figure line of an answer: one or more images ``![fig](../figures/<name>.png)`` (``.gif`` for an animation), which
+#: GitHub shows when the answer file is opened; the older form ``![fig](name ...)`` with bare names is also read.
+FIGURE_MARKER = re.compile(r"^(!\[fig\]\([^)]+\)(?:[ \t]+!\[fig\]\([^)]+\))*)\s*$", re.M)
+FIGURE_LINK = re.compile(r"!\[fig\]\(([^)]+)\)")
+
+
+def figure_names(marker: str) -> list[str]:
+    """Return the figure names of a figure line, the file stems: ``../figures/t1_1_radius.png`` -> ``t1_1_radius``."""
+    return [Path(target).stem for link in FIGURE_LINK.findall(marker) for target in link.split()]
 
 
 def split_at_figures(body: str) -> list[tuple[str, str]]:
-    """Split an answer at its figure markers ``![fig](name ...)``: a list of ("text", ...) and ("figure", names)."""
+    """Split an answer at its figure lines: a list of ("text", ...) and ("figure", names separated by spaces)."""
     parts: list[tuple[str, str]] = []
     pos = 0
     for m in FIGURE_MARKER.finditer(body):
         parts.append(("text", body[pos : m.start()]))
-        parts.append(("figure", m.group(1)))
+        parts.append(("figure", " ".join(figure_names(m.group(1)))))
         pos = m.end()
     parts.append(("text", body[pos:]))
     return parts
@@ -104,9 +112,9 @@ def build(name: str, title: str, scripts: list[str], ids: list[str], note: str =
     cells.append(
         nbformat.v4.new_markdown_cell(
             f"# {title}: reference solution\n\n"
-            f"Questions {', '.join(ids)} of [TASKS.md](../../TASKS.md). The code is in the scripts named below "
-            "(run from the repository root); this notebook runs them, shows their figures and gives the answers. "
-            "Every number quoted comes from `results/`."
+            f"Questions {', '.join(ids)} of [the stage-1 tasks](../../tasks/stage1_flash/README.md). The code is in "
+            "the scripts named below (run from the repository root); this notebook runs them, shows their figures and "
+            "gives the answers. Every number quoted comes from `results/`."
         )
     )
     cells.append(nbformat.v4.new_code_cell(SHOW))

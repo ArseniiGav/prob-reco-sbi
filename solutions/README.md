@@ -5,7 +5,7 @@ question ID -> script -> figures -> answer, the run instructions and the reprodu
 
 | stage | tasks | solutions |
 |---|---|---|
-| 1: A Flash in the Dark (the toy detector: prior, response, physics ladder, event displays, bonus) | [TASKS.md](../TASKS.md) | [`stage1_flash/`](stage1_flash/README.md) |
+| 1: A Flash in the Dark (the toy detector: prior, response, physics ladder, event displays, bonus) | [`tasks/stage1_flash/`](../tasks/stage1_flash/README.md) | [`stage1_flash/`](stage1_flash/README.md) |
 
 Every stage keeps the same layout: scripts `task*.py` with the helpers in `common.py`, one answer file per question ID
 in `answers/`, every number quoted in an answer in `results/*.json`, the figures (PDF + PNG, GIFs for animations) in

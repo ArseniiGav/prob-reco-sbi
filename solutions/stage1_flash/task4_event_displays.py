@@ -53,8 +53,8 @@ PRESET_STYLE = {  # the colour per preset is shared with T0.2 and T3 (common.PRE
     "full": {"color": PRESET_COLOURS["full"], "ls": "-", "marker": "D"},
 }
 MAIN_EVENT = {"x": 0.45, "y": 0.25, "energy": 2.0, "t0": 3.0}  # r = 0.51 m, used in T4.1 and T4.2
-PRESET_EVENT = {"x": 0.6, "y": 0.3, "energy": 2.0, "t0": 0.0}  # r = 0.67 m, T4.4: the example call of TASKS.md
-PRESET_SEED = 10  # as in TASKS.md: simulate(0.6, 0.3, 2.0, t0=0.0, config=preset(name), seed=10, save_tracks=1)
+PRESET_EVENT = {"x": 0.6, "y": 0.3, "energy": 2.0, "t0": 0.0}  # r = 0.67 m, T4.4: the example call of the task sheet
+PRESET_SEED = 10  # as in the task sheet: simulate(0.6, 0.3, 2.0, t0=0.0, config=preset(name), seed=10, save_tracks=1)
 SENSOR_TICKS = [0, 8, 16, 24, 31]
 
 
@@ -352,7 +352,7 @@ def t4_3() -> dict[str, object]:
 
 def t4_4() -> dict[str, object]:
     """T4.4: one theta under the four presets, single events and mean profiles."""
-    # the call of TASKS.md (100 recorded photons per event, of which the first 40 are drawn)
+    # the call of the task sheet (100 recorded photons per event, of which the first 40 are drawn)
     events = {name: one_event(**PRESET_EVENT, name=name, seed=PRESET_SEED, save_tracks=1) for name in PRESETS}
     vmax = max(float(ev.response.charge[0].max()) for ev in events.values())
     norm = Normalize(0.0, vmax)

@@ -4,9 +4,11 @@ Run from the repository root (it is also the last step of ``run_all.sh``)::
 
     python solutions/stage1_flash/make_answers.py
 
-Figure markers ``![fig](name ...)`` become inline images. Every figure name quoted in an answer (``t2_2_total_charge``
-and the like) or named in a marker must exist in ``figures/`` as a PNG or a GIF;
-the script fails otherwise, so that the answers and the figures cannot drift apart.
+A figure line ``![fig](../figures/<name>.png)`` (one or more images; ``.gif`` for an animation) shows the figure when
+the answer file is opened on GitHub and becomes an inline image of ``ANSWERS.md``. Every figure name quoted in an
+answer (``t2_2_total_charge`` and the like) or named in a figure line must exist in ``figures/`` as a PNG or a GIF, and
+every image path of a figure line must point at an existing file; the script fails otherwise, so that the answers and
+the figures cannot drift apart.
 """
 
 from __future__ import annotations
@@ -19,7 +21,15 @@ from common import FIG, SOL
 ANSWERS = SOL / "answers"
 OUTPUT = SOL / "ANSWERS.md"
 FIGURE_NAME = re.compile(r"`(t\d_\d_[a-z0-9_]+)`")
-FIGURE_MARKER = re.compile(r"^!\[fig\]\(([^)]+)\)\s*$", re.M)
+#: A figure line of an answer: one or more images ``![fig](../figures/<name>.png)`` (``.gif`` for an animation), which
+#: GitHub shows when the answer file is opened; the older form ``![fig](name ...)`` with bare names is also read.
+FIGURE_MARKER = re.compile(r"^(!\[fig\]\([^)]+\)(?:[ \t]+!\[fig\]\([^)]+\))*)\s*$", re.M)
+FIGURE_LINK = re.compile(r"!\[fig\]\(([^)]+)\)")
+
+
+def figure_names(marker: str) -> list[str]:
+    """Return the figure names of a figure line, the file stems: ``../figures/t1_1_radius.png`` -> ``t1_1_radius``."""
+    return [Path(target).stem for link in FIGURE_LINK.findall(marker) for target in link.split()]
 
 
 def question_key(path: Path) -> tuple[int, int]:
@@ -41,12 +51,15 @@ def main() -> None:
         title = first.lstrip("# ").strip()
         anchor = re.sub(r"[^\w\- ]", "", title.lower()).replace(" ", "-")  # the heading anchor of GitHub
         contents.append(f"- [{title}](#{anchor})")
-        for name in FIGURE_NAME.findall(text) + [n for m in FIGURE_MARKER.findall(text) for n in m.split()]:
+        for name in FIGURE_NAME.findall(text) + [n for m in FIGURE_MARKER.findall(text) for n in figure_names(m)]:
             if name not in figures:
                 missing.append((path.name, name))
+        for marker in FIGURE_MARKER.findall(text):  # an image path must resolve from answers/, where GitHub reads it
+            targets = [t for link in FIGURE_LINK.findall(marker) for t in link.split() if "/" in t]
+            missing += [(path.name, t) for t in targets if not (ANSWERS / t).is_file()]
         body = FIGURE_NAME.sub(lambda m: f"[`{m.group(1)}`](figures/{figures.get(m.group(1), m.group(1))})", body)
-        body = FIGURE_MARKER.sub(  # a marker line "![fig](name ...)" becomes one inline image per name
-            lambda m: "\n".join(f"![{n}](figures/{figures.get(n, n)})" for n in m.group(1).split()), body
+        body = FIGURE_MARKER.sub(  # a figure line becomes one inline image per figure, linked from this directory
+            lambda m: "\n".join(f"![{n}](figures/{figures.get(n, n)})" for n in figure_names(m.group(1))), body
         )
         sections.append(f"## {title}\n{body}")
     if missing:

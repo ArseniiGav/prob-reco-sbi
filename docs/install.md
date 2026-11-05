@@ -16,8 +16,8 @@ python -m venv .venv
 ```
 
 If `python` is not found, use `py` instead. The task sheet is written for a Unix shell (bash); on Windows, the
-`for` loops of TASKS.md are replaced by `python examples/make_task_data.py`, and single `flashsim` commands work as they
-are. [WSL](https://learn.microsoft.com/windows/wsl/) gives a Linux shell on Windows if you prefer the bash commands.
+`for` loops of [stage 1](../tasks/stage1_flash/README.md) are replaced by `python examples/make_task_data.py`, and
+single `flashsim` commands work as they are. [WSL](https://learn.microsoft.com/windows/wsl/) gives a Linux shell on Windows if you prefer the bash commands.
 
 ## Which PyTorch
 

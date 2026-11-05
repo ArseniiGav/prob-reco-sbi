@@ -1,8 +1,8 @@
 # Reference solutions: A Flash in the Dark
 
-Reference answers to the questions of [TASKS.md](../../TASKS.md), by question ID: stage 1 of the course (the index of
-the stages is [../README.md](../README.md)). The cached data sets in `data/` are not in the repository: the scripts
-simulate them on their first run.
+Reference answers to the questions of [`tasks/stage1_flash/`](../../tasks/stage1_flash/README.md), by question ID:
+stage 1 of the course (the index of the stages is [../README.md](../README.md)). The cached data sets in `data/` are
+not in the repository: the scripts simulate them on their first run.
 
 | what | where |
 |---|---|
@@ -109,6 +109,6 @@ photon-level realisation, which changes numbers in the last digit but no conclus
   reflection (teal squares) as separate markers, the charge barycentre (firebrick cross) as the naive vertex, the true
   vertex a gold star.
 - Two public-file conventions matter for the answers: the "69 / 21 / 10 %" direct / scattered / reflected composition
-  of the seminar is the disc average (the centre is 60.8 / 29.7 / 9.6 %), and the T3.4 estimators follow the TASKS.md
+  of the seminar is the disc average (the centre is 60.8 / 29.7 / 9.6 %), and the T3.4 estimators follow the task-sheet
   hint (k = median of Q/E, median bias, half of the central 68 % interval), with the mean-based variants stored next
   to them.

@@ -303,7 +303,7 @@ and +22.0 % at the wall, crossing zero at r ≈ 0.73 m; over the whole prior its
 resolution equals the photon statistics 1/sqrt(Q) (4.1-4.4 % falling to 3.9 %) up to r = 0.9 m, but jumps to 6.7 % and
 30.6 % in the last two bins, and knowing r exactly does not cure it (6.5 %, 29.8 %): near the wall the collection
 depends on the vertex in two dimensions (item 8). T3.4 repeats this estimator for every preset with the measures of
-the TASKS.md hint (k = median of Q/E, median bias, central 68 % interval) and with 1 cm bins in the last 10 cm; its
+the task-sheet hint (k = median of Q/E, median bias, central 68 % interval) and with 1 cm bins in the last 10 cm; its
 wall bias for the full model is larger than the +22.0 % quoted here for r > 0.95 m, because the last centimetre alone
 is more extreme than the whole last 5 cm (see answers/T3.4.md for the numbers).
 
@@ -477,7 +477,7 @@ Point for the students: even for straight light the collected fraction depends o
 0.498 facing a gap at r = 0.9 m), but averaged over the azimuth it is c at every radius; absorption adds the real radial
 dependence (0.2615 at the centre, 0.349 at vertex 3).
 
-### The set-up of TASKS.md
+### The set-up of the task sheet
 
 (`results/T3.json`, key `T3.2/tasks_setup`): the two commands of the task sheet give 1000
 events at (0.5, 0.2) m with exactly N = 2000 photons each (`--photon-statistics fixed`), so a student's per-sensor
@@ -593,7 +593,7 @@ collection, and the timing as independent information on the distances.
 
 *Figures:* [`t3_4_energy_estimator`](figures/t3_4_energy_estimator.png), [`t3_4_barycentre`](figures/t3_4_barycentre.png), [`t3_4_inverse_problem`](figures/t3_4_inverse_problem.png) (summary) (`task3_4_naive_estimators.py`;
 estimators applied to the 100 000-event main samples, calibrated on independent 50 000-event samples from the same
-prior with another seed). The energy estimator follows the TASKS.md hint: one constant k = median of Q/E per
+prior with another seed). The energy estimator follows the task-sheet hint: one constant k = median of Q/E per
 configuration, and in every bin of r0 the median of Ê/E − 1 as the bias and half of the central 68 % interval as the
 resolution; the mean-based variants (k = ΣQ/ΣE, mean and standard deviation per bin) are stored next to them in
 `results/T3.json` and quoted where they differ. Configurations below are always in the order straight / absorb /
@@ -673,7 +673,7 @@ Absorption sharpens the charge pattern (it punishes the long paths to the far si
 relative-time profiles keep the shape of the time of flight in every preset.
 
 **Details** (`simulate(0.6, 0.3, 2.0, t0=0.0, config=preset(name), seed=10, save_tracks=1)`, the example call of
-TASKS.md; profiles from 2000 events per preset)
+the task sheet; profiles from 2000 events per preset)
 
 ![t4_4_presets](figures/t4_4_presets.png)
 - *Collected light:* Q = 1019.5 p.e. on average for straight light (spread 33.3 p.e. over the events), 597.4 p.e. with
@@ -714,7 +714,7 @@ charges.
 - *Timeline:* the first photon is detected 3.54 ns after the emission; half of the detected ones arrive by 5.69 ns;
   half of all photons have ended by 4.11 ns (most of them absorbed); the last one ends at 19.41 ns, leaving 74
   detected, 206 absorbed and none in flight.
-- *File size, a practical point:* written the plain way of the TASKS.md hint (`FuncAnimation` saved with
+- *File size, a practical point:* written the plain way of the task-sheet hint (`FuncAnimation` saved with
   `writer="pillow"`), the same flash at 800 px with 203 frames is 8.9 MB, because every frame gets its own colour
   palette; one shared palette without dithering keeps the 163-frame GIF at 1.0 MB. The 8.9 MB were measured once with
   `python solutions/stage1_flash/task4_animation.py --compare-pillowwriter`, which `run_all.sh` does not run.
@@ -745,7 +745,7 @@ N = 2000 fixed)
   spread 20.3 instead of 24.0 p.e.); each sensor has variance/mean 1 − p_j (nearest sensor 0.975 measured, 0.976
   expected; rms pull 1.04); all pairs are anti-correlated as −√(p_i p_j / ((1 − p_i)(1 − p_j))): −0.0083 on average vs
   −0.0082 expected, −0.024 to −0.026 for the brightest neighbours (j = 4, 5, 6; expected −0.023 to −0.024).
-- *With the 20 000 events of TASKS.md* every pair correlation has a statistical noise of 1/√N = 0.007, as large as the
+- *With the 20 000 events of the tasks* every pair correlation has a statistical noise of 1/√N = 0.007, as large as the
   effect: look at the average over the 496 pairs and at variance/mean of Q (0.71 instead of 1.00), which show it
   clearly at that sample size; the pair-by-pair agreement above needs the 200 000 events of the reference.
 
@@ -855,4 +855,4 @@ by 6.41 ns instead of 1.31 ns.
 *Figures:* [`t5_4_detector_effects`](figures/t5_4_detector_effects.png) (vertex resolution from each feature group for every setting) and
 [`t5_4_feature_distributions`](figures/t5_4_feature_distributions.png) (one feature per effect); script `task5_detector_effects.py`; numbers in
 `results/T5.json` under `T5.4`. One effect is changed at a time with the same seed; the dark rates include the 10^6
-and 10^7 Hz of TASKS.md.
+and 10^7 Hz of the task sheet.

@@ -33,7 +33,7 @@ from prob_reco_sbi.flash import sensor_arcs
 
 TESTED = ["straight", "absorb"]  # configurations with an analytic prediction
 SENSOR_COLOR = "#3b3a37"
-TASKS_VERTEX, TASKS_ENERGY, TASKS_N, TASKS_SEED = (0.5, 0.2), 2.0, 1000, 8  # the T3.2 commands of TASKS.md
+TASKS_VERTEX, TASKS_ENERGY, TASKS_N, TASKS_SEED = (0.5, 0.2), 2.0, 1000, 8  # the T3.2 commands of the task sheet
 
 
 def draw_detector(ax: Any, geometry: Any, lw: float = 3.0) -> None:
@@ -268,7 +268,7 @@ def pull_distribution(results: dict[str, Any], pulls: dict[str, list[float]]) ->
 
 
 def hint_approximation(x0: float, y0: float, energy: float, cfg: Any) -> np.ndarray:
-    """Compute the approximation of the TASKS hint: ``Y E Delta_j / (2 pi) exp(-d_j / lambda_a)``, d_j to the centre."""
+    """Compute the approximation of the T3.2 hint: ``Y E Delta_j / (2 pi) exp(-d_j / lambda_a)``, d_j to the centre."""
     delta, _ = t3.subtended_angle(np.float64(x0), np.float64(y0), cfg.geometry)
     scale = cfg.readout.detection_efficiency * cfg.optics.light_yield * energy / (2 * np.pi)
     if not cfg.optics.absorption:
@@ -278,7 +278,7 @@ def hint_approximation(x0: float, y0: float, energy: float, cfg: Any) -> np.ndar
 
 
 def tasks_setup(results: dict[str, Any]) -> dict[str, Any]:
-    """Evaluate the set-up of the T3.2 commands of TASKS.md: (0.5, 0.2) m, 2 MeV, fixed photon numbers, 1000 events.
+    """Evaluate the set-up of the T3.2 commands of the tasks: (0.5, 0.2) m, 2 MeV, fixed photon numbers, 1000 events.
 
     With a fixed number of photons N per event the sensor charges are binomial, ``Var(n_j) = N p_j (1 - p_j)``, and
     the pulls use that variance. The hint's approximation (subtended angle times the survival probability along the
@@ -376,7 +376,7 @@ def main() -> None:
         print(
             f"  {ckey}: n={a['n']} mean={a['mean']:+.3f} std={a['std']:.3f} chi2={a['chi2']:.1f} p={a['p_value']:.3f}"
         )
-    print("T3.2 TASKS.md set-up (vertex (0.5, 0.2) m, 2 MeV, fixed N, 1000 events): chi2/ndf (p), collected fraction")
+    print("T3.2 set-up (vertex (0.5, 0.2) m, 2 MeV, fixed N, 1000 events): chi2/ndf (p), collected fraction")
     for ckey in TESTED:
         e = tasks[ckey]
         print(

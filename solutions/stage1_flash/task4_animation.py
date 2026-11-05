@@ -5,7 +5,7 @@ Run from the repository root::
     python solutions/stage1_flash/task4_animation.py
 
 With ``--compare-pillowwriter`` it also writes the same animation with matplotlib's FuncAnimation + PillowWriter (as in
-the TASKS.md hint), records its size and deletes it.
+the task-sheet hint), records its size and deletes it.
 
 Output: solutions/stage1_flash/figures/t4_5_photons.gif (looping GIF) and t4_5_photons_frame.pdf/.png (its final
 frame); numbers in solutions/stage1_flash/results/T4.json (key T4.5). The event is a 0.3 MeV flash at (0.25, 0.15) m,

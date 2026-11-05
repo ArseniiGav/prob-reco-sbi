@@ -4,11 +4,11 @@ Run from the repository root::
 
     python solutions/stage1_flash/task0_setup.py
 
-The students' steps (TASKS.md T0.1) are: clone, create a virtual environment, install the CPU build of PyTorch,
+The students' steps (T0.1 of the task sheet) are: clone, create a virtual environment, install the CPU build of PyTorch,
 ``python -m pip install -e ".[analysis,dev]"`` and ``python -m pytest``. This script repeats the last step in the
 current environment (``python -m pytest -q`` from the repository root, without writing a pytest cache or bytecode) and
 stores the outcome and the versions in ``results/T0.json``. It also checks whether the ``analysis`` extra alone would
-provide ``pytest`` (it does not: ``pytest`` comes with the ``dev`` extra, which is why TASKS.md installs both).
+provide ``pytest`` (it does not: ``pytest`` comes with the ``dev`` extra, which is why the task sheet installs both).
 """
 
 from __future__ import annotations
