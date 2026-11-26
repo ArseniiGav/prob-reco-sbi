@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- `solutions/`: the reference solutions are no longer part of the repository.
+
 ## [0.2.0] - 2026-11-05
 
 The reference solutions of stage 1, and stage 2a of the course: normalizing flows in one dimension.
