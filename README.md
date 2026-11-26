@@ -31,7 +31,7 @@ one-dimensional normalizing flows `prob_reco_sbi.flows1d`, their documentation a
 | 2     | Neural posterior estimation (NPE) of the vertex and the energy from the simulated detector response                      | next                             |
 | 3     | NPE on NuBench, an open benchmark for event reconstruction in neutrino telescopes ([arXiv:2511.13111](https://arxiv.org/abs/2511.13111)) | later |
 
-The index of the tasks, with the documentation, the guided notebook and the reference solutions of every stage, is
+The index of the tasks, with the documentation and the guided notebook of every stage, is
 [tasks/README.md](tasks/README.md).
 
 For background on simulation-based inference, see K. Cranmer, J. Brehmer and G. Louppe,
@@ -172,8 +172,7 @@ One directory per stage, indexed in [tasks/README.md](tasks/README.md):
 
 - Stage 1, [tasks/stage1_flash/](tasks/stage1_flash/README.md): set-up (T0), the prior (T1), the detector response
   (T2), the physics ladder (T3) and event displays (T4), plus a bonus on the way to inference (T5). The data of T1 to
-  T4 can be made on any operating system with `python examples/make_task_data.py`. The reference solutions are public,
-  one executed notebook per task: [solutions/stage1_flash/](solutions/stage1_flash/README.md).
+  T4 can be made on any operating system with `python examples/make_task_data.py`.
 - Stage 2a, [tasks/stage2a_flows/](tasks/stage2a_flows/README.md): the target and the oracle map (F1), planar and
   radial flows written by hand (F2, F3), splines (F4), the uniform base (F5) and animations (F6), plus the bonus tasks
   B1 and B2.
