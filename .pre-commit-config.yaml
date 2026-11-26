@@ -6,7 +6,6 @@ repos:
     hooks:
       - id: check-added-large-files
         args: ["--maxkb=3000"]
-        exclude: ^solutions/.*\.ipynb$  # the solution notebooks embed their figures
       - id: check-case-conflict
       - id: check-merge-conflict
       - id: check-json
@@ -29,4 +28,3 @@ repos:
     rev: 0.9.1
     hooks:
       - id: nbstripout
-        exclude: ^solutions/  # the solution notebooks keep their outputs (figures and answers)
