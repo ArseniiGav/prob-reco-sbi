@@ -32,7 +32,7 @@ documentation and the tasks for the students.
 | 1     | **A Flash in the Dark**: the toy detector, its data and the tasks about the data ([tasks](tasks/stage1_flash/README.md)) | released (0.1.0) |
 | 2a    | **Normalizing flows in one dimension**: the density model of NPE ([tasks](tasks/stage2a_flows/README.md))                | released (0.2.0) |
 | 2b    | **Neural posterior estimation** (NPE) of the vertex and the energy from the detector response ([tasks](tasks/stage2b_npe/README.md)) | released (0.3.0) |
-| 3     | Reliability of the posteriors: coverage, simulation-based calibration and predictive checks, with a wrong prior and a wrong simulator | next |
+| 3     | Reliability of the posteriors: do they hold the truth as often as they claim (coverage, simulation-based calibration), and do events simulated from them look like the data (predictive checks)? With a wrong prior and a wrong simulator | next |
 | 4     | NPE on NuBench, an open benchmark for event reconstruction in neutrino telescopes ([arXiv:2511.13111](https://arxiv.org/abs/2511.13111)) | later |
 
 The index of the tasks, with the documentation and the guided notebook of every stage, is
@@ -212,12 +212,12 @@ print(kl_to_truth(flow, target))  # exact KL divergence to the target, in nats
 
 ## Stage 2b: neural posterior estimation
 
-A network learns the posterior of the vertex and the energy, $\hat q(x_0, y_0, E \mid x)$, from simulated events.
-The subpackage `prob_reco_sbi.npe` (PyTorch, written from scratch) makes the spline flow of 2a conditional on the
-observations and chains three of them by the product rule. It maps the parameters to coordinates without the edges of
-the prior, trains by maximum likelihood on simulated pairs, and gives the exact posteriors of the toy where it has a
-likelihood formula. The library flow of the stage comes from [zuko](https://github.com/probabilists/zuko), in the
-`analysis` extra.
+A network learns the posterior of the vertex and the energy given the detector response $x$,
+$\hat q(x_0, y_0, E \mid x)$, from simulated events. The subpackage `prob_reco_sbi.npe` (PyTorch, written from scratch)
+makes the spline flow of 2a conditional on the observations and chains three of them by the product rule. It maps the
+parameters to coordinates without the edges of the prior, trains by maximum likelihood on simulated pairs, and gives
+the exact posteriors of the toy where it has a likelihood formula. The library flow of the stage comes from
+[zuko](https://github.com/probabilists/zuko), a library of normalizing flows in PyTorch, in the `analysis` extra.
 
 - [docs/npe.md](docs/npe.md): the maths, from the loss to the chain, the coordinates, the exact references, two
   modes and the library, with figures and animations
