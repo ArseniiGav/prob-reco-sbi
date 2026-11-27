@@ -37,6 +37,7 @@ Gavrikov et al. (2026); see the [references](#references).
 | $\tilde\theta$ | the parameters in unbounded, standardized coordinates | new |
 | $\mathcal{L}(\phi)$ | the loss | guide; paper |
 | $D_\mathrm{KL}(q \,\Vert\, \hat q)$ | the forward Kullback-Leibler divergence, in nats | paper; 2a wrote $\mathrm{KL}(p \,\Vert\, q)$ |
+| nat | the unit of KL divergences, entropies and losses computed with the natural logarithm (1 nat ≈ 1.44 bits) | new |
 | $N_\mathrm{flows}$ | the number of flows in a sequence | paper |
 | $K$, $B$ | the number of bins and the bound of a spline | 2a |
 

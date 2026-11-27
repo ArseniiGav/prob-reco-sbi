@@ -129,6 +129,7 @@ a folder outside the repository.
 | parameters head | the network that turns $\psi_i$ into the $3K - 1$ parameters of the spline of factor $i$ |
 | $\mathcal{L}(\phi)$ | the loss, $-\sum_{i=1}^{N} \log \hat q(\theta_i \mid x_i)$ over $N$ training pairs (the code takes the mean over a minibatch) |
 | $D_\mathrm{KL}(q \,\Vert\, \hat q)$ | the forward Kullback-Leibler divergence, in nats |
+| nat | the unit of KL divergences, entropies and losses computed with the natural logarithm (1 nat ≈ 1.44 bits) |
 | $K$, $B$ | the number of bins and the bound of a spline, as in 2a |
 | $N_\mathrm{flows}$ | the number of flows in a sequence: 1 in every factor of the chain, 3 in zuko's flow |
 | $r_0$, $Q$, $Y$, $n_j$, $\tau_j$, $t_0$ | as in stage 1: the radius of the vertex, the total charge, the light yield, the charge and the mean time of sensor $j$, the event time |
