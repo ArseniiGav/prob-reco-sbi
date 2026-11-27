@@ -17,7 +17,7 @@ The same is available on the command line as ``flashsim generate`` (``flashsim -
 """
 
 from .config import PRESETS, Geometry, Optics, Prior, Readout, SimConfig, matching_preset, preset
-from .features import network_input
+from .features import ganged_channels, ganged_input, network_input
 from .geometry import (
     distance_to_wall,
     photocoverage,
@@ -52,6 +52,8 @@ __all__ = [
     "Truth",
     "describe",
     "distance_to_wall",
+    "ganged_channels",
+    "ganged_input",
     "generate",
     "load",
     "matching_preset",
