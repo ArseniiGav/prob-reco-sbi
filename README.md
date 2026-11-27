@@ -11,25 +11,29 @@ Here the aim is the full posterior distribution of these parameters, not only a 
 **A Flash in the Dark**, a photon-transport simulation of a toy two-dimensional scintillation detector with switchable
 optical processes. The later stages train neural posterior estimators on its data and then apply them to an open
 neutrino-telescope benchmark. This repository holds the simulation package `prob_reco_sbi.flash`, the
-one-dimensional normalizing flows `prob_reco_sbi.flows1d`, their documentation and the tasks for the students.
+one-dimensional normalizing flows `prob_reco_sbi.flows1d`, the neural posterior estimators `prob_reco_sbi.npe`, their
+documentation and the tasks for the students.
 
 <p align="center">
-  <img src="docs/img/flash_photons.gif" width="480" alt="Animation of the photons of one event spreading through the toy detector">
+  <img src="docs/img/flash_photons.gif" width="270" alt="Animation of the photons of one event spreading through the toy detector">
+  <img src="docs/img/npe/posterior_training.gif" width="520" alt="Animation: the posterior samples of one event on the event display while a network learns them">
   <br>
-  <em>The photons of one event fly out from the vertex at the speed of light in the medium. Scatterings and wall
-  reflections appear as markers, absorbed photons turn grey, and detected photons light up their sensor (black: no
+  <em>Left: the photons of one event fly out from the vertex at the speed of light in the medium. Scatterings and wall
+  reflections appear as markers, absorbed photons turn gray, and detected photons light up their sensor (black: no
   light, green: most light). The event has 0.3 MeV, below the energy range of the default prior, so that its few
-  hundred photons can be followed one by one.</em>
+  hundred photons can be followed one by one. Right: the posterior of one event while a network learns it, from the
+  spread of the prior to the vertex, with the energy and the loss (stage 2b).</em>
 </p>
 
 ## Course roadmap
 
-| stage | content                                                                                                                  | status                           |
-|-------|--------------------------------------------------------------------------------------------------------------------------|----------------------------------|
-| 1     | **A Flash in the Dark**: the toy detector, its data and the tasks about the data ([tasks](tasks/stage1_flash/README.md)) | released (0.1.0)                 |
-| 2a    | **Normalizing flows in one dimension**: the density model of NPE ([tasks](tasks/stage2a_flows/README.md))                | released (0.2.0)                 |
-| 2     | Neural posterior estimation (NPE) of the vertex and the energy from the simulated detector response                      | next                             |
-| 3     | NPE on NuBench, an open benchmark for event reconstruction in neutrino telescopes ([arXiv:2511.13111](https://arxiv.org/abs/2511.13111)) | later |
+| stage | content                                                                                                                  | status           |
+|-------|--------------------------------------------------------------------------------------------------------------------------|------------------|
+| 1     | **A Flash in the Dark**: the toy detector, its data and the tasks about the data ([tasks](tasks/stage1_flash/README.md)) | released (0.1.0) |
+| 2a    | **Normalizing flows in one dimension**: the density model of NPE ([tasks](tasks/stage2a_flows/README.md))                | released (0.2.0) |
+| 2b    | **Neural posterior estimation** (NPE) of the vertex and the energy from the detector response ([tasks](tasks/stage2b_npe/README.md)) | released (0.3.0) |
+| 3     | Reliability of the posteriors: coverage, simulation-based calibration and predictive checks, with a wrong prior and a wrong simulator | next |
+| 4     | NPE on NuBench, an open benchmark for event reconstruction in neutrino telescopes ([arXiv:2511.13111](https://arxiv.org/abs/2511.13111)) | later |
 
 The index of the tasks, with the documentation and the guided notebook of every stage, is
 [tasks/README.md](tasks/README.md).
@@ -176,6 +180,10 @@ One directory per stage, indexed in [tasks/README.md](tasks/README.md):
 - Stage 2a, [tasks/stage2a_flows/](tasks/stage2a_flows/README.md): the target and the oracle map (F1), planar and
   radial flows written by hand (F2, F3), splines (F4), the uniform base (F5) and animations (F6), plus the bonus tasks
   B1 and B2.
+- Stage 2b, [tasks/stage2b_npe/](tasks/stage2b_npe/README.md): one parameter with an exact posterior (N1), the chain
+  of conditional flows and the exact posterior of three parameters (N2), the full detector (N3), two modes (N4) and a
+  flow from a library (N5), plus the bonus tasks NB1 and NB2. The data can be made on any operating system with
+  `python examples/make_npe_data.py`.
 
 ## Stage 2a: normalizing flows in one dimension
 
@@ -200,6 +208,34 @@ x = target.sample(20_000, seed=11)
 flow = Flow([RQSpline(bins=16)])  # a rational-quadratic spline on a standard normal base
 fit(flow, x, steps=2000, lr=1e-2)  # maximum likelihood (forward KL) with Adam
 print(kl_to_truth(flow, target))  # exact KL divergence to the target, in nats
+```
+
+## Stage 2b: neural posterior estimation
+
+A network learns the posterior of the vertex and the energy, $\hat q(x_0, y_0, E \mid x)$, from simulated events.
+The subpackage `prob_reco_sbi.npe` (PyTorch, written from scratch) makes the spline flow of 2a conditional on the
+observations and chains three of them by the product rule. It maps the parameters to coordinates without the edges of
+the prior, trains by maximum likelihood on simulated pairs, and gives the exact posteriors of the toy where it has a
+likelihood formula. The library flow of the stage comes from [zuko](https://github.com/probabilists/zuko), in the
+`analysis` extra.
+
+- [docs/npe.md](docs/npe.md): the maths, from the loss to the chain, the coordinates, the exact references, two
+  modes and the library, with figures and animations
+- [notebooks/02_npe.ipynb](notebooks/02_npe.ipynb): a guided first look at the package
+- [examples/npe_quickstart.py](examples/npe_quickstart.py): train the chain and draw the posterior of a new event from
+  the command line (writes `data/npe_quickstart.png`); [examples/make_npe_data.py](examples/make_npe_data.py): the
+  data of the tasks
+- [tasks/stage2b_npe/](tasks/stage2b_npe/README.md): the tasks N1 to N5 and the bonus NB1 and NB2
+
+```python
+from prob_reco_sbi.flash import generate, preset, simulate
+from prob_reco_sbi.npe import AutoregressiveFlow, fit, to_pairs
+
+theta, x = to_pairs(generate(22_000, config=preset("full"), seed=1))  # pairs: theta = (x0, y0, E), x [22000, 64]
+flow = AutoregressiveFlow(obs_dim=64)  # three conditional spline flows, x0 then y0 then E
+fit(flow, theta, x, epochs=20, val_fraction=1 / 11)  # maximum likelihood on the pairs
+event = simulate(0.5, 0.3, 2.0, seed=7)  # a new event
+samples = flow.sample(to_pairs(event)[1][0], 1000)  # its posterior: [1000, 3] samples
 ```
 
 ## Development
