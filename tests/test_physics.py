@@ -1,4 +1,4 @@
-"""Physics validations with statistical tolerances, for events at the centre of the detector, where the expectations
+"""Physics validations with statistical tolerances, for events at the center of the detector, where the expectations
 of the detected fractions and of the hit times are simple closed forms."""
 
 import math
@@ -13,7 +13,7 @@ COVERAGE = 32 * 0.10 / (2 * math.pi)
 
 
 def centre(name, n_events=200, **overrides):
-    """Events at the centre with exactly 1000 photons each."""
+    """Events at the center with exactly 1000 photons each."""
     config = preset(name, fixed_vertex=(0.0, 0.0), fixed_energy=1.0, photon_statistics="fixed", **overrides)
     return generate(n_events, config=config, seed=21, device="cpu", save_hits=True)
 
@@ -73,7 +73,7 @@ def test_perfect_reflector_and_sensors_detect_every_photon(vertex):
 
 
 def test_specular_reflection_from_the_centre_bounces_on_a_diameter():
-    """Radial photons that miss the sensors come back through the centre forever and are lost."""
+    """Radial photons that miss the sensors come back through the center forever and are lost."""
     config = preset("straight", reflection=True, reflectivity=1.0, reflection_model="specular", max_steps=20)
     data = generate(20, config=config, seed=23, device="cpu", photons_per_chunk=10**6).photons
     data_centre = simulate(np.zeros(20), 0.0, 1.0, config=config, seed=23, device="cpu").photons

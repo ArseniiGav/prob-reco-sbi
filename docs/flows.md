@@ -77,7 +77,7 @@ points after every layer, the "transport" of the samples from $p$ to the base.
 
 ## Training: maximum likelihood is the forward KL divergence
 
-The flow is trained on samples $x_1, \dots, x_N$ of the target by maximising their likelihood, i.e. by minimising the
+The flow is trained on samples $x_1, \dots, x_N$ of the target by maximizing their likelihood, i.e. by minimizing the
 mean negative log-likelihood
 
 ```math
@@ -92,7 +92,7 @@ where $\phi$ are the parameters of all layers. For many samples the average beco
   + \underbrace{\int p(x) \log \frac{p(x)}{q_\phi(x)} \,\mathrm{d}x}_{\mathrm{KL}(p\,\|\,q_\phi)} .
 ```
 
-The entropy $H(p)$ does not depend on the flow, so maximum likelihood minimises the forward Kullback-Leibler
+The entropy $H(p)$ does not depend on the flow, so maximum likelihood minimizes the forward Kullback-Leibler
 divergence $\mathrm{KL}(p \,\Vert\, q)$. Two consequences:
 
 - the expected loss cannot go below $H(p)$ (1.888 nats for the camel). The training loss itself is an average over
@@ -111,7 +111,7 @@ that NPE uses. The reverse divergence $\mathrm{KL}(q \,\Vert\, p) = \mathbb{E}_q
 inference, needs $\log p$ at the model's samples, which a simulator cannot provide (for NPE, $p$ would be the unknown
 posterior itself); it is not used in this course.
 
-The package's `fit` is this loop with the Adam optimiser:
+The package's `fit` is this loop with the Adam optimizer:
 
 ```python
 from prob_reco_sbi.flows1d import Flow, RQSpline, fit
@@ -156,7 +156,7 @@ z = x + \hat u \tanh(w x + b), \qquad
 \frac{\mathrm{d}z}{\mathrm{d}x} = 1 + \hat u w \left[1 - \tanh^2(w x + b)\right].
 ```
 
-The map is the identity plus a smooth step of total height $2\hat u$, centred at $x = -b/w$ and about $1/|w|$ wide.
+The map is the identity plus a smooth step of total height $2\hat u$, centered at $x = -b/w$ and about $1/|w|$ wide.
 Since $1 - \tanh^2$ takes every value in $(0, 1]$, the derivative is positive everywhere if and only if
 $\hat u w > -1$. The paper enforces this by replacing the raw parameter $u$ with
 
@@ -182,7 +182,7 @@ z = x + \hat\beta\, \frac{x - x_0}{\hat\alpha + |x - x_0|}, \qquad
 \frac{\mathrm{d}z}{\mathrm{d}x} = 1 + \frac{\hat\alpha \hat\beta}{(\hat\alpha + |x - x_0|)^2} .
 ```
 
-The map pushes points away from the centre $x_0$ ($\hat\beta > 0$) or pulls them towards it ($\hat\beta < 0$), within a
+The map pushes points away from the center $x_0$ ($\hat\beta > 0$) or pulls them toward it ($\hat\beta < 0$), within a
 distance of about $\hat\alpha$; far away it is a shift by $\pm\hat\beta$. At $x = x_0$ the derivative equals
 $1 + \hat\beta/\hat\alpha$; for $\hat\beta < 0$ this is its smallest value (for $\hat\beta > 0$ its largest, and the
 derivative is above 1 everywhere), so the derivative is positive everywhere if and only if $\hat\beta > -\hat\alpha$.
@@ -297,7 +297,7 @@ $\max_k(\mu_k + 10\sigma_k)$:
 \mathrm{KL}(p \,\|\, q) = \int p(x) \left[\log p(x) - \log q(x)\right] \mathrm{d}x \;\ge\; 0 ,
 ```
 
-in nats, zero only for $q = p$. It is the quantity that training minimises, but computed exactly instead of estimated
+in nats, zero only for $q = p$. It is the quantity that training minimizes, but computed exactly instead of estimated
 from samples, so it is the truth metric of every comparison: depth, number of bins, base, sample size. The flow is
 evaluated on a float64 copy, so the result does not suffer from the float32 rounding of the training. If the model
 puts zero density where the target has mass, the divergence is infinite.
@@ -336,7 +336,7 @@ the map, a continuum a shallow one.
 <p align="center"><img src="img/flows/toy_change_of_variables.png" width="520" alt="The same picture for a 16-bin spline fitted to the camel: its density on a log scale, the learned map and the standard normal base, with two marked points and a slab of x and its image in z"></p>
 
 **The same picture on the camel.** A 16-bin spline fitted to the 20 000 samples of the camel: its density on top (the
-target dashed), the map $z = f(x)$ in the centre and the base on the right. On the left flank of the spike, at
+target dashed), the map $z = f(x)$ in the center and the base on the right. On the left flank of the spike, at
 $x_1 = -2.4$, the map is steep and $q(x_1) = \varphi(z_1)\,f'(x_1) = 0.127 \times 2.82 = 0.356$; on the right flank of
 the hump, at $x_2 = 1.2$, it is shallow and $q(x_2) = 0.347 \times 0.51 = 0.176$. Between the spike and the hump the map
 is almost flat: the slab $x \in [-1.7, -1.0]$ is squeezed into $\Delta z = 0.08$, and the model gives it the same
@@ -365,13 +365,13 @@ orders of magnitude; the top row is the binned alternative of the same paper (TE
 
 **Figure credit.** The three NeuroMCT figures above are reproduced from the authors' code repository,
 [github.com/ArseniiGav/NeuroMCT](https://github.com/ArseniiGav/NeuroMCT), © 2025 Arsenii Gavrikov, Andrea Serafini
-and Dmitry Dolzhikov, where they are distributed under the MIT licence, which also covers their use in this
+and Dmitry Dolzhikov, where they are distributed under the MIT license, which also covers their use in this
 repository. Versions of two of them appear in A. Gavrikov et al., *Commun. Phys.* **9**, 63 (2026),
 [doi:10.1038/s42005-026-02499-6](https://doi.org/10.1038/s42005-026-02499-6), an open-access article published under
-the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International licence
+the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International license
 ([CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)): whoever reuses the published versions must
 credit the article, may not use them commercially and may not distribute modified versions. The "same picture on
-the camel" figures are new figures of this course and carry its MIT licence.
+the camel" figures are new figures of this course and carry its MIT license.
 
 <p align="center"><img src="img/flows/toy_conditional_spectra.png" width="760" alt="Histograms of 20 000 samples of p(x | theta) for five values of theta inside the training range, with the density of one conditional flow trained on all of them (dashed)"></p>
 
@@ -440,13 +440,13 @@ the quantile-quantile plots with the Kolmogorov-Smirnov test against the base.
 
 <p align="center"><img src="img/flows/anatomy_planar.gif" width="720" alt="Animation: a planar layer, its derivative and the density of a one-layer flow as u-hat w and b change"></p>
 
-**One planar layer.** As $\hat u w$ runs from $-0.95$ to $3$ and then the centre $-b/w$ moves (with $w = 2$), the map
+**One planar layer.** As $\hat u w$ runs from $-0.95$ to $3$ and then the center $-b/w$ moves (with $w = 2$), the map
 bends into a smooth step and its derivative into a bump or a dip; the right panel shows the density
 $\varphi(f(x))\,f'(x)$ of a flow made of this one layer.
 
 <p align="center"><img src="img/flows/anatomy_radial.gif" width="720" alt="Animation: a radial layer, its derivative and the density of a one-layer flow as beta-hat and x0 change"></p>
 
-**One radial layer.** With $\hat\alpha = 0.5$, the strength $\hat\beta$ runs from $-0.48$ to $3$ and then the centre
+**One radial layer.** With $\hat\alpha = 0.5$, the strength $\hat\beta$ runs from $-0.48$ to $3$ and then the center
 $x_0$ moves between $-2$ and $2$: the layer pushes points away from $x_0$ or pulls them in, and the panels show the
 map, its derivative, which equals $1 + \hat\beta/\hat\alpha$ at $x_0$, and the density of a flow made of this one
 layer.

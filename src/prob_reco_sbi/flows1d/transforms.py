@@ -102,7 +102,7 @@ class Affine(Transform):
 
     ``log|dz/dx| = s`` everywhere, so an affine flow with a Gaussian base is a Gaussian with mean ``-t exp(-s)`` and
     standard deviation ``exp(-s)``: it can match the mean and width of a target, nothing more. Parameters ``s``
-    (``log_scale``) and ``t`` (``shift``), initialised to the identity (0, 0).
+    (``log_scale``) and ``t`` (``shift``), initialized to the identity (0, 0).
     """
 
     def __init__(self) -> None:
@@ -135,7 +135,7 @@ class Planar(Transform):
         u_hat = u + (m(w u) - w u) w / w^2,    m(a) = -1 + softplus(a),
 
     so that ``u_hat w = m(w u) > -1`` for every ``u`` and ``w``. This holds in exact arithmetic: in float32,
-    ``1 + u_hat w`` rounds to 0 for ``w u`` below about -17 (the log-derivative at the bend centre is then -inf), and
+    ``1 + u_hat w`` rounds to 0 for ``w u`` below about -17 (the log-derivative at the bend center is then -inf), and
     the clamp of ``w^2`` below changes the bound for ``|w| < 1e-6``; training does not come near either. Three
     parameters: ``u``, ``w``, ``b``. The inverse has no closed form; since ``|z - x| < |u_hat|``, it is found by
     bisection in ``[z - |u_hat|, z + |u_hat|]``.
@@ -148,7 +148,7 @@ class Planar(Transform):
 
     Notes
     -----
-    Initialisation (seeded by :func:`torch.manual_seed`): ``w, b ~ N(0, 1)`` and ``u ~ N(0, 0.1^2)``. A small raw
+    Initialization (seeded by :func:`torch.manual_seed`): ``w, b ~ N(0, 1)`` and ``u ~ N(0, 0.1^2)``. A small raw
     ``u`` does not give a small ``u_hat``: for ``u -> 0``, ``u_hat w -> m(0) = log 2 - 1 = -0.31``, so ``u_hat`` is
     about ``-0.31 / w`` and a layer whose ``w`` starts near 0 starts as a large shift. A start at ``u = w = b = 0``
     is a stationary point (``u_hat = 0`` and every gradient vanishes).
@@ -190,7 +190,7 @@ class Radial(Transform):
         z     = x + beta_hat (x - x0) / (alpha_hat + |x - x0|)
         dz/dx = 1 + alpha_hat beta_hat / (alpha_hat + |x - x0|)^2
 
-    It pushes points away from ``x0`` (``beta_hat > 0``) or pulls them towards it (``beta_hat < 0``), over a distance
+    It pushes points away from ``x0`` (``beta_hat > 0``) or pulls them toward it (``beta_hat < 0``), over a distance
     of about ``alpha_hat``; far away it is a shift by ``+-beta_hat``. At ``x = x0`` the derivative is
     ``1 + beta_hat / alpha_hat``, its smallest value for ``beta_hat < 0`` (its largest for ``beta_hat > 0``, where it
     is above 1 everywhere): the derivative is positive everywhere if and only if ``beta_hat > -alpha_hat`` (with
@@ -209,7 +209,7 @@ class Radial(Transform):
 
     Notes
     -----
-    Initialisation (seeded by :func:`torch.manual_seed`): ``x0, alpha, beta ~ N(0, 1)``.
+    Initialization (seeded by :func:`torch.manual_seed`): ``x0, alpha, beta ~ N(0, 1)``.
     """
 
     def __init__(self, constrained: bool = True) -> None:
@@ -259,7 +259,7 @@ class RQSpline(Transform):
     Every term is positive when all ``w_k``, ``h_k`` and ``d_k`` are, so the map is strictly increasing by
     construction. The raw parameters: ``K`` widths and ``K`` heights (softmax over the bins, then a minimum share,
     times ``2 B``) and ``K - 1`` interior derivatives (softplus plus a minimum): ``3 K - 1`` in all. The inverse
-    solves a quadratic equation in ``xi`` (exact). Initialised to the identity (equal bins, unit derivatives).
+    solves a quadratic equation in ``xi`` (exact). Initialized to the identity (equal bins, unit derivatives).
 
     Parameters
     ----------

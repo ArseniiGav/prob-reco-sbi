@@ -48,7 +48,7 @@ class Mixture1D:
     Parameters
     ----------
     weights
-        Positive component weights (normalised to sum to 1).
+        Positive component weights (normalized to sum to 1).
     means
         Component means ``mu_k``.
     stds

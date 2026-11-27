@@ -17,12 +17,12 @@ photosensors on the wall record what arrives. This page defines the model as imp
 | dark-noise rate             | Hz (per sensor)         |
 | angles                      | rad                     |
 
-The centre of the detector is the origin. Angles are measured counter-clockwise from the $+x$ axis.
+The center of the detector is the origin. Angles are measured counter-clockwise from the $+x$ axis.
 
 ## Detector
 
 The detector is a disc of radius $R$ whose wall carries $M$ identical photosensors. Sensor $j = 0, \dots, M-1$ is the
-wall arc of length $a$ centred at the angle
+wall arc of length $a$ centered at the angle
 
 ```math
 \phi_j = \frac{2\pi j}{M},
@@ -44,7 +44,7 @@ f_\mathrm{cov} = \frac{M a}{2 \pi R}.
 
 Sensors may not overlap: configurations with $M a > 2\pi R$ are rejected. With $a = 0.10$ m and $R = 1$ m at most
 62 sensors fit on the wall. For drawing, `sensor_positions`, `sensor_edges` and `sensor_arcs` return the sensor
-centres, the angles of the arc ends and points along every arc.
+centers, the angles of the arc ends and points along every arc.
 
 ## Event parameters and prior
 
@@ -220,7 +220,7 @@ Detected photons are split into three categories: *reflected* if the photon was 
 | `fixed_vertex`, `fixed_energy` | the same vertex or energy for every event                                                |
 
 Specular reflection on a perfect circle keeps the angle between the photon and the wall. A photon emitted exactly at the
-centre therefore bounces back and forth along one diameter; if that diameter misses the sensors, the photon is absorbed
+center therefore bounces back and forth along one diameter; if that diameter misses the sensors, the photon is absorbed
 by the wall at one of its bounces (with $\rho = 1$ it bounces until `max_steps` and is counted as lost).
 
 ## Presets: the physics ladder
@@ -261,7 +261,7 @@ interactions, time jitter). Consequently:
 
 - the event parameters, photon numbers and noise counts do not depend on the device or on the chunking;
 - all stored arrays are identical for the same seed, device type, chunking (`photons_per_chunk`), PyTorch build and
-  hardware, whatever the number of threads (the realisation can change between CPU models, because the vector math
+  hardware, whatever the number of threads (the realization can change between CPU models, because the vector math
   library of PyTorch chooses its code path by the processor's instruction set; a different GPU model can change it as
   well). Only the provenance differs between two such runs: the creation time and the wall time, and the recorded
   thread count and command line where those differ.
@@ -270,11 +270,11 @@ Photons are transported in chunks of about `photons_per_chunk` photons (default 
 GPU); the value used is stored in every file. Before the first transport in a process, the package evaluates the CPU
 math kernels once single-threaded (`warm_up_cpu_kernels`): without this, the first multi-threaded call of `sin`,
 `cos`, `sqrt` or `log` in a process could compute one thread's block of elements with errors of order $10^{-4}$ (an
-initialisation race in the vector math library of the MKL-backed CPU builds of PyTorch), which flips the fate of a few
-photons and, through the random draws of the time jitter, changes the whole realisation of that run. On our test
+initialization race in the vector math library of the MKL-backed CPU builds of PyTorch), which flips the fate of a few
+photons and, through the random draws of the time jitter, changes the whole realization of that run. On our test
 machine (torch 2.14.1+cpu, 16 threads) the first large kernel call was affected in 13 of 40 fresh processes without
 the warm-up and in 0 of 40 with it, and 105 fresh simulations and command-line runs with the warm-up all reproduced
-the canonical data. The warm-up relies on this behaviour of the library; a test of the package starts fresh
+the canonical data. The warm-up relies on this behavior of the library; a test of the package starts fresh
 subprocesses to catch a regression (`tests/test_simulate.py`). If you ever see two runs with the same seed disagree,
 please report it with the output of `flashsim info` of both files.
 

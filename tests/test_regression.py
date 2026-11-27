@@ -133,7 +133,7 @@ def test_disc_composition_and_delays(uniform_events):
 
 
 def test_direct_light_at_the_centre():
-    """At the centre a photon is detected without any interaction with probability coverage * exp(-R mu)."""
+    """At the center a photon is detected without any interaction with probability coverage * exp(-R mu)."""
     data = simulate(np.zeros(1000), 0.0, 2.0, config=preset("full"), seed=9, device="cpu")
     p = data.photons
     expected = 32 * 0.10 / (2 * math.pi) * math.exp(-1.0 * (1 / 1.5 + 1 / 2.0))
@@ -218,16 +218,16 @@ def test_centre_composition_against_the_original():
     old_delay = np.concatenate([p["t"] for p in parts]) - 1.0 / 0.2
     new_shares = np.bincount(category, minlength=3) / len(category)
     old_shares = np.bincount(old_category, minlength=3) / len(old_category)
-    # photons of centre events are independent: binomial errors
+    # photons of center events are independent: binomial errors
     assert_pulls(
         new_shares,
         np.sqrt(new_shares * (1 - new_shares) / len(category)),
         old_shares,
         np.sqrt(old_shares * (1 - old_shares) / len(old_category)),
-        "centre shares vs original",
+        "center shares vs original",
     )
     new_mean = [delay[category == c].mean() for c in range(3)]
     old_mean = [old_delay[old_category == c].mean() for c in range(3)]
     new_err = [delay[category == c].std() / math.sqrt((category == c).sum()) for c in range(3)]
     old_err = [old_delay[old_category == c].std() / math.sqrt((old_category == c).sum()) for c in range(3)]
-    assert_pulls(new_mean, new_err, old_mean, old_err, "centre delays vs original")
+    assert_pulls(new_mean, new_err, old_mean, old_err, "center delays vs original")

@@ -176,9 +176,9 @@ animation needs.
 
 | dataset      | dtype   | shape | units | content                    |
 |--------------|---------|-------|-------|----------------------------|
-| `sensor_x`   | float64 | [M]   | m     | x of the sensor centres    |
-| `sensor_y`   | float64 | [M]   | m     | y of the sensor centres    |
-| `sensor_phi` | float64 | [M]   | rad   | angle of the sensor centres, $2\pi j / M$ |
+| `sensor_x`   | float64 | [M]   | m     | x of the sensor centers    |
+| `sensor_y`   | float64 | [M]   | m     | y of the sensor centers    |
+| `sensor_phi` | float64 | [M]   | rad   | angle of the sensor centers, $2\pi j / M$ |
 
 Attributes: `radius` [m], `n_sensors`, `sensor_width` [m] (arc length of a sensor) and `photocoverage`.
 

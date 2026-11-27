@@ -1,6 +1,6 @@
 """Detector geometry: sensor positions, the sensor lookup on the wall and the distance to the wall.
 
-The detector is a disc of radius ``R``. Sensor ``j`` is the wall arc centred at ``phi_j = 2 pi j / M`` with angular
+The detector is a disc of radius ``R``. Sensor ``j`` is the wall arc centered at ``phi_j = 2 pi j / M`` with angular
 half-width ``a / (2 R)``. The NumPy helpers (:func:`sensor_phi`, :func:`sensor_positions`, :func:`sensor_edges`,
 :func:`sensor_arcs`) are meant for drawing; the torch functions (:func:`sensor_at`, :func:`distance_to_wall`) are used
 by the photon transport and work on any device.
@@ -38,12 +38,12 @@ def sensor_half_angle(geometry: Geometry) -> float:
 
 
 def sensor_phi(geometry: Geometry) -> np.ndarray:
-    """Angles of the sensor centres, ``phi_j = 2 pi j / M`` [rad], shape ``[M]``."""
+    """Angles of the sensor centers, ``phi_j = 2 pi j / M`` [rad], shape ``[M]``."""
     return 2 * np.pi * np.arange(geometry.n_sensors) / geometry.n_sensors
 
 
 def sensor_positions(geometry: Geometry) -> tuple[np.ndarray, np.ndarray]:
-    """Coordinates ``(x_j, y_j)`` of the sensor centres on the wall [m], each of shape ``[M]``."""
+    """Coordinates ``(x_j, y_j)`` of the sensor centers on the wall [m], each of shape ``[M]``."""
     phi = sensor_phi(geometry)
     return geometry.radius * np.cos(phi), geometry.radius * np.sin(phi)
 
@@ -89,8 +89,8 @@ def sensor_arcs(geometry: Geometry, n_points: int = 16, radius: float | None = N
 def sensor_at(phi: torch.Tensor, geometry: Geometry) -> tuple[torch.Tensor, torch.Tensor]:
     """Which sensor, if any, covers the wall point at angle ``phi``.
 
-    The nearest sensor centre is ``j = round(phi / dphi) mod M`` with ``dphi = 2 pi / M``; the point lies on that
-    sensor if its angular distance to the centre, wrapped into ``[-pi, pi)``, is at most the half-width
+    The nearest sensor center is ``j = round(phi / dphi) mod M`` with ``dphi = 2 pi / M``; the point lies on that
+    sensor if its angular distance to the center, wrapped into ``[-pi, pi)``, is at most the half-width
     ``a / (2 R)``. The wrap makes ``phi = pi`` and ``phi = -pi`` the same point.
 
     Parameters

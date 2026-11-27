@@ -5,7 +5,7 @@ In one dimension the KL divergence from the target ``p`` to the model ``q`` is a
     KL(p || q) = int p(x) (log p(x) - log q(x)) dx,
 
 which :func:`kl_to_truth` evaluates by the trapezoidal rule on a fine grid: the "truth metric" of every comparison in
-the course (in nats; 0 only for ``q = p``). It is the same divergence that maximum-likelihood training minimises, but
+the course (in nats; 0 only for ``q = p``). It is the same divergence that maximum-likelihood training minimizes, but
 exact instead of estimated from samples.
 """
 

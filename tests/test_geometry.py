@@ -65,7 +65,7 @@ def test_lookup_at_arc_edges(j):
 
 def test_lookup_at_the_wrap_around():
     half = sensor_half_angle(G)
-    # phi = +pi and -pi are the same point, the centre of sensor 16 for M = 32
+    # phi = +pi and -pi are the same point, the center of sensor 16 for M = 32
     index, on = lookup([math.pi, -math.pi, math.pi - 0.5 * half, -math.pi + 0.5 * half])
     np.testing.assert_array_equal(index, 16)
     assert on.all()

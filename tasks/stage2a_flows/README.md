@@ -11,7 +11,7 @@ the truth.
 - Background: the maths is in [docs/flows.md](../../docs/flows.md), and
   [notebooks/01_flows_1d.ipynb](../../notebooks/01_flows_1d.ipynb) is a guided first look at the package
   `prob_reco_sbi.flows1d`.
-- **Training is always maximum likelihood on samples**, which minimises the forward KL divergence
+- **Training is always maximum likelihood on samples**, which minimizes the forward KL divergence
   ([docs/flows.md](../../docs/flows.md#training-maximum-likelihood-is-the-forward-kl-divergence)). This is how neural
   posterior estimation (NPE) trains its flows: the simulator gives samples, never the value of a density.
 - **Where to run.** A laptop is enough (CPU only): a fit takes from a few seconds to a few tens of seconds. More
@@ -160,7 +160,7 @@ normal base its density is
 ```
 
 For a stack $f = f_L \circ \dots \circ f_1$, with $z_0 = x$ and $z_l = f_l(z_{l-1})$, the log-derivatives add up:
-$\log f'(x) = \sum_l \log f_l'(z_{l-1})$. Training minimises the mean negative log-likelihood of the samples with Adam
+$\log f'(x) = \sum_l \log f_l'(z_{l-1})$. Training minimizes the mean negative log-likelihood of the samples with Adam
 (`torch.optim.Adam`),
 
 ```math
@@ -221,11 +221,11 @@ KL against the depth, yours and the package's in one figure, and the learned map
   target, e.g. from -6 to 15; the two should agree.
 - F2.1: what are the mean and the standard deviation of your fitted Gaussian? Compare them with those of the target
   (`target.mean`, `target.std`).
-- The reparametrisation divides by $w^2$: keep it finite at $w = 0$, e.g. with `(w * w).clamp_min(1e-12)`.
+- The reparametrization divides by $w^2$: keep it finite at $w = 0$, e.g. with `(w * w).clamp_min(1e-12)`.
 - The inverse: since $|z - x| < |\hat u|$, the solution of $f(x) = z$ lies in $[z - |\hat u|, z + |\hat u|]$. Halve
   this bracket about 60 times, or use `invert_monotone(f, z, lo, hi)` of the package. A stack is inverted layer by
   layer, in reverse order.
-- The initialisation matters: try a few seeds of the initial parameters and report the spread of the KL, not one value.
+- The initialization matters: try a few seeds of the initial parameters and report the spread of the KL, not one value.
   For the deepest stacks, look at the largest $|\hat u|$ of the initial layers and at the loss curve: a stack that
   starts far from the data may need more steps.
 - F2.3: `fit` trains in float32 (it converts the samples to the type of the flow), while a loop of your own on the

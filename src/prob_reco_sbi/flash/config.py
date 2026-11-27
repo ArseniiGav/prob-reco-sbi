@@ -85,7 +85,7 @@ def _coerce(f: dataclasses.Field[Any], value: Any, owner: str) -> Any:
 
 
 class _Part:
-    """Behaviour shared by the four configuration parts: type coercion and validation on construction."""
+    """Behavior shared by the four configuration parts: type coercion and validation on construction."""
 
     def __post_init__(self) -> None:
         for f in dataclasses.fields(self):  # type: ignore[arg-type]
@@ -100,7 +100,7 @@ class _Part:
 class Geometry(_Part):
     """Disc detector with photosensor arcs on its wall.
 
-    Sensor ``j`` (``j = 0 ... n_sensors - 1``) is centred at the angle ``phi_j = 2 pi j / n_sensors`` and covers the
+    Sensor ``j`` (``j = 0 ... n_sensors - 1``) is centered at the angle ``phi_j = 2 pi j / n_sensors`` and covers the
     arc ``|phi - phi_j| <= sensor_width / (2 radius)``. The photocoverage is ``n_sensors * sensor_width / (2 pi R)``
     (0.509 for the defaults).
     """
@@ -135,7 +135,7 @@ class Optics(_Part):
     or as a black wall (reflection); with absorption and scattering both off, photons fly straight to the wall.
     Photons still in flight after ``max_steps`` interactions are counted as lost.
 
-    Specular reflection in a perfect circle keeps the angle of incidence: a photon emitted exactly at the centre
+    Specular reflection in a perfect circle keeps the angle of incidence: a photon emitted exactly at the center
     bounces along one diameter; if that diameter misses the sensors, the photon is absorbed by the wall at one of its
     bounces (with ``reflectivity = 1`` it bounces until ``max_steps`` and is counted as lost).
     """

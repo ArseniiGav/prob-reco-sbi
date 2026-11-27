@@ -1,10 +1,10 @@
 """Maximum-likelihood training of a flow on samples.
 
-Training minimises the mean negative log-likelihood of the samples::
+Training minimizes the mean negative log-likelihood of the samples::
 
     loss = -(1/N) sum_i log q(x_i)  ->  E_p[-log q(x)] = H(p) + KL(p || q)    (many samples),
 
-so it minimises the forward KL divergence ``KL(p || q)`` up to the entropy ``H(p)``, which does not depend on the flow.
+so it minimizes the forward KL divergence ``KL(p || q)`` up to the entropy ``H(p)``, which does not depend on the flow.
 It needs samples of ``p`` only, never its density: exactly the situation of neural posterior estimation, where the
 simulator provides samples. :func:`fit` runs Adam and records the losses, the parameters and the model on a grid at
 regular steps (the frames of the training animations)::
@@ -60,7 +60,7 @@ def split(x: ArrayLike, val_fraction: float = 0.2, seed: Seed = 0) -> tuple[Tens
     Parameters
     ----------
     x
-        The samples (1-D).
+        The samples (1D).
     val_fraction
         Fraction of the samples in the validation part.
     seed
@@ -102,7 +102,7 @@ def fit(
     flow
         The flow to train (in place).
     x
-        Training samples of the target (1-D).
+        Training samples of the target (1D).
     steps
         Number of Adam updates.
     lr

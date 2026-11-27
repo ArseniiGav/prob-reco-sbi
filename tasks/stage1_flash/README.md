@@ -42,10 +42,10 @@ folder outside it. Data files are not committed: `data/` and `*.h5` are ignored 
 | $Q = \sum_j n_j$ | total charge of an event |
 | $Y$ | light yield, 1000 photons/MeV (`data.config.optics.light_yield`) |
 | $Q/(Y E)$ | light collection: detected fraction of the mean number of emitted photons |
-| $(x_j, y_j)$ | centre of sensor $j$ (`data.detector.sensor_x`, `data.detector.sensor_y`) |
-| $d_j$ | distance from the vertex to the centre of sensor $j$ |
-| $t - t_0 - d_j / c_n$ | delay of a hit with respect to straight flight to the sensor centre |
-| $\left(\sum_j n_j x_j, \sum_j n_j y_j\right) / Q$ | charge-weighted barycentre of the sensor positions (a naive vertex) |
+| $(x_j, y_j)$ | center of sensor $j$ (`data.detector.sensor_x`, `data.detector.sensor_y`) |
+| $d_j$ | distance from the vertex to the center of sensor $j$ |
+| $t - t_0 - d_j / c_n$ | delay of a hit with respect to straight flight to the sensor center |
+| $\left(\sum_j n_j x_j, \sum_j n_j y_j\right) / Q$ | charge-weighted barycenter of the sensor positions (a naive vertex) |
 
 ---
 
@@ -171,7 +171,7 @@ matter?
 **Hints**
 - `data.truth` of `data/t2_full.h5` has everything. The parameters can also be drawn without any simulation:
   `sample_prior(100_000, preset("full"), rng=1)` (both from `prob_reco_sbi.flash`).
-- For T1.1, compare how many vertices fall into a thin ring near the centre and into one of the same width near the
+- For T1.1, compare how many vertices fall into a thin ring near the center and into one of the same width near the
   wall.
 - For T1.2, recall Bayes' theorem, $p(\theta \mid x) \propto p(x \mid \theta)\, p(\theta)$. What happens to the
   posterior of an event close to the edge of the prior, for example at $E = 0.6$ MeV or $r_0 = 0.95$ m? What could a
@@ -193,7 +193,7 @@ times ($t_0$ is unknown)?
 does an empty sensor look like?
 
 **T2.5** At least three proposals of your own. For example: the charge of a sensor against its distance $d_j$; the
-first-hit time against $d_j$ (time of flight, slope $1/c_n$); the charge-weighted barycentre against the true vertex
+first-hit time against $d_j$ (time of flight, slope $1/c_n$); the charge-weighted barycenter against the true vertex
 (a naive vertex); a naive energy from $Q$ with one calibration constant (its bias against $r_0$); correlations
 between sensors; photon-fate fractions; the direct / scattered / reflected composition of the detected light.
 
@@ -207,7 +207,7 @@ between sensors; photon-fate fractions; the direct / scattered / reflected compo
   `np.nanmean`.
 - Do not be surprised that first hits mostly arrive *before* the straight time of flight $t_0 + d_j / c_n$, and some
   even before $t_0$: the first hit is the earliest of $n_j$ photons, each with a 1 ns Gaussian jitter, and $d_j$ is
-  measured to the sensor centre while the arc has a width. This is not a bug; think about what the earliest of many
+  measured to the sensor center while the arc has a width. This is not a bug; think about what the earliest of many
   jittered times does.
 - `network_input(charge, time_mean)` returns an array `[N, 64]`: columns 0 to 31 are the log charges, 32 to 63 the
   relative times. Its definition is in [docs/physics.md](../../docs/physics.md#network-input).
@@ -235,7 +235,7 @@ flashsim generate --preset absorb --fixed-vertex 0.5 0.2 --fixed-energy 2 --phot
 collection grow toward the wall in the full model?
 
 **T3.4** How hard is the inverse problem? For every preset, estimate the energy from $Q$ with one calibration constant
-and the vertex from the charge barycentre, and show the bias and the resolution of both against $r_0$. What will a
+and the vertex from the charge barycenter, and show the bias and the resolution of both against $r_0$. What will a
 learned posterior need beyond $Q$ (the charge pattern, the timing)?
 
 **Deliverables:** for T3.1 the two quantities with all presets on shared axes; for T3.2 the expected and the
@@ -244,9 +244,9 @@ Answer T3.3 in a few sentences and refer to your figures.
 
 **Hints**
 - Hits carry `event_id`, `sensor` and `time`. Get the $t_0$ and the vertex of each hit from `data.truth` (with
-  `event_id` as the index, since the first event has id 0), and $d_j$ from the vertex and the sensor centre.
+  `event_id` as the index, since the first event has id 0), and $d_j$ from the vertex and the sensor center.
 - T3.2: photons are emitted uniformly in angle. The two ends of every sensor arc are in `sensor_edges(geometry)`
-  (angles on the wall). Check your result first for a vertex at the centre. A fixed vertex and fixed photon numbers, as
+  (angles on the wall). Check your result first for a vertex at the center. A fixed vertex and fixed photon numbers, as
   in the commands above, make the statistical errors of the mean charges small. For absorption, the probability that a
   photon survives a straight path follows from the free-path distribution in
   [docs/physics.md](../../docs/physics.md); which path length do you use for a sensor arc?
@@ -255,13 +255,13 @@ Answer T3.3 in a few sentences and refer to your figures.
 - T3.4: a single calibration constant $k$ for the whole data set, e.g. the median of $Q/E$, gives
   $E_\mathrm{rec} = Q/k$. Use robust measures in every bin of $r_0$: the median of $(E_\mathrm{rec} - E)/E$ for the
   bias and half the width of its central 68 % interval for the resolution. For the vertex, look at the distance between
-  the barycentre and the true vertex, and at the component of their difference along the direction of the vertex.
+  the barycenter and the true vertex, and at the component of their difference along the direction of the vertex.
 
 ## T4 Event displays (about 2 hours)
 
 **Goal:** draw single events so that the eye sees what the network will see.
 
-**T4.1** The disc with the sensors coloured by their charge, the true vertex and the charge barycentre, with $E$,
+**T4.1** The disc with the sensors colored by their charge, the true vertex and the charge barycenter, with $E$,
 $r_0$ and $Q$ in the title.
 
 **T4.2** Add the timing, in a second panel or as a polar plot.
@@ -279,7 +279,7 @@ events = {
 }
 ```
 
-(`device="cpu"` makes the individual photons the same for everybody; a GPU gives a different random realisation of
+(`device="cpu"` makes the individual photons the same for everybody; a GPU gives a different random realization of
 the same event.)
 
 **T4.5** Bonus: an animation of the photons of one event.
@@ -288,20 +288,20 @@ the same event.)
 
 **Hints**
 - `sensor_arcs(data.config.geometry)` returns points along every sensor arc. Draw all sensors with the same size, so that
-  only their colour carries the charge (dark for no light, bright for much light), and add a colour bar with its label.
-- Use different markers for the true vertex and the barycentre, and a legend outside the disc.
-- T4.2: relative times (the second half of `network_input`) or first times as colour, with empty sensors in a neutral
-  colour; or $n_j$ and $\tau_j$ against the sensor angle.
+  only their color carries the charge (dark for no light, bright for much light), and add a color bar with its label.
+- Use different markers for the true vertex and the barycenter, and a legend outside the disc.
+- T4.2: relative times (the second half of `network_input`) or first times as color, with empty sensors in a neutral
+  color; or $n_j$ and $\tau_j$ against the sensor angle.
 - T4.3: `data.tracks.of_event(event_id)` gives the tracks of one event, `data.tracks.polyline(k)` the points and their
   types. Give scatterings and wall reflections their own markers. A hundred photons are usually enough to see the
   structure.
-- T4.4: use the same colour scale in all four panels.
-- T4.5: use `matplotlib.animation.FuncAnimation`. A photon has travelled the path length $s = c_n (t - t_0)$ at the
+- T4.4: use the same color scale in all four panels.
+- T4.5: use `matplotlib.animation.FuncAnimation`. A photon has traveled the path length $s = c_n (t - t_0)$ at the
   time $t$; interpolate its position along the polyline with `np.interp` on `path_length`. Saving the animation with
   `writer="pillow"` gives a GIF, but a large one (a palette per frame; about 9 MB for 200 frames at 800 px): keep the
   number of frames and the dpi modest, or save an MP4 with `writer="ffmpeg"` if ffmpeg is installed.
 
-## T5 Bonus: towards inference (2 to 4 hours)
+## T5 Bonus: toward inference (2 to 4 hours)
 
 **Goal:** first steps toward the questions that the inference will have to answer.
 
@@ -346,7 +346,7 @@ for rate in 0 1e6 1e7; do flashsim generate --dark-rate "$rate" -n 20000 --seed 
   of the effect you are looking for: look at the average over all pairs and at the variance of $Q$ over its mean.
 - T5.2: read candidate pairs off your light-collection curve (T2.2 or T3.1), simulate each pair with `--fixed-vertex`
   and `--fixed-energy`, and compare the distributions of a few features other than $Q$.
-- T5.3: compare, for example, the fraction of empty sensors, the barycentre and the energy from $Q$ (T3.4) for the
+- T5.3: compare, for example, the fraction of empty sensors, the barycenter and the energy from $Q$ (T3.4) for the
   different designs.
 - T5.4: change one effect at a time, with the same seed. The dark rate is per sensor: 1 MHz gives on average 0.1 noise
   hits per sensor and event in the default readout window of 100 ns. Measure "suffer" with the estimators of T3.4 or

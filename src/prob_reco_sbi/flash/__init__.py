@@ -1,4 +1,4 @@
-"""A Flash in the Dark: photon-transport simulation of a toy 2-D scintillation detector.
+"""A Flash in the Dark: photon-transport simulation of a toy 2D scintillation detector.
 
 A disc of radius 1 m with 32 photosensors on its wall records the light of point-like events (vertex ``(x0, y0)``,
 energy ``E``, unknown time ``t0``). Photons are tracked one by one through absorption, Rayleigh scattering and wall

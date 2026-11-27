@@ -153,9 +153,9 @@ class Detector:
 
     radius: float  #: detector radius R [m]
     sensor_width: float  #: arc length of a sensor [m]
-    sensor_x: np.ndarray  #: sensor centres [m], shape [n_sensors]
+    sensor_x: np.ndarray  #: sensor centers [m], shape [n_sensors]
     sensor_y: np.ndarray
-    sensor_phi: np.ndarray  #: angles of the sensor centres [rad]
+    sensor_phi: np.ndarray  #: angles of the sensor centers [rad]
 
     @property
     def n_sensors(self) -> int:

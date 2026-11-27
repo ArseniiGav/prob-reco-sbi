@@ -3,7 +3,7 @@
 All photons of a batch of events are tracked together: every tensor below has one entry per photon, and one pass of
 the loop in :func:`transport` moves every photon still in flight to its next interaction point.
 
-The physics (2-D, a single medium, no refraction)::
+The physics (2D, a single medium, no refraction)::
 
     emission    at the vertex, isotropic: direction angle ~ U(0, 2 pi)
     flight      free path to the next bulk interaction  s_free ~ Exp(mu),  mu = 1/lambda_a + 1/lambda_s
@@ -85,15 +85,15 @@ _cpu_kernels_warm = False
 
 
 def warm_up_cpu_kernels() -> None:
-    """Run the vectorised CPU math kernels once, single-threaded, before the first multi-threaded transport.
+    """Run the vectorized CPU math kernels once, single-threaded, before the first multi-threaded transport.
 
     In a fresh process, the first multi-threaded evaluation of the float32 kernels ``sin``, ``cos``, ``sqrt``, ``log``
     and ``asin`` can compute one thread's block of elements with a different code path than the other blocks (the
-    one-time initialisation of the vector math library races between the threads; seen with the MKL-backed CPU
+    one-time initialization of the vector math library races between the threads; seen with the MKL-backed CPU
     builds of PyTorch). That flips the fates of a few photons at the sensor edges, and since the number of random
     draws of the time jitter equals the number of detected photons, every later chunk then gets other random numbers:
-    the whole realisation differs from a run in a process that has used these kernels before. One small
-    single-threaded call of each kernel beforehand initialises the library without a race. :func:`transport` calls
+    the whole realization differs from a run in a process that has used these kernels before. One small
+    single-threaded call of each kernel beforehand initializes the library without a race. :func:`transport` calls
     this function for CPU tensors; it does its work once per process and is harmless to call again.
     """
     global _cpu_kernels_warm
@@ -369,7 +369,7 @@ def reflect(photons: Photons, selected: torch.Tensor, model: str, generator: tor
 
 
 def sample_rayleigh_angle(n: int, generator: torch.Generator) -> torch.Tensor:
-    """Rayleigh scattering angles in 2-D, ``p(theta) = (1 + cos^2 theta) / (3 pi)`` on ``[0, 2 pi)``.
+    """Rayleigh scattering angles in 2D, ``p(theta) = (1 + cos^2 theta) / (3 pi)`` on ``[0, 2 pi)``.
 
     Inverse-transform sampling: ``theta`` solves ``F(theta) = u`` for ``u ~ U(0, 1)`` and the cumulative distribution
     ``F(theta) = (3 theta / 2 + sin(2 theta) / 4) / (3 pi)``. Newton's method starts from ``theta = 2 pi u``, which is

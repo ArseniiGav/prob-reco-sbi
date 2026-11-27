@@ -69,7 +69,7 @@ PAPER_STYLE = {
     "legend.fontsize": 10,
     "pdf.fonttype": 42,
 }
-#: One colour per meaning, as in every figure of the course: the target, the spline flow, maps.
+#: One color per meaning, as in every figure of the course: the target, the spline flow, maps.
 COLOURS = {"target": "royalblue", "spline": "indigo", "map": "black"}
 
 
