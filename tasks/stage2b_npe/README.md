@@ -22,8 +22,8 @@ model is compared with an exact posterior.
 
 ## Set-up
 
-Update your clone with `git pull` and install again, because the library zuko is new (it is in the `analysis`
-extra). Then check the new subpackage with its tests:
+Update your clone with `git pull` and install again, because the library zuko (normalizing flows in PyTorch) is new
+(it is in the `analysis` extra). Then check the new subpackage with its tests:
 
 ```bash
 python -m pip install -e ".[analysis,dev]"
@@ -66,7 +66,8 @@ theta, x = load_pairs("data/n3_full_train.h5", "ganged")  # 17 + 17 values of th
 theta, x = load_pairs("data/n1_center.h5", "q")  # theta = (E,), x = ln Q: the vertex is fixed
 ```
 
-**The budgets.** Every task names one. The validation pairs are always the last 10 000 of the file.
+**The budgets.** A budget is the number of training pairs (simulations) and of epochs; every task names one. The
+validation pairs, never used for the updates, are always the last 10 000 of the file.
 
 ```python
 import torch
@@ -81,9 +82,11 @@ history = fit(flow, theta[:100_000], x[:100_000], epochs=20, validation=val, see
 ```
 
 In N1 the budget is the first 50 000 pairs of `n1_center.h5` for 30 epochs, with the last 10 000 for validation.
-`fit` uses minibatches of 512 pairs and Adam with the learning rate $10^{-3}$, decaying to 0 as a cosine; use the
-same in your own loops. The initial weights come from torch's random state: call `torch.manual_seed(...)` before you
-build a network, and note the seed. The `seed` of `fit` fixes the order of the minibatches.
+`fit` uses minibatches of 512 pairs (random subsets, one Adam step or update each; one pass through all training
+pairs is an epoch) and Adam with the learning rate $10^{-3}$, decaying to 0 as a cosine over all updates
+(`torch.optim.lr_scheduler.CosineAnnealingLR`); use the same in your own loops. The initial weights come from
+torch's random state: call `torch.manual_seed(...)` before you build a network, and note the seed. The `seed` of
+`fit` fixes the order of the minibatches.
 
 ## What to hand in
 
@@ -92,8 +95,8 @@ build a network, and note the seed. The `seed` of `fit` fixes the order of the m
 2. **Short answers**: a few sentences per question ID and for the "why" question of every section, with the numbers
    you measured and the budget of every network (simulations, epochs, wall time, seed).
 3. **Your code** (scripts or notebooks) with the seeds, so that every figure can be made again. Save your trained
-   networks (`save_model`; your own models with `torch.save(model.state_dict(), path)`), so that later tasks do not
-   retrain them.
+   networks (`save_model`; your own models with `torch.save(model.state_dict(), path)`, where `state_dict()` holds all
+   their weights), so that later tasks do not retrain them.
 
 Make your own plots too: whatever you find telling, surprising or useful.
 
@@ -114,6 +117,7 @@ a folder outside the repository.
 | $x_o$ | one observed event, whose posterior is asked |
 | $\pi(\theta)$ | the prior of stage 1: the vertex uniform in the disc, $E$ uniform in [0.5, 5] MeV |
 | $p(x \mid \theta)$ | the likelihood: the density of the observations, known in general only through the simulator |
+| simulator | the toy of stage 1 (`flashsim`): it draws observations for given parameters, $x \sim p(x \mid \theta)$ |
 | $\mathcal{L}(x \mid \theta)$ | the likelihood as a function of $\theta$, where it has a formula (N1, N2) |
 | $\kappa_j(x_0, y_0)$, $\kappa = \sum_j \kappa_j$ | probability that a photon from the vertex is detected by sensor $j$; the light collection $\langle Q \rangle / (Y E)$ |
 | $\mu_j = Y E\, \kappa_j$ | the expected charge of sensor $j$ |
@@ -123,7 +127,7 @@ a folder outside the repository.
 | $f_\phi$ | the transformation of the flow, in the normalizing direction: $z = f_\phi(\theta \mid x)$ |
 | $z$, $p_Z$ | the base variable and the base density, the standard normal |
 | normalizing, generative direction | from $\theta$ to $z$ (the density), from $z$ to $\theta$ (samples) |
-| $\tilde\theta$ | the parameters after the fixed transforms of the package to unbounded, standardized coordinates |
+| $\tilde\theta$ | the parameters after the fixed transforms of the package to unbounded, standardized coordinates (no edges; mean 0 and standard deviation 1 over the training pairs) |
 | $h(x)$ | the output of the input embedding block, a network that summarizes the observations |
 | $\psi_i$ | the conditioning variables of factor $i$ of the chain, $\psi_i = (h(x), \tilde\theta_1, \dots, \tilde\theta_{i-1})$ |
 | parameters head | the network that turns $\psi_i$ into the $3K - 1$ parameters of the spline of factor $i$ |
@@ -144,7 +148,8 @@ are the weights of the network.
 ## N1 One parameter with an exact posterior: the energy at a known vertex (about 2 hours)
 
 **Goal:** how well does the total charge fix the energy of an event at the center? A conditional flow, the NPE loss
-and amortized inference, on a problem whose posterior is known exactly for every $Q$.
+and amortized inference (train once, then the posterior of any $Q$ without new training), on a problem whose
+posterior is known exactly for every $Q$.
 
 **Data:** `data/n1_center.h5`, 60 000 events of the preset `full` at the center: $\theta = E$, $x = \ln Q$. The N1
 budget.
@@ -234,12 +239,13 @@ transform, and the posterior of the 8 MeV event (N1.6).
   $\hat q$ starts as $\mathcal{N}(0, 1)$ in $\tilde E$. Use `bound=5`. See
   [`conditional_flow.gif` and `energy_training.gif`](../../docs/npe.md#the-conditional-flow), drawn for the flow with
   the logit of N1.6. The package version is `ConditionalFlow1D(bins=16, unbounded=False)`.
-- N1.6: `energy_to_unbounded(E)` returns $u = \mathrm{logit}[(E - E_\mathrm{min}) / (E_\mathrm{max} - E_\mathrm{min})]$
-  and $\log \lvert \mathrm{d}u/\mathrm{d}E \rvert$: standardize $u$, put the flow on it, and add the log-Jacobian to
-  $\log \hat q$. See [`coordinates_map.png`](../../docs/npe.md#the-coordinates); the package version is
-  `ConditionalFlow1D(bins=16)`. The mass outside the prior: integrate $\hat q$ beyond the limits, or count samples
-  outside. An event of 8 MeV (a fixed energy is not limited to the prior range; its $x$ is
-  `observations(data.response.charge, None, "q")` with `data = load("data/n1_8mev.h5")`):
+- N1.6: `energy_to_unbounded(E)` returns $u = \mathrm{logit}[(E - E_\mathrm{min}) / (E_\mathrm{max} - E_\mathrm{min})]$,
+  with $\mathrm{logit}\, p = \log[p / (1 - p)]$, and $\log \lvert \mathrm{d}u/\mathrm{d}E \rvert$: standardize $u$,
+  put the flow on it, and add the log-Jacobian to $\log \hat q$. See
+  [`coordinates_map.png`](../../docs/npe.md#the-coordinates); the package version is `ConditionalFlow1D(bins=16)`.
+  The mass outside the prior: integrate $\hat q$ beyond the limits, or count samples outside. An event of 8 MeV (a
+  fixed energy is not limited to the prior range; its $x$ is `observations(data.response.charge, None, "q")` with
+  `data = load("data/n1_8mev.h5")`):
   ```bash
   flashsim generate --fixed-vertex 0 0 --fixed-energy 8 -n 1 --seed 26 -o data/n1_8mev.h5
   ```
@@ -300,7 +306,8 @@ ratio against $r_0$ for both budgets (N2.6).
 - N2.1: write your chain as a subclass of `PosteriorEstimator`. The base class maps $\theta$ to $\tilde\theta$ (the
   coordinate map and the standardization, with their Jacobian) and standardizes $x$; you write the learned part.
   Then `log_prob`, `sample` and `fit` work as for the package's models. See
-  [`chain_diagram.png`](../../docs/npe.md#the-chain).
+  [`chain_diagram.png`](../../docs/npe.md#the-chain). `mlp(n_in, hidden, n_out)` is a fully connected network with
+  ReLU between its layers.
   ```python
   from torch import nn
   from prob_reco_sbi.npe import PosteriorEstimator, mlp, n_spline_params, rq_spline, rq_spline_inverse
@@ -345,11 +352,12 @@ ratio against $r_0$ for both budgets (N2.6).
   `energy_evidence(Q, kappa)` the logarithm of the integral over $E$ (with the prior and $Y$ of stage 1). Center a
   grid of about 161 by 161 points on the flow samples, a few of their standard deviations wide, and check that the
   exact posterior falls off well before the edges. At a fixed vertex the energy posterior is that of N1.2 with
-  $\kappa(x_0, y_0)$; the marginal of $E$ is their mixture, weighted with the vertex posterior.
-  `energy_posterior(Q, kappa)` takes an array of $\kappa$, one per grid point, and its `pdf(E[:, None])` gives the
-  energy posteriors of all grid points at once. See [`likelihood_product.gif` and
+  $\kappa(x_0, y_0)$; the marginal of $E$ (its posterior alone, the vertex integrated out) is their mixture, weighted
+  with the vertex posterior. `energy_posterior(Q, kappa)` takes an array of $\kappa$, one per grid point, and its
+  `pdf(E[:, None])` gives the energy posteriors of all grid points at once. See [`likelihood_product.gif` and
   `exact_vs_flow.png`](../../docs/npe.md#three-parameters-the-vertex-and-the-energy-with-straight-light).
-- N2.4: contours: `credible_levels(density, [0.68, 0.95])` gives the levels, and matplotlib's `contour` wants them
+- N2.4: the 68 % region is where the density lies above the level at which the region holds 68 % of the probability.
+  Contours: `credible_levels(density, [0.68, 0.95])` gives the levels, and matplotlib's `contour` wants them
   increasing. The check: `grid_posterior(charge, "absorb")`; its `x` and `y` are 2D arrays on a grid turned to the
   radial and tangential directions of the vertex.
 - N2.6: `grid_posterior` takes about a second per event; save its results. The width of the vertex posterior is
@@ -439,8 +447,8 @@ distribution, its mean and its rms around 1/2.
 
 **N4.4** *(medium)* Between the modes. For every event, the fraction of samples with
 $\lvert y \rvert \lt \lvert y_0 \rvert / 2$, where $y$ is the $y_0$ of a sample and $y_0$ the true one; its median
-against $\lvert y_0 \rvert$. How does this fraction change toward the mirror axis, and why? Train the chain again
-with 16 bins: do more bins change anything?
+against $\lvert y_0 \rvert$. How does this fraction change toward the mirror axis ($y_0 = 0$), and why? Train the
+chain again with 16 bins: do more bins change anything?
 
 **N4.5** *(easy)* The Gaussian comparison model `GaussianChain(obs_dim=34)` on the same data and budget: what does
 it do with the two modes?
@@ -522,8 +530,8 @@ refer to N5.2 to N5.4 (N5.5).
           ...  # N5.1
   ```
   `self.flow(x_t)` is a distribution, and its `.transform` is the transformation from $\tilde\theta$ to $z$: look at
-  its methods `call_and_ladj` and `inv`. `save_model` stores only the models of the package: save yours with
-  `torch.save(model.state_dict(), path)`.
+  its methods `call_and_ladj` (ladj: the log absolute determinant of the Jacobian) and `inv`. `save_model` stores
+  only the models of the package: save yours with `torch.save(model.state_dict(), path)`.
 - N5.2: time both trainings with the same number of threads.
 - N5.5: put the numbers of N5.2 to N5.4 side by side: validation losses, widths, $P(y_0 > 0)$, training time.
 

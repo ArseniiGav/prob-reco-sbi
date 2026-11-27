@@ -22,6 +22,7 @@ Gavrikov et al. (2026); see the [references](#references).
 | $x_o$ | the observed event whose posterior is asked | guide |
 | $\pi(\theta)$ | the prior | paper; the guide writes $p(\theta)$ |
 | $p(x \mid \theta)$ | the likelihood, known in general only through the simulator | guide; paper |
+| simulator | the toy of stage 1 (`flashsim`): it draws observations for given parameters, $x \sim p(x \mid \theta)$ | stage 1; guide |
 | $\mathcal{L}(x \mid \theta)$ | the likelihood as a function of $\theta$, where it has a formula | paper |
 | $\kappa_j(x_0, y_0)$, $\kappa = \sum_j \kappa_j$ | probability that a photon from the vertex is detected by sensor $j$; the light collection | new; stage 1 wrote $Q/(Y E)$ |
 | $\mu_j = Y E\, \kappa_j$ | the expected charge of sensor $j$ | paper (expected counts) |
@@ -33,8 +34,8 @@ Gavrikov et al. (2026); see the [references](#references).
 | normalizing, generative direction | from $\theta$ to $z$ (the density), from $z$ to $\theta$ (samples) | paper |
 | $\psi$, $\psi_i$ | the conditioning variables of a flow; of factor $i$ of the chain | paper |
 | conditioning neural network | turns $\psi$ into the parameters of a flow: an input embedding block and a parameters head | paper; the guide's embedding network is the input embedding block |
-| $h(x)$ | the output of the input embedding block | new |
-| $\tilde\theta$ | the parameters in unbounded, standardized coordinates | new |
+| $h(x)$ | the output of the input embedding block, a network that summarizes the observations | new |
+| $\tilde\theta$ | the parameters in unbounded, standardized coordinates (no edges; mean 0 and standard deviation 1 over the training pairs) | new |
 | $\mathcal{L}(\phi)$ | the loss | guide; paper |
 | $D_\mathrm{KL}(q \,\Vert\, \hat q)$ | the forward Kullback-Leibler divergence, in nats | paper; 2a wrote $\mathrm{KL}(p \,\Vert\, q)$ |
 | nat | the unit of KL divergences, entropies and losses computed with the natural logarithm (1 nat ≈ 1.44 bits) | new |
@@ -83,8 +84,9 @@ The second line uses Bayes' theorem, $\pi(\theta)\, p(x \mid \theta) = p(x)\, q(
 $p(x) = \int \pi(\theta)\, p(x \mid \theta)\, \mathrm{d}\theta$. The entropy $H$ of the posterior does not depend on
 $\phi$: the loss is the forward KL divergence of [2a](flows.md#training-maximum-likelihood-is-the-forward-kl-divergence),
 averaged over the observations that the simulator makes. It needs pairs, never the posterior or the likelihood. The
-code takes the mean over a minibatch. In the package, $\theta$ is in m and MeV and $\hat q$ a density per
-$\mathrm{m}^2\,\mathrm{MeV}$, so the loss can be negative.
+code takes the mean over a minibatch, a random subset of the pairs for one Adam step; one pass through all training
+pairs is an epoch. In the package, $\theta$ is in m and MeV and $\hat q$ a density per $\mathrm{m}^2\,\mathrm{MeV}$,
+so the loss can be negative.
 
 ## The conditional flow
 
@@ -133,10 +135,11 @@ and on the parameters before it,
 ```
 
 This is the change of variables of 2a once per factor, with the conditioning made explicit; $\tilde\theta$ are the
-coordinates of the next section.
+coordinates of the next section. A flow in which every coordinate is conditioned on the ones before it is called
+autoregressive, hence `AutoregressiveFlow`.
 
-- **Input embedding block** $h$: a network of the standardized observations, $x \to 128 \to 128 \to 32$ (ReLU),
-  trained together with the rest.
+- **Input embedding block** $h$: a network of the standardized observations, $x \to 128 \to 128 \to 32$ units (ReLU,
+  $\max(0, t)$, between the layers), trained together with the rest.
 - **Factor** $i$: a rational-quadratic spline $f_\phi^{(i)}$ with $K = 8$ bins on $[-5, 5]$, the identity outside, on
   the standard normal base. Its $3K - 1$ parameters come from its **parameters head**, a network of $\psi_i$ with two
   hidden layers of 64. The last layer of every head starts at zero, so every factor starts as the identity.
@@ -178,7 +181,8 @@ E \mapsto \mathrm{logit}\,\frac{E - E_\mathrm{min}}{E_\mathrm{max} - E_\mathrm{m
 \mathrm{logit}\, p = \log \frac{p}{1 - p},
 ```
 
-with the log-Jacobians, for $\rho = r_0 / R$ and $p = (E - E_\mathrm{min}) / (E_\mathrm{max} - E_\mathrm{min})$,
+where $\mathrm{artanh}$ is the inverse of $\tanh$, with the log-Jacobians, for $\rho = r_0 / R$ and
+$p = (E - E_\mathrm{min}) / (E_\mathrm{max} - E_\mathrm{min})$,
 
 ```math
 \log \left\lvert \det \frac{\partial u}{\partial (x_0, y_0)} \right\rvert
@@ -218,7 +222,8 @@ $Q \sim \mathrm{Poisson}(Y \kappa E)$. Step by step:
    $q(E \mid Q) \propto \mathcal{L}(Q \mid E) \propto (Y \kappa E)^{Q}\, e^{-Y \kappa E}$ for
    $E_\mathrm{min} \le E \le E_\mathrm{max}$, and 0 outside.
 2. As a function of $E$, $E^{Q} e^{-Y \kappa E}$ is the density of a Gamma distribution with the shape $Q + 1$ and
-   the rate $Y \kappa$, up to a constant.
+   the rate $Y \kappa$, up to a constant (the Gamma density of shape $a$ and rate $b$ is
+   $b^a E^{a - 1} e^{-b E} / \Gamma(a)$ for $E > 0$).
 3. Normalized in the prior range:
 
 ```math
@@ -227,9 +232,9 @@ q(E \mid Q) = \frac{(Y \kappa)^{Q + 1} E^{Q}\, e^{-Y \kappa E}}
 E_\mathrm{min} \le E \le E_\mathrm{max},
 ```
 
-with the regularized lower incomplete Gamma function $P(a, t) = \gamma(a, t) / \Gamma(a)$ (`torch.special.gammainc`,
-`scipy.special.gammainc`). The KL divergence of a learned posterior to it is an integral over $E$, by quadrature as in
-2a:
+with the regularized lower incomplete Gamma function $P(a, t) = \gamma(a, t) / \Gamma(a)$,
+$\gamma(a, t) = \int_0^t s^{a - 1} e^{-s}\, \mathrm{d}s$ (`torch.special.gammainc`, `scipy.special.gammainc`). The KL
+divergence of a learned posterior to it is an integral over $E$, by quadrature as in 2a:
 
 ```math
 D_\mathrm{KL}\big(q(\cdot \mid Q) \,\Vert\, \hat q(\cdot \mid Q)\big)
@@ -281,12 +286,13 @@ from prob_reco_sbi.npe import credible_levels, detection_probability, energy_evi
 
 kappa_j = detection_probability(x0, y0, "absorb")  # [..., 32]
 log_evidence = energy_evidence(Q, kappa_j.sum(-1))  # log of the integral over E (flat prior in [0.5, 5] MeV)
-exact = grid_posterior(charge, "absorb")  # one event: density on a grid, energy marginal, means, covariance
+exact = grid_posterior(charge, "absorb")  # one event: density on a grid, posterior of E alone, means, covariance
 levels = credible_levels(exact.density, [0.68, 0.95])  # density levels of the 68 % and 95 % regions
 ```
 
 `grid_posterior` finds the posterior with a coarse pass over the disc and then puts a fine grid on it, turned to the
-radial and tangential directions of the vertex; it takes about a second per event.
+radial and tangential directions of the vertex; it takes about a second per event. The 68 % region is where the
+density lies above the level at which the region holds 68 % of the probability; its edge is a contour.
 
 <p align="center"><img src="img/npe/likelihood_product.gif" width="760" alt="Animation: the exact posterior built sensor by sensor on the grid of vertices"></p>
 
@@ -320,10 +326,10 @@ $(r_0, E)$ panel follow it.
 ## Two modes
 
 With a ganged readout, sensor $j$ and its mirror image $32 - j$ share one channel: sensor $j$ sits at the angle
-$2\pi j / 32$, its mirror image under $y_0 \to -y_0$ at $-2\pi j / 32$. Sensors 0 and 16 lie on the mirror axis and
-keep a channel of their own, so there are 17 channels. The charge of a channel is the sum of the charges of its
-sensors, its mean time their charge-weighted mean. A response and its mirror image give exactly the same ganged
-observations.
+$2\pi j / 32$, its mirror image under $y_0 \to -y_0$ at $-2\pi j / 32$. Sensors 0 and 16 lie on the mirror axis
+($y_0 = 0$) and keep a channel of their own, so there are 17 channels. The charge of a channel is the sum of the
+charges of its sensors, its mean time their charge-weighted mean. A response and its mirror image give exactly the
+same ganged observations.
 
 ```python
 from prob_reco_sbi.flash import ganged_channels, ganged_input
