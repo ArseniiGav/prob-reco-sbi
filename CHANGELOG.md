@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-27
+
+Stage 2b of the course: neural posterior estimation (NPE) of the vertex and the energy.
+
+### Added
+
+- `prob_reco_sbi.npe`: neural posterior estimation for the toy detector, written from scratch in PyTorch.
+  - `rq_spline` and `rq_spline_inverse`: the rational-quadratic spline of `flows1d.RQSpline` with one set of knots per
+    value, so that a network can compute the parameters of the spline; zero parameters give the identity.
+  - The fixed maps of the event parameters to unbounded coordinates (artanh of the radius, logit of the energy) with
+    their inverses and log-Jacobians: `to_unbounded`, `from_unbounded`, `energy_to_unbounded`,
+    `vertex_to_unbounded`, `inside_prior`.
+  - The posterior models, with `log_prob(theta, x)` and `sample(x, n)` in physical units: `ConditionalFlow1D` (one
+    parameter, one conditional spline), `AutoregressiveFlow` (the chain of conditional splines by the product rule,
+    with an input embedding block and one parameters head per factor) and `GaussianChain` (a multivariate normal with
+    a full covariance, the comparison model); their base class `PosteriorEstimator`, which a new model subclasses.
+  - `load_pairs` and `to_pairs`: the pairs `(theta, x)` of simulated events in the representations `"charge+time"`,
+    `"charge"`, `"q"` and `"ganged"`; `observations`: the same `x` from arrays of charges and times.
+  - `fit`: minibatch maximum likelihood with Adam, a cosine decay of the learning rate and a validation set; its
+    `History` keeps the losses, the state with the lowest validation loss and snapshots for animations.
+    `save_model` and `load_model`.
+  - The exact references of the toy where it has a likelihood formula: `detection_probability` (the probability that
+    a photon from a vertex reaches a sensor, for straight light), `energy_posterior` (a truncated Gamma
+    distribution), `energy_evidence`, `grid_posterior` (the exact posterior of one event of `straight` or `absorb` on
+    an adaptive grid, the energy integrated analytically) and `credible_levels`.
+- `prob_reco_sbi.flash.ganged_input` and `ganged_channels`: the network input of a ganged readout, in which a sensor
+  and its mirror image share one channel.
+- `tests/test_npe.py`: the batched spline against `RQSpline`, inverses and log-derivatives against autograd, the
+  coordinate maps, densities that integrate to 1, samples sent back to the base, training, saving and loading, the
+  ganged input, the exact references against closed forms; slow tests of `detection_probability` against the
+  simulation, of trained models against the exact posteriors, of `examples/npe_quickstart.py` and of a zuko flow.
+- `docs/npe.md`: the maths of the stage: the loss, the conditional flow, the chain, the coordinates, the exact
+  references with their derivations, two modes and the library, with the given figures and animations
+  (`docs/img/npe/`).
+- `notebooks/02_npe.ipynb`: a guided first look at neural posterior estimation with the package.
+- `examples/make_npe_data.py`: the data of the tasks on any operating system; `examples/npe_quickstart.py`: train the
+  chain and draw the posterior of a new event from the command line.
+- `tasks/stage2b_npe/README.md`: the tasks of stage 2b, N1 to N5 and the bonus NB1 and NB2, with fixed question IDs.
+
+### Changed
+
+- zuko is in the `analysis` extra (the library flow of task N5).
+- README: stage 2b in the course roadmap, with stage 3 (the reliability of the posteriors) and stage 4 (NuBench) next;
+  a short section on stage 2b; its posterior animation next to the photon animation at the top.
+- `tasks/README.md`: the row of stage 2b.
+- `CITATION.cff`: neural posterior estimation in the abstract.
+- American spelling in the text of the README, docs, task sheets, notebooks and docstrings of stages 1 and 2a; no names changed.
+
 ### Removed
 
 - `solutions/`: the reference solutions are no longer part of the repository.
@@ -103,6 +151,7 @@ First release: the toy detector "A Flash in the Dark" and its data.
   and measured resources per job.
 - `notebooks/00_quickstart.ipynb`: a guided first look at the data.
 
-[Unreleased]: https://github.com/ArseniiGav/prob-reco-sbi/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/ArseniiGav/prob-reco-sbi/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/ArseniiGav/prob-reco-sbi/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/ArseniiGav/prob-reco-sbi/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ArseniiGav/prob-reco-sbi/releases/tag/v0.1.0

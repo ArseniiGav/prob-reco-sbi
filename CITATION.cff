@@ -8,12 +8,15 @@ abstract: >-
   switchable absorption, Rayleigh scattering and wall reflection, a documented HDF5 data format and student tasks
   about the simulated data. The second part introduces normalizing flows in one dimension: a PyTorch package written
   from scratch (transforms, maximum-likelihood training, the exact KL divergence to the target) and student tasks.
+  The third part is neural posterior estimation of the event parameters: conditional spline flows chained by the
+  product rule, written from scratch, the exact posteriors of the toy where it has a likelihood formula, and student
+  tasks.
 authors:
   - family-names: Gavrikov
     given-names: Arsenii
     affiliation: "Tsung-Dao Lee Institute, Shanghai Jiao Tong University"
-version: 0.2.0
-date-released: 2026-11-05
+version: 0.3.0
+date-released: 2026-11-27
 license: MIT
 repository-code: "https://github.com/ArseniiGav/prob-reco-sbi"
 url: "https://github.com/ArseniiGav/prob-reco-sbi"
